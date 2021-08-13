@@ -22,13 +22,49 @@ public class PortfolioServiceImpl implements PortfolioService {
     private CashRepository cashRepository;
 
     @Override
-    public Collection<Stock> getStocks() {
+    public Collection<Stock> getAllStocks() {
         return stockRepository.findAll();
     }
 
     @Override
-    public Collection<Cash> getCash() {
-        return cashRepository.findAll();
+    public Collection<ExchangeTradedFund> getAllExchangeTradedFunds() { return exchangeTradedFundRepository.findAll(); }
+
+    @Override
+    public Collection<Cash> getAllCash() { return cashRepository.findAll(); }
+
+    @Override
+    public double dummyCurrentMarketValue(String symbol) {
+        return 52.3;
     }
 
+    @Override
+    public double getInvestmentValue() {
+        Collection<Stock> stocksTotal = stockRepository.getLatestStocks();
+        double investmentValue = 0;
+        for(Stock stock: stocksTotal) {
+            investmentValue += (stock.getTotalQuantity() * dummyCurrentMarketValue(stock.getSymbol()));
+        }
+
+        Collection<ExchangeTradedFund> exchangeTradedFundTotal = exchangeTradedFundRepository.getLatestExchangeTradedFunds();
+        for(ExchangeTradedFund exchangeTradedFund: exchangeTradedFundTotal) {
+            investmentValue += (exchangeTradedFund.getTotalQuantity() * dummyCurrentMarketValue(exchangeTradedFund.getSymbol()));
+        }
+        return investmentValue;
+    }
+
+    @Override
+    public double getCashValue() {
+        Collection<Cash> cashTotal = cashRepository.getLatestCashBalances();
+        double cashValue = 0;
+        for(Cash cash: cashTotal) {
+            cashValue += cash.getBalance();
+        }
+        return cashValue;
+    }
+
+    @Override
+    public double[] getNetWorth() {
+        double[] netWorth = {getInvestmentValue(), getCashValue(), getInvestmentValue() + getCashValue()};
+        return netWorth;
+    }
 }

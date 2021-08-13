@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.Calendar;
 
 @Entity
-@Table(name="exchangetradedfunds")
+@Table(name="exchange_traded_funds")
 public class ExchangeTradedFund implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -30,9 +30,7 @@ public class ExchangeTradedFund implements Serializable {
     @Column(name="total_value")
     private double totalValue; // Total value of the investment at this point
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
+    public LocalDateTime getDateTime() { return dateTime; }
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;

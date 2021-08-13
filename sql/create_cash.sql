@@ -5,4 +5,6 @@ CREATE TABLE `conygre`.`cash` (
   `account_type` INT NOT NULL,
   `transaction_type` INT NOT NULL,
   `balance` FLOAT NOT NULL,
+  `transaction_amount` FLOAT NOT NULL,
+  `account_number` INT NOT NULL,
   PRIMARY KEY (`id`))

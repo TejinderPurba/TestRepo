@@ -21,6 +21,10 @@ public class Cash implements Serializable {
     private int transactionType;
     @Column(name="balance")
     private double balance;
+    @Column(name="transaction_amount")
+    private double transactionAmount;
+    @Column(name="account_number")
+    private int accountNumber;
 
     public int getId() {
         return id;
@@ -68,5 +72,21 @@ public class Cash implements Serializable {
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public double getTransactionAmount() {
+        return transactionAmount;
+    }
+
+    public void setTransactionAmount(double transactionAmount) {
+        this.transactionAmount = transactionAmount;
+    }
+
+    public int getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(int accountNumber) {
+        this.accountNumber = accountNumber;
     }
 }

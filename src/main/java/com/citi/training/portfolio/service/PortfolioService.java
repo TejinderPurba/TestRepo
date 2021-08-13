@@ -4,7 +4,17 @@ import com.citi.training.portfolio.entities.*;
 import java.util.Collection;
 
 public interface PortfolioService {
-    public Collection<Stock> getStocks();
+    public Collection<Stock> getAllStocks();
 
-    public Collection<Cash> getCash();
+    public Collection<ExchangeTradedFund> getAllExchangeTradedFunds();
+
+    public Collection<Cash> getAllCash();
+
+    public double dummyCurrentMarketValue(String symbol);
+
+    public double getInvestmentValue();
+
+    public double getCashValue();
+
+    public double[] getNetWorth();
 }
