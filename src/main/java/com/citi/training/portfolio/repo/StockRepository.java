@@ -10,12 +10,32 @@ import java.util.Collection;
 
 @Repository
 public interface StockRepository extends JpaRepository<Stock, Integer> {
+
+    /**
+     * Locates a stock based on symbol.
+     * @param symbol the stock symbol to be used in the lookup.
+     * @return Collection of stocks that match the symbol provided.
+     */
     Collection<Stock> findBySymbol(String symbol);
 
+    /**
+     * Locates a stock based on name.
+     * @param name the stock name to be used in the lookup.
+     * @return Collection of stocks that match the name provided.
+     */
     Collection<Stock> findByName(String name);
 
+    /**
+     * Locates a stock based on type.
+     * @param type the stock type to be used in the lookup.
+     * @return Collection of stocks that match the type provided.
+     */
     Collection<Stock> findByTransactionType(int type);
 
+    /**
+     * Retrieves the latest transaction of each stock.
+     * @return Collection of the latest transaction for each stock.
+     */
     @Query(
             value = "SELECT * from stocks t1 where date_time = (select max(date_time) from stocks where t1.symbol = stocks.symbol) order by date_time desc",
             nativeQuery = true)

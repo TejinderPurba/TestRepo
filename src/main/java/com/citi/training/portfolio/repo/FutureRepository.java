@@ -8,5 +8,11 @@ import java.util.Collection;
 
 @Repository
 public interface FutureRepository extends JpaRepository<Future, Integer> {
-    Collection<Future> findBySymbol(String title);
+
+    /**
+     * Locates a future based on symbol.
+     * @param symbol the future symbol to be used in the lookup.
+     * @return Collection of futures that match the symbol provided.
+     */
+    Collection<Future> findBySymbol(String symbol);
 }

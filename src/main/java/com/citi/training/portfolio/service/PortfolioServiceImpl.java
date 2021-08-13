@@ -58,7 +58,7 @@ public class PortfolioServiceImpl implements PortfolioService {
     }
     @Override
     public double getCashValue() {
-        Collection<Cash> cashTotal = cashRepository.getLatestCashBalances();
+        Collection<Cash> cashTotal = cashRepository.getLatestCashAccounts();
         double cashValue = 0;
         for(Cash cash: cashTotal) {
             cashValue += cash.getBalance();

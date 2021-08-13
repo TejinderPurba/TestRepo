@@ -8,5 +8,11 @@ import java.util.Collection;
 
 @Repository
 public interface BondRepository extends JpaRepository<Bond, Integer> {
-    Collection<Bond> findBySymbol(String title);
+
+    /**
+     * Locates a bond based on symbol.
+     * @param symbol the bond symbol to be used in the lookup.
+     * @return Collection of bonds that match the symbol provided.
+     */
+    Collection<Bond> findBySymbol(String symbol);
 }
