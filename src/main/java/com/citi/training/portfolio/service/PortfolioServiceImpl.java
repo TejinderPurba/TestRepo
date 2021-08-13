@@ -25,6 +25,12 @@ public class PortfolioServiceImpl implements PortfolioService {
     public Collection<Stock> getAllStocks() {
         return stockRepository.findAll();
     }
+    @Override
+    public Collection<Stock> getStocksBySymbol(String symbol) { return stockRepository.findBySymbol(symbol); }
+    @Override
+    public Collection<Stock> getStocksByName(String name) { return stockRepository.findByName(name); }
+    @Override
+    public Collection<Stock> getStocksByType(int type) { return stockRepository.findByTransactionType(type); }
 
     @Override
     public Collection<ExchangeTradedFund> getAllExchangeTradedFunds() { return exchangeTradedFundRepository.findAll(); }
@@ -36,7 +42,6 @@ public class PortfolioServiceImpl implements PortfolioService {
     public double dummyCurrentMarketValue(String symbol) {
         return 52.3;
     }
-
     @Override
     public double getInvestmentValue() {
         Collection<Stock> stocksTotal = stockRepository.getLatestStocks();
@@ -51,7 +56,6 @@ public class PortfolioServiceImpl implements PortfolioService {
         }
         return investmentValue;
     }
-
     @Override
     public double getCashValue() {
         Collection<Cash> cashTotal = cashRepository.getLatestCashBalances();
@@ -61,7 +65,6 @@ public class PortfolioServiceImpl implements PortfolioService {
         }
         return cashValue;
     }
-
     @Override
     public double[] getNetWorth() {
         double[] netWorth = {getInvestmentValue(), getCashValue(), getInvestmentValue() + getCashValue()};

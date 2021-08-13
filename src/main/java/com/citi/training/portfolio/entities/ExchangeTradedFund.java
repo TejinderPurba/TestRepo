@@ -14,13 +14,13 @@ public class ExchangeTradedFund implements Serializable {
     private int id;
 
     @Column(name="date_time")
-    private LocalDateTime dateTime; // Ticker symbol of investment
+    private LocalDateTime dateTime; // Date of transaction
     @Column(name="symbol")
     private String symbol; // Ticker symbol of investment
     @Column(name="name")
     private String name; // Name of investment
     @Column(name="transaction_type")
-    private int transactionType; // Sold or purchased
+    private int transactionType; // Sold or purchased - 0 for buy, 1 for sell
     @Column(name="quantity_affected")
     private int quantityAffected; // How many were sold/purchased
     @Column(name="total_quantity")

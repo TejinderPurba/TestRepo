@@ -10,7 +10,11 @@ import java.util.Collection;
 
 @Repository
 public interface StockRepository extends JpaRepository<Stock, Integer> {
-    Collection<Stock> findBySymbol(String title);
+    Collection<Stock> findBySymbol(String symbol);
+
+    Collection<Stock> findByName(String name);
+
+    Collection<Stock> findByTransactionType(int type);
 
     @Query(
             value = "SELECT * from stocks t1 where date_time = (select max(date_time) from stocks where t1.symbol = stocks.symbol) order by date_time desc",

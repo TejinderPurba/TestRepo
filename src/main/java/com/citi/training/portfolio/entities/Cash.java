@@ -12,19 +12,19 @@ public class Cash implements Serializable {
     @Column(name="id")
     private int id;
     @Column(name="date_time")
-    private LocalDateTime dateTime;
+    private LocalDateTime dateTime; // Date of transaction
     @Column(name="financial_institution")
-    private String financialInstitution;
+    private String financialInstitution; // Name of financial institution
     @Column(name="account_type")
-    private int accountType;
+    private int accountType; // Type of account - 0 for chequing, 1 for savings, 2 for cash management, 3 for broker
     @Column(name="transaction_type")
-    private int transactionType;
+    private int transactionType; // Deposit or withdraw - 0 for deposit, 1 for withdraw
     @Column(name="balance")
-    private double balance;
+    private double balance; // Value of the current account balance
     @Column(name="transaction_amount")
-    private double transactionAmount;
+    private double transactionAmount; // Value of the amount in transaction
     @Column(name="account_number")
-    private int accountNumber;
+    private int accountNumber; // Value of the account number
 
     public int getId() {
         return id;
@@ -90,3 +90,4 @@ public class Cash implements Serializable {
         this.accountNumber = accountNumber;
     }
 }
+

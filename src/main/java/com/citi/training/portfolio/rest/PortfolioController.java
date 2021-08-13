@@ -23,13 +23,26 @@ public class PortfolioController {
     }
 
     @RequestMapping(value = "/etf", method = {RequestMethod.GET})
-    public Collection<ExchangeTradedFund> getAllExchangeTradedFunds() {
-        return portfolioService.getAllExchangeTradedFunds();
-    }
+    public Collection<ExchangeTradedFund> getAllExchangeTradedFunds() { return portfolioService.getAllExchangeTradedFunds(); }
 
     @RequestMapping(value = "/cash", method = {RequestMethod.GET})
     public Collection<Cash> getAllCash() {
         return portfolioService.getAllCash();
+    }
+
+    @RequestMapping(value = "/stocks/symbol/{symbol}", method = {RequestMethod.GET})
+    public Collection<Stock> getStocksBySymbol(@PathVariable String symbol) {
+        return portfolioService.getStocksBySymbol(symbol);
+    }
+
+    @RequestMapping(value = "/stocks/name/{name}", method = {RequestMethod.GET})
+    public Collection<Stock> getStocksByName(@PathVariable String name) {
+        return portfolioService.getStocksByName(name);
+    }
+
+    @RequestMapping(value = "/stocks/type/{type}", method = {RequestMethod.GET})
+    public Collection<Stock> getStocksByType(@PathVariable int type) {
+        return portfolioService.getStocksByType(type);
     }
 
     @RequestMapping(value = "/investmentvalue", method = {RequestMethod.GET})
