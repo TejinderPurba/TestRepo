@@ -6,11 +6,11 @@ TO-DO:
 
 1. Finish making the mock data for cash, futures, and bonds.
 
-2. Add more lookup by symbol/name/type to the other investment types and cash accounts.
+2. Add more lookup by symbol/name/type to the other investment types and cash accounts. - COMPLETED
 
-3. Add object properties for Futures/Bonds.
+3. Add object properties and methods for Futures/Bonds.
 
-4. Add buy/sell functionality for all investments/cash accounts EXCEPT for Stocks (already done).
+4. Add buy/sell functionality for all investments/cash accounts EXCEPT for Stocks which is already completed.
 
 5. Make algorithms to find changes in networth, cash and investment values over various periods of time.
 

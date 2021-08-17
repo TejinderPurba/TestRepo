@@ -28,6 +28,20 @@ public interface ExchangeTradedFundRepository extends JpaRepository<ExchangeTrad
     Collection<ExchangeTradedFund> findBySymbol(String symbol);
 
     /**
+     * Locates an ETF based on name.
+     * @param name the ETF name to be used in the lookup.
+     * @return Collection of ETFs that match the name provided.
+     */
+    Collection<ExchangeTradedFund> findByName(String name);
+
+    /**
+     * Locates an ETF based on type.
+     * @param type the ETF type to be used in the lookup.
+     * @return Collection of ETFs that match the type provided.
+     */
+    Collection<ExchangeTradedFund> findByTransactionType(int type);
+
+    /**
      * Retrieves the latest transaction of each ETF.
      * @return Collection of the latest transaction for each ETF.
      */

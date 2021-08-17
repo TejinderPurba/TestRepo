@@ -50,10 +50,59 @@ public interface PortfolioService {
     public Collection<ExchangeTradedFund> getAllExchangeTradedFunds();
 
     /**
+     * Get all exchange traded funds in the database by symbol.
+     * @param symbol the symbol to use in the exchange traded funds lookup.
+     * @return Collection of ExchangeTradedFunds with all database items by symbol.
+     */
+    public Collection<ExchangeTradedFund> getExchangeTradedFundsBySymbol(String symbol);
+
+    /**
+     * Get all exchange traded funds in the database by symbol.
+     * @param name the name to use in the exchange traded funds lookup.
+     * @return Collection of ExchangeTradedFunds with all database items by name.
+     */
+    public Collection<ExchangeTradedFund> getExchangeTradedFundsByName(String name);
+
+    /**
+     * Get all exchange traded funds in the database by type.
+     * @param type the type to use in the exchange traded funds lookup.
+     * @return Collection of ExchangeTradedFunds with all database items by type.
+     */
+    public Collection<ExchangeTradedFund> getExchangeTradedFundsByType(int type);
+
+    /**
      * Get all cash accounts in the database.
      * @return Collection of cash accounts with all database items.
      */
     public Collection<Cash> getAllCash();
+
+    /**
+     * Get all cash in the database by transaction type.
+     * @param type the transaction type to use in the cash lookup.
+     * @return Collection of Cash with all database items by transaction type.
+     */
+    public Collection<Cash> getCashByTransactionType(int type);
+
+    /**
+     * Get all cash in the database by account type.
+     * @param type the account type to use in the cash lookup.
+     * @return Collection of Cash with all database items by account type.
+     */
+    public Collection<Cash> getCashByAccountType(int type);
+
+    /**
+     * Get all cash in the database by account number.
+     * @param account the account number to use in the cash lookup.
+     * @return Collection of Cash with all database items by account number.
+     */
+    public Collection<Cash> getCashByAccountNumber(int account);
+
+    /**
+     * Get all cash in the database by financial institution.
+     * @param institution the institution name to use in the cash lookup.
+     * @return Collection of Cash with all database items by financial institution.
+     */
+    public Collection<Cash> getCashByFinancialInstitution(String institution);
 
     /**
      * A dummy value representing the current market value of an investment.

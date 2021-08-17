@@ -22,10 +22,31 @@ public interface CashRepository extends JpaRepository<Cash, Integer> {
 
     /**
      * Locates a cash account based on account type.
-     * @param accountType the account type to be used in the lookup.
+     * @param account the account type to be used in the lookup.
      * @return Collection of cash accounts that match the account type provided.
      */
-    Collection<Cash> findByAccountType(int accountType);
+    Collection<Cash> findByAccountType(int account);
+
+    /**
+     * Locates a cash account based on transaction type.
+     * @param type the transaction type to be used in the lookup.
+     * @return Collection of cash accounts that match the transaction type provided.
+     */
+    Collection<Cash> findByTransactionType(int type);
+
+    /**
+     * Locates a cash account based on institution.
+     * @param institution the institution name to be used in the lookup.
+     * @return Collection of cash accounts that match the institution provided.
+     */
+    Collection<Cash> findByFinancialInstitution(String institution);
+
+    /**
+     * Locates a cash account based on account number.
+     * @param number the account number to be used in the lookup.
+     * @return Collection of cash accounts that match the account number provided.
+     */
+    Collection<Cash> findByAccountNumber(int number);
 
     /**
      * Retrieves the latest transaction of each cash account.

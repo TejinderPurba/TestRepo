@@ -60,12 +60,47 @@ public class PortfolioController {
     @RequestMapping(value = "/etf", method = {RequestMethod.GET})
     public Collection<ExchangeTradedFund> getAllExchangeTradedFunds() { return portfolioService.getAllExchangeTradedFunds(); }
 
+    @RequestMapping(value = "/etf/symbol/{symbol}", method = {RequestMethod.GET})
+    public Collection<ExchangeTradedFund> getExchangeTradedFundsBySymbol(@PathVariable String symbol) {
+        return portfolioService.getExchangeTradedFundsBySymbol(symbol);
+    }
+
+    @RequestMapping(value = "/etf/name/{name}", method = {RequestMethod.GET})
+    public Collection<ExchangeTradedFund> getExchangeTradedFundsByName(@PathVariable String name) {
+        return portfolioService.getExchangeTradedFundsByName(name);
+    }
+
+    @RequestMapping(value = "/etf/type/{type}", method = {RequestMethod.GET})
+    public Collection<ExchangeTradedFund> getExchangeTradedFundsByType(@PathVariable int type) {
+        return portfolioService.getExchangeTradedFundsByType(type);
+    }
+
     /**
      * CASH METHODS
      */
     @RequestMapping(value = "/cash", method = {RequestMethod.GET})
     public Collection<Cash> getAllCash() {
         return portfolioService.getAllCash();
+    }
+
+    @RequestMapping(value = "/cash/account/{accountNum}", method = {RequestMethod.GET})
+    public Collection<Cash> getCashByAccountNumber(@PathVariable int accountNum) {
+        return portfolioService.getCashByAccountNumber(accountNum);
+    }
+
+    @RequestMapping(value = "/cash/institution/{institution}", method = {RequestMethod.GET})
+    public Collection<Cash> getCashByFinancialInstitution (@PathVariable String institution) {
+        return portfolioService.getCashByFinancialInstitution(institution);
+    }
+
+    @RequestMapping(value = "/cash/accounttype/{accountType}", method = {RequestMethod.GET})
+    public Collection<Cash> getCashByAccountType(@PathVariable int accountType) {
+        return portfolioService.getCashByAccountType(accountType);
+    }
+
+    @RequestMapping(value = "/cash/transactiontype/{transactionType}", method = {RequestMethod.GET})
+    public Collection<Cash> getCashByTransactionType(@PathVariable int transactionType) {
+        return portfolioService.getCashByTransactionType(transactionType);
     }
 
     /**

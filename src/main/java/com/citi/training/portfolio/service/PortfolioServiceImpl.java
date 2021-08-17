@@ -54,12 +54,26 @@ public class PortfolioServiceImpl implements PortfolioService {
      */
     @Override
     public Collection<ExchangeTradedFund> getAllExchangeTradedFunds() { return exchangeTradedFundRepository.findAllSorted(); }
+    @Override
+    public Collection<ExchangeTradedFund> getExchangeTradedFundsBySymbol(String symbol) { return exchangeTradedFundRepository.findBySymbol(symbol); }
+    @Override
+    public Collection<ExchangeTradedFund> getExchangeTradedFundsByName(String name) { return exchangeTradedFundRepository.findByName(name); }
+    @Override
+    public Collection<ExchangeTradedFund> getExchangeTradedFundsByType(int type) { return exchangeTradedFundRepository.findByTransactionType(type); }
 
     /**
      * CASH METHODS
      */
     @Override
     public Collection<Cash> getAllCash() { return cashRepository.findAllSorted(); }
+    @Override
+    public Collection<Cash> getCashByTransactionType(int type) { return cashRepository.findByTransactionType(type); }
+    @Override
+    public Collection<Cash> getCashByAccountType(int type) { return cashRepository.findByAccountType(type); }
+    @Override
+    public Collection<Cash> getCashByAccountNumber(int account) { return cashRepository.findByAccountNumber(account); }
+    @Override
+    public Collection<Cash> getCashByFinancialInstitution(String institution) { return cashRepository.findByFinancialInstitution(institution); }
 
     /**
      * PORTFOLIO METHODS
