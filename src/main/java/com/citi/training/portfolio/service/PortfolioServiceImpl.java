@@ -27,7 +27,7 @@ public class PortfolioServiceImpl implements PortfolioService {
      */
     @Override
     public Collection<Stock> getAllStocks() {
-        return stockRepository.findAll();
+        return stockRepository.findAllSorted();
     }
     @Override
     public Collection<Stock> getStocksBySymbol(String symbol) { return stockRepository.findBySymbol(symbol); }
@@ -53,13 +53,13 @@ public class PortfolioServiceImpl implements PortfolioService {
      * EXCHANGED TRADED FUNDS METHODS
      */
     @Override
-    public Collection<ExchangeTradedFund> getAllExchangeTradedFunds() { return exchangeTradedFundRepository.findAll(); }
+    public Collection<ExchangeTradedFund> getAllExchangeTradedFunds() { return exchangeTradedFundRepository.findAllSorted(); }
 
     /**
      * CASH METHODS
      */
     @Override
-    public Collection<Cash> getAllCash() { return cashRepository.findAll(); }
+    public Collection<Cash> getAllCash() { return cashRepository.findAllSorted(); }
 
     /**
      * PORTFOLIO METHODS

@@ -1,6 +1,7 @@
 package com.citi.training.portfolio.repo;
 
 import com.citi.training.portfolio.entities.ExchangeTradedFund;
+import com.citi.training.portfolio.entities.Stock;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -9,6 +10,15 @@ import java.util.Collection;
 
 @Repository
 public interface ExchangeTradedFundRepository extends JpaRepository<ExchangeTradedFund, Integer> {
+
+    /**
+     * Locates all ETFs sorted by date ascending.
+     * @return Collection of all ETFs sorted by date time ascending.
+     */
+    @Query(
+            value = "SELECT * from exchange_traded_funds order by date_time asc",
+            nativeQuery = true)
+    Collection<ExchangeTradedFund> findAllSorted();
 
     /**
      * Locates an ETF based on symbol.

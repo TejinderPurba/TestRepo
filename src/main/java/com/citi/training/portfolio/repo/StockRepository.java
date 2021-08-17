@@ -13,6 +13,15 @@ import java.util.Collection;
 public interface StockRepository extends JpaRepository<Stock, Integer> {
 
     /**
+     * Locates all stocks sorted by date ascending.
+     * @return Collection of all stocks sorted by date time ascending.
+     */
+    @Query(
+            value = "SELECT * from stocks order by date_time asc",
+            nativeQuery = true)
+    Collection<Stock> findAllSorted();
+
+    /**
      * Locates a stock based on symbol.
      * @param symbol the stock symbol to be used in the lookup.
      * @return Collection of stocks that match the symbol provided.
