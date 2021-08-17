@@ -44,6 +44,7 @@ public interface StockRepository extends JpaRepository<Stock, Integer> {
 
     /**
      * Retrieves the latest transaction of a specific stock.
+     * @param symbol the stock symbol to be fetched.
      * @return The latest transaction for the specified stock.
      */
     @Query(
