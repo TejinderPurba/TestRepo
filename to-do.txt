@@ -8,6 +8,8 @@ TO-DO:
 
 4. Add buy/sell functionality for all investments/cash accounts.
 
-5. Make algorithms to find changes in networth, cash and investment values over various periods of time
+5. Make algorithms to find changes in networth, cash and investment values over various periods of time.
 
-6. Integrate either dummy or real data to calculate Market Movers based on portfolio investments
+6. Integrate either dummy or real data to calculate Market Movers based on portfolio investments.
+
+7. Add testing functionality.
