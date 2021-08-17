@@ -32,6 +32,18 @@ public interface PortfolioService {
     public Collection<Stock> getStocksByType(int type);
 
     /**
+     * Add a new stock to the database.
+     * @param stock the stock to be added to the database.
+     */
+    public void buyStock(Stock stock);
+
+    /**
+     * Sells a stock from the database.
+     * @param stock the stock to be sold to the database.
+     */
+    public void sellStock(Stock stock);
+
+    /**
      * Get all ETFs in the database.
      * @return Collection of ETFs with all database items.
      */

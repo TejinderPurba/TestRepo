@@ -4,9 +4,9 @@ TO-DO:
 
 2. Add more lookup by symbol/name/type to the other investment types and cash accounts.
 
-3. Add object propoerties for Futures/Bonds.
+3. Add object properties for Futures/Bonds.
 
-4. Add buy/sell functionality for all investments/cash accounts.
+4. Add buy/sell functionality for all investments/cash accounts EXCEPT for Stocks (already done).
 
 5. Make algorithms to find changes in networth, cash and investment values over various periods of time.
 

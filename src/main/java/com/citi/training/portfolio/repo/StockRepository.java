@@ -4,6 +4,7 @@ package com.citi.training.portfolio.repo;
 import com.citi.training.portfolio.entities.Stock;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
@@ -39,5 +40,14 @@ public interface StockRepository extends JpaRepository<Stock, Integer> {
     @Query(
             value = "SELECT * from stocks t1 where date_time = (select max(date_time) from stocks where t1.symbol = stocks.symbol) order by date_time desc",
             nativeQuery = true)
-    Collection<Stock> getLatestStocks();
+    Collection<Stock> getAllLatestStocks();
+
+    /**
+     * Retrieves the latest transaction of a specific stock.
+     * @return The latest transaction for the specified stock.
+     */
+    @Query(
+            value = "SELECT * from stocks t1 where date_time = (select max(date_time) from stocks where stocks.symbol = :symbol) order by date_time desc",
+            nativeQuery = true)
+    Stock getLatestStockTransaction(@Param("symbol") String symbol);
 }
