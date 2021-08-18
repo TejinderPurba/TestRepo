@@ -20,7 +20,7 @@ public class Cash implements Serializable {
     @Column(name="transaction_type")
     private int transactionType; // Deposit or withdraw - 0 for deposit, 1 for withdraw
     @Column(name="balance")
-    private double balance; // Value of the current account balance
+    private double balance; // Value of the current account balance after the transaction
     @Column(name="transaction_amount")
     private double transactionAmount; // Value of the amount in transaction
     @Column(name="account_number")
