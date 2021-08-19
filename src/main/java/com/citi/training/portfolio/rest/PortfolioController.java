@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Array;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.SortedMap;
@@ -35,12 +34,17 @@ public class PortfolioController {
         return portfolioService.getBondsByIssuer(issuer);
     }
 
+    @RequestMapping(value = "/bonds/transactiontype/{transactionType}", method = {RequestMethod.GET})
+    public Collection<Bond> getBondsByTransactionType(@PathVariable int transactionType) {
+        return portfolioService.getBondsByTransactionType(transactionType);
+    }
+
     @RequestMapping(value = "/bonds/name/{name}", method = {RequestMethod.GET})
     public Collection<Bond> getBondsByName(@PathVariable String name) {
         return portfolioService.getBondsByName(name);
     }
 
-    @RequestMapping(value = "/bonds/type/{type}", method = {RequestMethod.GET})
+    @RequestMapping(value = "/bonds/bondtype/{type}", method = {RequestMethod.GET})
     public Collection<Bond> getBondsByBondType(@PathVariable String type) {
         return portfolioService.getBondsByBondType(type);
     }
@@ -51,8 +55,8 @@ public class PortfolioController {
     }
 
     @RequestMapping(value = "/bonds/sell", method = RequestMethod.POST, consumes = "application/json")
-    public ResponseEntity sellBond(@RequestBody String name) {
-        portfolioService.sellBond(name);
+    public ResponseEntity sellBond(@RequestBody Bond bond) {
+        portfolioService.sellBond(bond);
         return new ResponseEntity(HttpStatus.ACCEPTED);
     }
     /**
@@ -181,31 +185,18 @@ public class PortfolioController {
         return portfolioService.getNetWorth();
     }
 
-    /**
-     * Cash Flow
-     */
-    @RequestMapping(value = "/incomeflow", method = {RequestMethod.GET})
-    public double[] getIncomeCashFlow(){return portfolioService.getIncomeCashFlow();}
-
-    @RequestMapping(value = "/expenseflow", method = {RequestMethod.GET})
-    public double[] getExpenseCashFlow(){return portfolioService.getExpenseCashFlow();}
-
-    @RequestMapping(value = "/cashflow", method = {RequestMethod.GET})
-    public double getCashFlow(){return portfolioService.getCashFlow();}
-
-
-    /**
-     * Net Worth
-     */
-    @RequestMapping(value = "/cashHistory", method = {RequestMethod.GET})
-    public SortedMap<LocalDate, Double> getCashHistory(){return portfolioService.getCashHistory();}
-
-    //@RequestMapping(value = "/investmentValueHistory", method = {RequestMethod.GET})
-    //public double[] getExpenseCashFlow(){return portfolioService.getExpenseCashFlow();}
-
-
     @RequestMapping(value = "/marketmovers", method = {RequestMethod.GET})
-    public SortedMap getMarketMovers() {
-        return portfolioService.getMarketMovers();
-    }
+    public SortedMap getMarketMovers() { return portfolioService.getMarketMovers(); }
+
+    @RequestMapping(value = "/cashincomeflow/{date}", method = {RequestMethod.GET})
+    public double[] getIncomeCashFlow(@PathVariable String date){ return portfolioService.getIncomeCashFlow(date); }
+
+    @RequestMapping(value = "/cashexpenseflow/{date}", method = {RequestMethod.GET})
+    public double[] getExpenseCashFlow(@PathVariable String date){ return portfolioService.getExpenseCashFlow(date); }
+
+    @RequestMapping(value = "/cashflow/{date}", method = {RequestMethod.GET})
+    public double getCashFlow(@PathVariable String date){ return portfolioService.getCashFlow(date); }
+
+    @RequestMapping(value = "/cashhistory/{period}", method = {RequestMethod.GET})
+    public SortedMap<LocalDate, Double> getCashHistory(@PathVariable int period){return portfolioService.getCashHistory(period);}
 }

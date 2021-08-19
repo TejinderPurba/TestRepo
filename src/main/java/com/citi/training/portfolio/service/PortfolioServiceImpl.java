@@ -8,11 +8,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.SortedMap;
-import java.util.TreeMap;
-import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -162,6 +157,26 @@ public class PortfolioServiceImpl implements PortfolioService {
     public Collection<Bond> getBondsByBondType(String bondType) {
         return bondRepository.findByBondType(bondType);
     }
+    @Override
+    public Collection<Bond> getBondsByTransactionType(int transactionType) {
+        return bondRepository.findByTransactionType(transactionType);
+    }
+    @Override
+    @Transactional
+    public void buyBond(Bond bond) { //Assume a bond can only be bought once
+        bondRepository.save(bond);
+    }
+    @Override
+    @Transactional
+    public void sellBond(Bond bond) { //Assume a bond has to be sold as a whole
+        Collection<Bond> recentTransactions = bondRepository.getLatestBondTransaction(bond.getName());
+        if (recentTransactions.size() > 0) {
+            Bond recentTransaction = recentTransactions.iterator().next();
+            if (recentTransaction.getTotalValue() > 0){
+                bondRepository.save(bond);
+            }
+        }
+    }
 
     /**
      * PORTFOLIO METHODS
@@ -198,75 +213,6 @@ public class PortfolioServiceImpl implements PortfolioService {
         double[] netWorth = {getInvestmentValue(), getCashValue(), getInvestmentValue() + getCashValue()};
         return netWorth;
     }
-
-    @Override
-    public double[] getIncomeCashFlow(){
-        double[] incomeCashFlow = new double[5];
-        Collection<Cash> cashFlows =cashRepository.getLatestIncomeCashFlows();
-        for(Cash cash :cashFlows){
-            if(cash.getAccountType() == 1){
-                incomeCashFlow[1]+=cash.getTransactionAmount();
-            }else if(cash.getAccountType() == 2){
-                incomeCashFlow[2]+=cash.getTransactionAmount();
-            }else if(cash.getAccountType() == 3){
-                incomeCashFlow[3]+=cash.getTransactionAmount();
-            }else if(cash.getAccountType() == 4){
-                incomeCashFlow[4]+=cash.getTransactionAmount();
-            }
-        }
-        incomeCashFlow[0]=incomeCashFlow[1]+incomeCashFlow[2]+incomeCashFlow[3]+incomeCashFlow[4];
-        return incomeCashFlow;
-    }
-
-    @Override
-    public double[] getExpenseCashFlow(){
-        double[] expenseCashFlow = new double[5];
-        Collection<Cash> cashFlows =cashRepository.getLatestExpenseCashFlows();
-        for(Cash cash :cashFlows){
-            if(cash.getAccountType() == 1){
-                expenseCashFlow[1]+=cash.getTransactionAmount();
-            }else if(cash.getAccountType() == 2){
-                expenseCashFlow[2]+=cash.getTransactionAmount();
-            }else if(cash.getAccountType() == 3){
-                expenseCashFlow[3]+=cash.getTransactionAmount();
-            }else if(cash.getAccountType() == 4){
-                expenseCashFlow[4]+=cash.getTransactionAmount();
-            }
-        }
-        expenseCashFlow[0]=expenseCashFlow[1]+expenseCashFlow[2]+expenseCashFlow[3]+expenseCashFlow[4];
-        return expenseCashFlow;
-    }
-
-    @Override
-    public double getCashFlow(){
-        double cashFlow = getIncomeCashFlow()[0] - getExpenseCashFlow()[0];
-        return cashFlow;
-    }
-
-    @Override
-    public SortedMap<LocalDate, Double> getCashHistory(){
-        SortedMap<LocalDate, Double> cashHistory= new TreeMap<LocalDate, Double>();
-        double cashValueForYesterday =0;
-        for(int i=365; i>=0; i--){
-            LocalDate day= LocalDate.now().minusDays(i);
-            Collection<Cash> dayCashValue = cashRepository.getAllCashByDay(day);
-            System.out.println("date "+day);
-            double cashValForToday = 0;
-            for(Cash cash: dayCashValue) {
-                cashValForToday += cash.getBalance();
-                System.out.println(cash.getFinancialInstitution()+" "+cash.getBalance());
-            }
-            System.out.println(cashValForToday);
-            if(cashValForToday!=0){
-                cashHistory.put(day, cashValForToday);
-                cashValueForYesterday=cashValForToday;
-            }else{
-                cashHistory.put(day, cashValueForYesterday);
-            }
-        }
-
-        return cashHistory;
-    }
     @Override
     public Double dummyCurrentMarketMover(String symbol) {
         double moveAmount = (Math.floor((Math.random() * 5.5)*100))/100; // Return random value between 0 and 5.5%, truncating to 2 decimal places
@@ -301,29 +247,73 @@ public class PortfolioServiceImpl implements PortfolioService {
         return marketMovers;
     }
 
-    //Assume a bond can only be bought once
     @Override
-    @Transactional
-    public void buyBond(Bond bond) {
-        bondRepository.save(bond);
-    }
-
-    //Assume a bond has to be sold as a whole
-    @Override
-    @Transactional
-    public void sellBond(String bondName) {
-        Collection<Bond> recentTransactions = bondRepository.getLatestBondTransaction(bondName);
-        if (recentTransactions.size() > 0) {
-            Bond recentTransaction = recentTransactions.iterator().next();
-            if(recentTransaction.getTotalValue()>0){
-                Bond newTransaction = recentTransaction;
-                newTransaction.setFaceValue(0);
-                newTransaction.setTotalValue(0);
-                newTransaction.setDateTime(LocalDateTime.now());
-                newTransaction.setTransactionType(1);
-                bondRepository.save(newTransaction);
+    public double[] getIncomeCashFlow(String date){
+        double[] incomeCashFlow = new double[5];
+        Collection<Cash> cashFlows = cashRepository.getLatestIncomeCashFlows(date);
+        for(Cash cash : cashFlows){
+            if(cash.getAccountType() == 1){
+                incomeCashFlow[1]+=cash.getTransactionAmount();
+            }else if(cash.getAccountType() == 2){
+                incomeCashFlow[2]+=cash.getTransactionAmount();
+            }else if(cash.getAccountType() == 3){
+                incomeCashFlow[3]+=cash.getTransactionAmount();
+            }else if(cash.getAccountType() == 4){
+                incomeCashFlow[4]+=cash.getTransactionAmount();
             }
-
         }
+        incomeCashFlow[0]=incomeCashFlow[1]+incomeCashFlow[2]+incomeCashFlow[3]+incomeCashFlow[4];
+        return incomeCashFlow;
     }
+
+    @Override
+    public double[] getExpenseCashFlow(String date){
+        double[] expenseCashFlow = new double[5];
+        Collection<Cash> cashFlows = cashRepository.getLatestExpenseCashFlows(date);
+        for(Cash cash :cashFlows){
+            if(cash.getAccountType() == 1){
+                expenseCashFlow[1]+=cash.getTransactionAmount();
+            }else if(cash.getAccountType() == 2){
+                expenseCashFlow[2]+=cash.getTransactionAmount();
+            }else if(cash.getAccountType() == 3){
+                expenseCashFlow[3]+=cash.getTransactionAmount();
+            }else if(cash.getAccountType() == 4){
+                expenseCashFlow[4]+=cash.getTransactionAmount();
+            }
+        }
+        expenseCashFlow[0]=expenseCashFlow[1]+expenseCashFlow[2]+expenseCashFlow[3]+expenseCashFlow[4];
+        return expenseCashFlow;
+    }
+
+    @Override
+    public double getCashFlow(String date){
+        double cashFlow = getIncomeCashFlow(date)[0] - getExpenseCashFlow(date)[0];
+        return cashFlow;
+    }
+
+    @Override
+    public SortedMap<LocalDate, Double> getCashHistory(int period){
+        SortedMap<LocalDate, Double> cashHistory= new TreeMap<>();
+        double cashValueForYesterday =0;
+        for(int i = period; i >= 0; i--){
+            LocalDate day= LocalDate.now().minusDays(i);
+            Collection<Cash> dayCashValue = cashRepository.getAllCashByDay(day.toString());
+            System.out.println("date "+day);
+            double cashValForToday = 0;
+            for(Cash cash: dayCashValue) {
+                cashValForToday += cash.getBalance();
+                System.out.println(cash.getFinancialInstitution()+" "+cash.getBalance());
+            }
+            System.out.println(cashValForToday);
+            if(cashValForToday!=0){
+                cashHistory.put(day, cashValForToday);
+                cashValueForYesterday=cashValForToday;
+            }else{
+                cashHistory.put(day, cashValueForYesterday);
+            }
+        }
+
+        return cashHistory;
+    }
+
 }

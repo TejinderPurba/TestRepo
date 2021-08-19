@@ -37,6 +37,20 @@ CREATE TABLE `conygre`.`cash` (
   `account_number` INT NOT NULL,
   PRIMARY KEY (`id`));
 
+CREATE TABLE `conygre`.`bonds` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `date_time` DATETIME NOT NULL,
+  `issuer` VARCHAR(50) NOT NULL,
+  `name` VARCHAR(100) NOT NULL,
+  `bond_type` VARCHAR(50) NOT NULL,
+  `transaction_type` INT NOT NULL,
+  `face_value` FLOAT NOT NULL,
+  `maturity` DATETIME NOT NULL,
+  `coupon_rate` FLOAT NOT NULL,
+  `total_value` FLOAT NOT NULL,
+  PRIMARY KEY (`id`));
+
+use conygre;
 insert into stocks values (1, "2021-01-01 12:12:12", "MSFT", "Microsoft", 0, 10, 10, 40, 400);
 insert into stocks values (2, "2021-01-02 9:42:12", "MSFT", "Microsoft", 0, 10, 20, 45, 850);
 insert into stocks values (3, "2021-01-03 12:12:12", "MSFT", "Microsoft", 0, 10, 30, 38, 1230);
@@ -156,3 +170,9 @@ insert into cash values(28, "2021-06-18 10:32:12", "Morgan Chase", 3, 0, 180, 10
 insert into cash values(29, "2021-06-19 10:42:12", "Morgan Chase", 1, 0, 300, 100, 913823416);
 insert into cash values(30, "2021-06-21 11:32:12", "Morgan Chase", 1, 0, 400, 100, 913823416);
 
+use conygre;
+insert into bonds values (1, "2021-05-21 12:12:12", "MAN", "Manitoba Savings Bonds","Fixed-rate bonds", 0, 1000, "2025-09-05 00:09:00", 2.7, 1000);
+insert into bonds values (2, "2021-06-08 9:42:12", "QC", "Quebec Savings Bonds", "Fixed-rate bonds",0, 2000, "2029-09-01 00:09:00", 2.3, 2000);
+insert into bonds values (3, "2021-07-01 12:12:12", "ONT", "Ontario Savings Bonds","Fixed-rate bonds", 0, 3000, "2023-09-08 00:09:00", 2.9, 3000);
+insert into bonds values (4, "2021-08-10 16:12:12", "BC", "British Columbia Savings Bonds", "Fixed-rate bonds",0, 4000, "2027-11-19 00:09:00", 2.7, 4000);
+insert into bonds values (5, "2021-03-19 10:12:12", "CAN", "Canada Savings Bonds", "Fixed-rate bonds",0, 1000, "2029-06-01 00:09:00", 2.25, 1000);

@@ -3,10 +3,7 @@ package com.citi.training.portfolio.service;
 import com.citi.training.portfolio.entities.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.SortedMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedMap;
@@ -158,10 +155,29 @@ public interface PortfolioService {
 
     /**
      * Get all bonds in the database by bond type.
-     * @param bondType the bond type to use in the cash lookup.
+     * @param bondType the bond type to use in the bond lookup.
      * @return Collection of bonds with all database items by bond type.
      */
     public Collection<Bond> getBondsByBondType(String bondType);
+
+    /**
+     * Get all bonds in the database by transaction type.
+     * @param transactionType the transaction type to use in the bond lookup.
+     * @return Collection of bonds with all database items by transaction type.
+     */
+    public Collection<Bond> getBondsByTransactionType(int transactionType);
+
+    /**
+     * Add a new bond to the database.
+     * @param bond the bond to be added to the database.
+     */
+    public void buyBond(Bond bond);
+
+    /**
+     * Sells a bond from the database.
+     * @param bond the bond to be sold in the database.
+     */
+    public void sellBond(Bond bond);
 
     /**
      * A dummy value representing the current market value of an investment.
@@ -201,24 +217,27 @@ public interface PortfolioService {
      */
     public SortedMap getMarketMovers();
 
-
-    double[] getIncomeCashFlow();
-
-    double[] getExpenseCashFlow();
-
-    double getCashFlow();
-
-    SortedMap<LocalDate, Double> getCashHistory();
     /**
-     * Add a new bond to the database.
-     * @param bond the bond to be added to the database.
+     * Generates the income cash flow by each account type.
+     * @return A collection with income cash flows sorted by account type.
      */
-    public void buyBond(Bond bond);
+    public double[] getIncomeCashFlow(String date);
 
     /**
-     * Sells a bond from the database.
-     * @param bondName the bond to be sold in the database.
+     * Generates the expense cash flow by each account type.
+     * @return A collection with expense cash flows sorted by account type.
      */
-    public void sellBond(String bondName);
+    public double[] getExpenseCashFlow(String date);
 
+    /**
+     * Calculates the overall cash flow by subtracting expenses from income.
+     * @return An overall cash flow value.
+     */
+    public double getCashFlow(String date);
+
+    /**
+     * Generates a map for each date in the cash history.
+     * @return A map with the balance of each cash account for each day.
+     */
+    public SortedMap<LocalDate, Double> getCashHistory(int period);
 }

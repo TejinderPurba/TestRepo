@@ -17,9 +17,6 @@ public interface BondRepository extends JpaRepository<Bond, Integer> {
      * @param issuer the bond issuer to be used in the lookup.
      * @return Collection of bonds that match the issuer provided.
      */
-    @Query(
-            value = "SELECT * from bonds where bonds.issuer = :issuer order by maturity asc",
-            nativeQuery = true)
     Collection<Bond> findByIssuer(String issuer);
 
     /**
@@ -27,7 +24,7 @@ public interface BondRepository extends JpaRepository<Bond, Integer> {
      * @return Collection of all bonds sorted by maturity ascending.
      */
     @Query(
-            value = "SELECT * from bonds order by maturity asc",
+            value = "SELECT * from bonds order by date_time asc",
             nativeQuery = true)
     Collection<Bond> findAllSorted();
 
@@ -36,9 +33,6 @@ public interface BondRepository extends JpaRepository<Bond, Integer> {
      * @param name the bond name to be used in the lookup.
      * @return Collection of bonds that match the name provided.
      */
-    @Query(
-            value = "SELECT * from bonds where bonds.name = :name order by maturity asc",
-            nativeQuery = true)
     Collection<Bond> findByName(String name);
 
     /**

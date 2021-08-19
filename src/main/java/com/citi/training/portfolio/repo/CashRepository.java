@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Repository
@@ -69,7 +68,6 @@ public interface CashRepository extends JpaRepository<Cash, Integer> {
             value = "SELECT * from cash t1 where date_time = (select max(date_time) from cash where cash.account_number = :number) order by date_time desc",
             nativeQuery = true)
     Collection<Cash> getLatestCashAccountTransactionByAccountNumber(@Param("number") int number);
-    Collection<Cash> getLatestCashAccounts();
 
     /**
      * Retrieves all income transactions within 30 days
@@ -77,24 +75,24 @@ public interface CashRepository extends JpaRepository<Cash, Integer> {
      */
     @Query(
             //value = "SELECT * from cash t1 where (t1.transaction_type = 0) (date_time >= (LocalDateTime.of(2021, 5, 30, 0, 0)))",
-            value = "SELECT * from cash t1 where (t1.transaction_type = 0) AND (date_time >= ('2021-05-30'))",
+            value = "SELECT * from cash t1 where t1.transaction_type = 0 AND date_time >= :date",
             nativeQuery = true)
-    Collection<Cash> getLatestIncomeCashFlows();
+    Collection<Cash> getLatestIncomeCashFlows(@Param("date") String date);
     /**
      * Retrieves all spending transactions within 30 days
      * @return Collection of spending transactions within 30 days.
      */
     @Query(
-            value = "SELECT * from cash t1 where (t1.transaction_type = 1) AND (date_time >= ('2021-05-30'))",
+            value = "SELECT * from cash t1 where t1.transaction_type = 1 AND date_time >= :date",
             nativeQuery = true)
-    Collection<Cash> getLatestExpenseCashFlows();
+    Collection<Cash> getLatestExpenseCashFlows(@Param("date") String date);
 
     /**
      * Retrieves all cash transactions on a given day
      * @return Collection of the latest transaction for each cash account.
      */
     @Query(
-            value = "SELECT * from cash t1 where (DATE(date_time) = :day)",
+            value = "SELECT * from cash t1 where DATE(date_time) = :date",
             nativeQuery = true)
-    Collection<Cash> getAllCashByDay(@Param("day") LocalDate day);
+    Collection<Cash> getAllCashByDay(@Param("date") String date);
 }
