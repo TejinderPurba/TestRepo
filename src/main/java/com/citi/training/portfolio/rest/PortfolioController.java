@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.SortedMap;
 
 @RestController
 @RequestMapping("/portfolio")
@@ -179,7 +180,7 @@ public class PortfolioController {
     }
 
     @RequestMapping(value = "/marketmovers", method = {RequestMethod.GET})
-    public Collection<HashMap> getMarketMovers() {
+    public SortedMap getMarketMovers() {
         return portfolioService.getMarketMovers();
     }
 }

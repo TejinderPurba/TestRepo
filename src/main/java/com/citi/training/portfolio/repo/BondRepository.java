@@ -22,9 +22,6 @@ public interface BondRepository extends JpaRepository<Bond, Integer> {
             nativeQuery = true)
     Collection<Bond> findByIssuer(String issuer);
 
-
-
-
     /**
      * Locates all bonds sorted by maturity ascending.
      * @return Collection of all bonds sorted by maturity ascending.

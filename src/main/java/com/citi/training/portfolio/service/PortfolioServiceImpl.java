@@ -9,7 +9,6 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.*;
 
-import static java.util.Objects.isNull;
 
 @Service
 public class PortfolioServiceImpl implements PortfolioService {
@@ -163,7 +162,7 @@ public class PortfolioServiceImpl implements PortfolioService {
      */
     @Override
     public double dummyCurrentMarketValue(String symbol) {
-        return 52.3;
+        return Math.floor(10 + (Math.random() * 145)) / 100; // Return random value between 10 and 145, truncating to 2 decimal places
     }
     @Override
     public double getInvestmentValue() {
@@ -194,20 +193,35 @@ public class PortfolioServiceImpl implements PortfolioService {
         return netWorth;
     }
     @Override
-    public double dummyCurrentMarketMover(String symbol) {
-        double moveAmount = Math.floor((Math.random() * 3.8)) / 100; // Return random value between 0 and 3.8%, truncating to 2 decimal places
+    public Double dummyCurrentMarketMover(String symbol) {
+        double moveAmount = (Math.floor((Math.random() * 5.5)*100))/100; // Return random value between 0 and 5.5%, truncating to 2 decimal places
         if (Math.round(Math.random()) == 1) moveAmount *= -1; // Random chance its either a gain or loss
         return moveAmount;
     }
     @Override
-    public Collection<HashMap> getMarketMovers() {
-        HashMap marketGainers = new HashMap<>();
-        HashMap marketLosers = new HashMap<>();
-        Collection<HashMap> marketMovers = new ArrayList<HashMap>(Arrays.asList(marketGainers, marketLosers));
+    public SortedMap getMarketMovers() {
+        SortedMap<Double, String> marketMovers= new TreeMap<>();
 
         // Stock Analysis
         Collection<Stock> latestStocks = stockRepository.getAllLatestStocks();
+        for(Stock stock : latestStocks) {
+            Double currMarketMoverValue = dummyCurrentMarketMover(stock.getSymbol());
+            marketMovers.put(currMarketMoverValue, stock.getSymbol());
+        }
 
+        // Exchange Traded Fund Analysis
+        Collection<ExchangeTradedFund> latestExchangeTradedFunds = exchangeTradedFundRepository.getAllLatestExchangeTradedFunds();
+        for(ExchangeTradedFund exchangeTradedFund : latestExchangeTradedFunds) {
+            Double currMarketMoverValue = dummyCurrentMarketMover(exchangeTradedFund.getSymbol());
+            marketMovers.put(currMarketMoverValue, exchangeTradedFund.getSymbol());
+        }
+
+//        // Bond Analysis
+//        Collection<Bond> latestBonds = bondRepository.getAllLatestBonds();
+//        for(Bond bond : latestBonds) {
+//            Double currMarketMoverValue = dummyCurrentMarketMover(bond.getIssuer());
+//            marketMovers.put(currMarketMoverValue, bond.getName());
+//        }
 
         return marketMovers;
     }
