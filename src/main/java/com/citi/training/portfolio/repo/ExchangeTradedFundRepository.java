@@ -4,6 +4,7 @@ import com.citi.training.portfolio.entities.ExchangeTradedFund;
 import com.citi.training.portfolio.entities.Stock;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
@@ -48,5 +49,15 @@ public interface ExchangeTradedFundRepository extends JpaRepository<ExchangeTrad
     @Query(
             value = "SELECT * from exchange_traded_funds t1 where date_time = (select max(date_time) from exchange_traded_funds where t1.symbol = exchange_traded_funds.symbol) order by date_time desc",
             nativeQuery = true)
-    Collection<ExchangeTradedFund> getLatestExchangeTradedFunds();
+    Collection<ExchangeTradedFund> getAllLatestExchangeTradedFunds();
+
+    /**
+     * Retrieves the latest transaction of a specific etf.
+     * @param symbol the etf symbol to be fetched.
+     * @return The latest transaction for the specified etf.
+     */
+    @Query(
+            value = "SELECT * from exchange_traded_funds t1 where date_time = (select max(date_time) from exchange_traded_funds where exchange_traded_funds.symbol = :symbol) order by date_time desc",
+            nativeQuery = true)
+    Collection<ExchangeTradedFund> getLatestExchangeTradedFundTransactionBySymbol(@Param("symbol") String symbol);
 }

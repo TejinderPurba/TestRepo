@@ -7,6 +7,9 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.SortedMap;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.SortedMap;
 
 public interface PortfolioService {
     /**
@@ -44,7 +47,7 @@ public interface PortfolioService {
 
     /**
      * Sells a stock from the database.
-     * @param stock the stock to be sold to the database.
+     * @param stock the stock to be sold in the database.
      */
     public void sellStock(Stock stock);
 
@@ -74,6 +77,18 @@ public interface PortfolioService {
      * @return Collection of ExchangeTradedFunds with all database items by type.
      */
     public Collection<ExchangeTradedFund> getExchangeTradedFundsByType(int type);
+
+    /**
+     * Add a new exchange traded fund to the database.
+     * @param exchangeTradedFund the exchange traded fund to be added to the database.
+     */
+    public void buyExchangeTradedFund(ExchangeTradedFund exchangeTradedFund);
+
+    /**
+     * Sells a exchange traded fund from the database.
+     * @param exchangeTradedFund the exchange traded fund to be sold in the database.
+     */
+    public void sellExchangeTradedFund(ExchangeTradedFund exchangeTradedFund);
 
     /**
      * Get all cash accounts in the database.
@@ -110,6 +125,45 @@ public interface PortfolioService {
     public Collection<Cash> getCashByFinancialInstitution(String institution);
 
     /**
+     * Deposit a cash amount to the database.
+     * @param cash the cash to be added to the database.
+     */
+    public void depositCash(Cash cash);
+
+    /**
+     * Withdraw a cash amount from the database.
+     * @param cash the cash to be withdrawn in the database.
+     */
+    public void withdrawCash(Cash cash);
+
+    /**
+     * Get all bonds in the database.
+     * @return Collection of bonds with all database items.
+     */
+    public Collection<Bond> getAllBonds();
+
+    /**
+     * Get all bonds in the database by issuer.
+     * @param issuer the issuer to use in the bond lookup.
+     * @return Collection of bonds with all database items by issuer.
+     */
+    public Collection<Bond> getBondsByIssuer(String issuer);
+
+    /**
+     * Get all bonds in the database by name.
+     * @param name the name to use in the bond lookup.
+     * @return Collection of bonds with all database items by bond name.
+     */
+    public Collection<Bond> getBondsByName(String name);
+
+    /**
+     * Get all bonds in the database by bond type.
+     * @param bondType the bond type to use in the cash lookup.
+     * @return Collection of bonds with all database items by bond type.
+     */
+    public Collection<Bond> getBondsByBondType(String bondType);
+
+    /**
      * A dummy value representing the current market value of an investment.
      * @param symbol the symbol to use in the investment lookup.
      * @return A double representing the current market value of the investment.
@@ -133,6 +187,20 @@ public interface PortfolioService {
      * @return Double array representing the investment, cash account, and overall net-worth
      */
     public double[] getNetWorth();
+
+    /**
+     * A dummy value representing the current market mover value of an investment.
+     * @param symbol the symbol to use in the investment lookup.
+     * @return A double representing the current market mover value of the investment in percents.
+     */
+    public Double dummyCurrentMarketMover(String symbol);
+
+    /**
+     * Generates the market mover data based on current investments.
+     * @return A sorted indicating market values of each investment.
+     */
+    public SortedMap getMarketMovers();
+
 
     double[] getIncomeCashFlow();
 

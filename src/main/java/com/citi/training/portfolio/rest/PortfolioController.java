@@ -23,6 +23,29 @@ public class PortfolioController {
     private PortfolioService portfolioService;
 
     /**
+     * BOND METHODS
+     */
+    @RequestMapping(value = "/bonds", method = {RequestMethod.GET})
+    public Collection<Bond> getAllBonds() {
+        return portfolioService.getAllBonds();
+    }
+
+    @RequestMapping(value = "/bonds/issuer/{issuer}", method = {RequestMethod.GET})
+    public Collection<Bond> getBondsByIssuer(@PathVariable String issuer) {
+        return portfolioService.getBondsByIssuer(issuer);
+    }
+
+    @RequestMapping(value = "/bonds/name/{name}", method = {RequestMethod.GET})
+    public Collection<Bond> getBondsByName(@PathVariable String name) {
+        return portfolioService.getBondsByName(name);
+    }
+
+    @RequestMapping(value = "/bonds/type/{type}", method = {RequestMethod.GET})
+    public Collection<Bond> getBondsByBondType(@PathVariable String type) {
+        return portfolioService.getBondsByBondType(type);
+    }
+
+    /**
      * STOCK METHODS
      */
     @RequestMapping(value = "/stocks", method = {RequestMethod.GET})
@@ -78,6 +101,18 @@ public class PortfolioController {
         return portfolioService.getExchangeTradedFundsByType(type);
     }
 
+    @RequestMapping(value = "/etf/buy", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity buyExchangeTradedFund(@RequestBody ExchangeTradedFund exchangeTradedFund) {
+        portfolioService.buyExchangeTradedFund(exchangeTradedFund);
+        return new ResponseEntity(HttpStatus.ACCEPTED);
+    }
+
+    @RequestMapping(value = "/etf/sell", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity sellExchangeTradedFund(@RequestBody ExchangeTradedFund exchangeTradedFund) {
+        portfolioService.sellExchangeTradedFund(exchangeTradedFund);
+        return new ResponseEntity(HttpStatus.ACCEPTED);
+    }
+
     /**
      * CASH METHODS
      */
@@ -104,6 +139,18 @@ public class PortfolioController {
     @RequestMapping(value = "/cash/transactiontype/{transactionType}", method = {RequestMethod.GET})
     public Collection<Cash> getCashByTransactionType(@PathVariable int transactionType) {
         return portfolioService.getCashByTransactionType(transactionType);
+    }
+
+    @RequestMapping(value = "/cash/deposit", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity depositCash(@RequestBody Cash cash) {
+        portfolioService.depositCash(cash);
+        return new ResponseEntity(HttpStatus.ACCEPTED);
+    }
+
+    @RequestMapping(value = "/cash/withdraw", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity withdrawCash(@RequestBody Cash cash) {
+        portfolioService.withdrawCash(cash);
+        return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
     /**
@@ -147,4 +194,8 @@ public class PortfolioController {
     //public double[] getExpenseCashFlow(){return portfolioService.getExpenseCashFlow();}
 
 
+    @RequestMapping(value = "/marketmovers", method = {RequestMethod.GET})
+    public SortedMap getMarketMovers() {
+        return portfolioService.getMarketMovers();
+    }
 }

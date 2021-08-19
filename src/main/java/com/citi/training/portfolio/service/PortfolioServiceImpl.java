@@ -42,14 +42,26 @@ public class PortfolioServiceImpl implements PortfolioService {
     public Collection<Stock> getStocksByType(int type) { return stockRepository.findByTransactionType(type); }
     @Override
     @Transactional
-    public void buyStock(Stock stock) { stockRepository.save(stock); }
+    public void buyStock(Stock stock) {
+        Collection<Stock> recentTransactions = stockRepository.getLatestStockTransactionBySymbol(stock.getSymbol());
+        if (recentTransactions.size() > 0) {
+            Stock recentTransaction = recentTransactions.iterator().next();
+            stock.setTotalQuantity(recentTransaction.getTotalQuantity() + stock.getQuantityAffected());
+        }
+        else stock.setTotalQuantity(stock.getQuantityAffected());
+        stock.setTotalValue(stock.getTotalQuantity() * stock.getMarketValue());
+        stockRepository.save(stock);
+    }
     @Override
     @Transactional
     public void sellStock(Stock stock) {
-        Stock recentTransaction = stockRepository.getLatestStockTransaction(stock.getSymbol());
-        if (stock.getQuantityAffected() <= recentTransaction.getTotalQuantity()) {
-            stock.setTotalQuantity(recentTransaction.getTotalQuantity() - stock.getQuantityAffected());
-            stock.setTotalValue(stock.getTotalQuantity() * stock.getMarketValue());
+        Collection<Stock> recentTransactions = stockRepository.getLatestStockTransactionBySymbol(stock.getSymbol());
+        if (recentTransactions.size() > 0) {
+            Stock recentTransaction = recentTransactions.iterator().next();
+            if (stock.getQuantityAffected() <= recentTransaction.getTotalQuantity()) {
+                stock.setTotalQuantity(recentTransaction.getTotalQuantity() - stock.getQuantityAffected());
+                stock.setTotalValue(stock.getTotalQuantity() * stock.getMarketValue());
+            }
             stockRepository.save(stock);
         }
     }
@@ -65,6 +77,31 @@ public class PortfolioServiceImpl implements PortfolioService {
     public Collection<ExchangeTradedFund> getExchangeTradedFundsByName(String name) { return exchangeTradedFundRepository.findByName(name); }
     @Override
     public Collection<ExchangeTradedFund> getExchangeTradedFundsByType(int type) { return exchangeTradedFundRepository.findByTransactionType(type); }
+    @Override
+    @Transactional
+    public void buyExchangeTradedFund(ExchangeTradedFund exchangeTradedFund) {
+        Collection<ExchangeTradedFund> recentTransactions = exchangeTradedFundRepository.getLatestExchangeTradedFundTransactionBySymbol(exchangeTradedFund.getSymbol());
+        if (recentTransactions.size() > 0) {
+            ExchangeTradedFund recentTransaction = recentTransactions.iterator().next();
+            exchangeTradedFund.setTotalQuantity(recentTransaction.getTotalQuantity() + exchangeTradedFund.getQuantityAffected());
+        }
+        else exchangeTradedFund.setTotalQuantity(exchangeTradedFund.getQuantityAffected());
+        exchangeTradedFund.setTotalValue(exchangeTradedFund.getTotalQuantity() * exchangeTradedFund.getMarketValue());
+        exchangeTradedFundRepository.save(exchangeTradedFund);
+    }
+    @Override
+    @Transactional
+    public void sellExchangeTradedFund(ExchangeTradedFund exchangeTradedFund) {
+        Collection<ExchangeTradedFund> recentTransactions = exchangeTradedFundRepository.getLatestExchangeTradedFundTransactionBySymbol(exchangeTradedFund.getSymbol());;
+        if (recentTransactions.size() > 0) {
+            ExchangeTradedFund recentTransaction = recentTransactions.iterator().next();
+            if (exchangeTradedFund.getQuantityAffected() <= recentTransaction.getTotalQuantity()) {
+                exchangeTradedFund.setTotalQuantity(recentTransaction.getTotalQuantity() - exchangeTradedFund.getQuantityAffected());
+                exchangeTradedFund.setTotalValue(exchangeTradedFund.getTotalQuantity() * exchangeTradedFund.getMarketValue());
+            }
+            exchangeTradedFundRepository.save(exchangeTradedFund);
+        }
+    }
 
     /**
      * CASH METHODS
@@ -79,13 +116,56 @@ public class PortfolioServiceImpl implements PortfolioService {
     public Collection<Cash> getCashByAccountNumber(int account) { return cashRepository.findByAccountNumber(account); }
     @Override
     public Collection<Cash> getCashByFinancialInstitution(String institution) { return cashRepository.findByFinancialInstitution(institution); }
+    @Override
+    @Transactional
+    public void depositCash(Cash cash) {
+        Collection<Cash> recentTransactions = cashRepository.getLatestCashAccountTransactionByAccountNumber(cash.getAccountNumber());
+        if (recentTransactions.size() > 0) {
+            Cash recentTransaction = recentTransactions.iterator().next();
+            cash.setBalance(recentTransaction.getBalance() + cash.getTransactionAmount());
+        }
+        else cash.setBalance(cash.getTransactionAmount());
+        cashRepository.save(cash);
+    }
+    @Override
+    @Transactional
+    public void withdrawCash(Cash cash) {
+        Collection<Cash> recentTransactions = cashRepository.getLatestCashAccountTransactionByAccountNumber(cash.getAccountNumber());
+        if (recentTransactions.size() > 0) {
+            Cash recentTransaction = recentTransactions.iterator().next();
+            if (cash.getTransactionAmount() <= recentTransaction.getBalance()) {
+                cash.setBalance(recentTransaction.getBalance() - cash.getTransactionAmount());
+                cashRepository.save(cash);
+            }
+        }
+    }
+
+    /**
+     * BOND METHODS
+     */
+    @Override
+    public Collection<Bond> getAllBonds() {
+        return bondRepository.findAllSorted();
+    }
+    @Override
+    public Collection<Bond> getBondsByIssuer(String issuer) {
+        return bondRepository.findByIssuer(issuer);
+    }
+    @Override
+    public Collection<Bond> getBondsByName(String name) {
+        return bondRepository.findByName(name);
+    }
+    @Override
+    public Collection<Bond> getBondsByBondType(String bondType) {
+        return bondRepository.findByBondType(bondType);
+    }
 
     /**
      * PORTFOLIO METHODS
      */
     @Override
     public double dummyCurrentMarketValue(String symbol) {
-        return 52.3;
+        return Math.floor(10 + (Math.random() * 145)) / 100; // Return random value between 10 and 145, truncating to 2 decimal places
     }
     @Override
     public double getInvestmentValue() {
@@ -95,7 +175,7 @@ public class PortfolioServiceImpl implements PortfolioService {
             investmentValue += (stock.getTotalQuantity() * dummyCurrentMarketValue(stock.getSymbol()));
         }
 
-        Collection<ExchangeTradedFund> exchangeTradedFundTotal = exchangeTradedFundRepository.getLatestExchangeTradedFunds();
+        Collection<ExchangeTradedFund> exchangeTradedFundTotal = exchangeTradedFundRepository.getAllLatestExchangeTradedFunds();
         for(ExchangeTradedFund exchangeTradedFund: exchangeTradedFundTotal) {
             investmentValue += (exchangeTradedFund.getTotalQuantity() * dummyCurrentMarketValue(exchangeTradedFund.getSymbol()));
         }
@@ -103,15 +183,13 @@ public class PortfolioServiceImpl implements PortfolioService {
     }
     @Override
     public double getCashValue() {
-        Collection<Cash> cashTotal = cashRepository.getLatestCashAccounts();
+        Collection<Cash> cashTotal = cashRepository.getAllLatestCashAccounts();
         double cashValue = 0;
         for(Cash cash: cashTotal) {
             cashValue += cash.getBalance();
         }
         return cashValue;
     }
-
-
     @Override
     public double[] getNetWorth() {
         double[] netWorth = {getInvestmentValue(), getCashValue(), getInvestmentValue() + getCashValue()};
@@ -185,5 +263,38 @@ public class PortfolioServiceImpl implements PortfolioService {
         }
 
         return cashHistory;
+    }
+    @Override
+    public Double dummyCurrentMarketMover(String symbol) {
+        double moveAmount = (Math.floor((Math.random() * 5.5)*100))/100; // Return random value between 0 and 5.5%, truncating to 2 decimal places
+        if (Math.round(Math.random()) == 1) moveAmount *= -1; // Random chance its either a gain or loss
+        return moveAmount;
+    }
+    @Override
+    public SortedMap getMarketMovers() {
+        SortedMap<Double, String> marketMovers= new TreeMap<>();
+
+        // Stock Analysis
+        Collection<Stock> latestStocks = stockRepository.getAllLatestStocks();
+        for(Stock stock : latestStocks) {
+            Double currMarketMoverValue = dummyCurrentMarketMover(stock.getSymbol());
+            marketMovers.put(currMarketMoverValue, stock.getSymbol());
+        }
+
+        // Exchange Traded Fund Analysis
+        Collection<ExchangeTradedFund> latestExchangeTradedFunds = exchangeTradedFundRepository.getAllLatestExchangeTradedFunds();
+        for(ExchangeTradedFund exchangeTradedFund : latestExchangeTradedFunds) {
+            Double currMarketMoverValue = dummyCurrentMarketMover(exchangeTradedFund.getSymbol());
+            marketMovers.put(currMarketMoverValue, exchangeTradedFund.getSymbol());
+        }
+
+//        // Bond Analysis
+//        Collection<Bond> latestBonds = bondRepository.getAllLatestBonds();
+//        for(Bond bond : latestBonds) {
+//            Double currMarketMoverValue = dummyCurrentMarketMover(bond.getIssuer());
+//            marketMovers.put(currMarketMoverValue, bond.getName());
+//        }
+
+        return marketMovers;
     }
 }

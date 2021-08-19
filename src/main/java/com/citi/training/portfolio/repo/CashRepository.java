@@ -58,6 +58,17 @@ public interface CashRepository extends JpaRepository<Cash, Integer> {
     @Query(
             value = "SELECT * from cash t1 where date_time = (select max(date_time) from cash where t1.account_number = cash.account_number) order by date_time desc",
             nativeQuery = true)
+    Collection<Cash> getAllLatestCashAccounts();
+
+    /**
+     * Retrieves the latest transaction of a specific cash account.
+     * @param number the account number to be fetched.
+     * @return The latest transaction for the specified stock.
+     */
+    @Query(
+            value = "SELECT * from cash t1 where date_time = (select max(date_time) from cash where cash.account_number = :number) order by date_time desc",
+            nativeQuery = true)
+    Collection<Cash> getLatestCashAccountTransactionByAccountNumber(@Param("number") int number);
     Collection<Cash> getLatestCashAccounts();
 
     /**
