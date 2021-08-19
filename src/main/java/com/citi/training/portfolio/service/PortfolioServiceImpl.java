@@ -6,7 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 @Service
 public class PortfolioServiceImpl implements PortfolioService {
@@ -105,9 +110,80 @@ public class PortfolioServiceImpl implements PortfolioService {
         }
         return cashValue;
     }
+
+
     @Override
     public double[] getNetWorth() {
         double[] netWorth = {getInvestmentValue(), getCashValue(), getInvestmentValue() + getCashValue()};
         return netWorth;
+    }
+
+    @Override
+    public double[] getIncomeCashFlow(){
+        double[] incomeCashFlow = new double[5];
+        Collection<Cash> cashFlows =cashRepository.getLatestIncomeCashFlows();
+        for(Cash cash :cashFlows){
+            if(cash.getAccountType() == 1){
+                incomeCashFlow[1]+=cash.getTransactionAmount();
+            }else if(cash.getAccountType() == 2){
+                incomeCashFlow[2]+=cash.getTransactionAmount();
+            }else if(cash.getAccountType() == 3){
+                incomeCashFlow[3]+=cash.getTransactionAmount();
+            }else if(cash.getAccountType() == 4){
+                incomeCashFlow[4]+=cash.getTransactionAmount();
+            }
+        }
+        incomeCashFlow[0]=incomeCashFlow[1]+incomeCashFlow[2]+incomeCashFlow[3]+incomeCashFlow[4];
+        return incomeCashFlow;
+    }
+
+    @Override
+    public double[] getExpenseCashFlow(){
+        double[] expenseCashFlow = new double[5];
+        Collection<Cash> cashFlows =cashRepository.getLatestExpenseCashFlows();
+        for(Cash cash :cashFlows){
+            if(cash.getAccountType() == 1){
+                expenseCashFlow[1]+=cash.getTransactionAmount();
+            }else if(cash.getAccountType() == 2){
+                expenseCashFlow[2]+=cash.getTransactionAmount();
+            }else if(cash.getAccountType() == 3){
+                expenseCashFlow[3]+=cash.getTransactionAmount();
+            }else if(cash.getAccountType() == 4){
+                expenseCashFlow[4]+=cash.getTransactionAmount();
+            }
+        }
+        expenseCashFlow[0]=expenseCashFlow[1]+expenseCashFlow[2]+expenseCashFlow[3]+expenseCashFlow[4];
+        return expenseCashFlow;
+    }
+
+    @Override
+    public double getCashFlow(){
+        double cashFlow = getIncomeCashFlow()[0] - getExpenseCashFlow()[0];
+        return cashFlow;
+    }
+
+    @Override
+    public SortedMap<LocalDate, Double> getCashHistory(){
+        SortedMap<LocalDate, Double> cashHistory= new TreeMap<LocalDate, Double>();
+        double cashValueForYesterday =0;
+        for(int i=365; i>=0; i--){
+            LocalDate day= LocalDate.now().minusDays(i);
+            Collection<Cash> dayCashValue = cashRepository.getAllCashByDay(day);
+            System.out.println("date "+day);
+            double cashValForToday = 0;
+            for(Cash cash: dayCashValue) {
+                cashValForToday += cash.getBalance();
+                System.out.println(cash.getFinancialInstitution()+" "+cash.getBalance());
+            }
+            System.out.println(cashValForToday);
+            if(cashValForToday!=0){
+                cashHistory.put(day, cashValForToday);
+                cashValueForYesterday=cashValForToday;
+            }else{
+                cashHistory.put(day, cashValueForYesterday);
+            }
+        }
+
+        return cashHistory;
     }
 }

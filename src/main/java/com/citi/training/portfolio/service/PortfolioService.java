@@ -1,7 +1,12 @@
 package com.citi.training.portfolio.service;
 
 import com.citi.training.portfolio.entities.*;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.SortedMap;
 
 public interface PortfolioService {
     /**
@@ -128,4 +133,12 @@ public interface PortfolioService {
      * @return Double array representing the investment, cash account, and overall net-worth
      */
     public double[] getNetWorth();
+
+    double[] getIncomeCashFlow();
+
+    double[] getExpenseCashFlow();
+
+    double getCashFlow();
+
+    SortedMap<LocalDate, Double> getCashHistory();
 }

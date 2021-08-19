@@ -9,8 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Array;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.SortedMap;
 
 @RestController
 @RequestMapping("/portfolio")
@@ -120,5 +123,28 @@ public class PortfolioController {
     public double[] getNetWorth() {
         return portfolioService.getNetWorth();
     }
+
+    /**
+     * Cash Flow
+     */
+    @RequestMapping(value = "/incomeflow", method = {RequestMethod.GET})
+    public double[] getIncomeCashFlow(){return portfolioService.getIncomeCashFlow();}
+
+    @RequestMapping(value = "/expenseflow", method = {RequestMethod.GET})
+    public double[] getExpenseCashFlow(){return portfolioService.getExpenseCashFlow();}
+
+    @RequestMapping(value = "/cashflow", method = {RequestMethod.GET})
+    public double getCashFlow(){return portfolioService.getCashFlow();}
+
+
+    /**
+     * Net Worth
+     */
+    @RequestMapping(value = "/cashHistory", method = {RequestMethod.GET})
+    public SortedMap<LocalDate, Double> getCashHistory(){return portfolioService.getCashHistory();}
+
+    //@RequestMapping(value = "/investmentValueHistory", method = {RequestMethod.GET})
+    //public double[] getExpenseCashFlow(){return portfolioService.getExpenseCashFlow();}
+
 
 }
