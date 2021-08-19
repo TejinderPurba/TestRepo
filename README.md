@@ -10,12 +10,14 @@ TO-DO:
 
 3. Add object properties and methods for Bonds. - COMPLETED
 
-4. Add buy/sell functionality for all investments/cash accounts EXCEPT for Stocks which is already completed. - COMPLETED
+4. Add buy/sell functionality for cash accounts and ETFs. - COMPLETED
 
 5. Make algorithms to find changes in networth, cash and investment values over various periods of time.
 
-6. Integrate either dummy or real data to calculate Market Movers based on portfolio investments. - COMPLETED
+6. Add buy/sell functionality for bonds.
 
-7. Add Futures investment support.
+7. Integrate either dummy or real data to calculate Market Movers based on portfolio investments. - COMPLETED
 
-8. Add testing functionality.
+8. Add Futures investment support.
+
+9. Add testing functionality.
