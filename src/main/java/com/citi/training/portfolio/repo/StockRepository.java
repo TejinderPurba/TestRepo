@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Repository
 public interface StockRepository extends JpaRepository<Stock, Integer> {
@@ -59,5 +60,5 @@ public interface StockRepository extends JpaRepository<Stock, Integer> {
     @Query(
             value = "SELECT * from stocks t1 where date_time = (select max(date_time) from stocks where stocks.symbol = :symbol) order by date_time desc",
             nativeQuery = true)
-    Stock getLatestStockTransaction(@Param("symbol") String symbol);
+    Collection<Stock> getLatestStockTransactionBySymbol(@Param("symbol") String symbol);
 }

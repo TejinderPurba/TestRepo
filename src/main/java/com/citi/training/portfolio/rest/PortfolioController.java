@@ -98,6 +98,18 @@ public class PortfolioController {
         return portfolioService.getExchangeTradedFundsByType(type);
     }
 
+    @RequestMapping(value = "/etf/buy", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity buyExchangeTradedFund(@RequestBody ExchangeTradedFund exchangeTradedFund) {
+        portfolioService.buyExchangeTradedFund(exchangeTradedFund);
+        return new ResponseEntity(HttpStatus.ACCEPTED);
+    }
+
+    @RequestMapping(value = "/etf/sell", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity sellExchangeTradedFund(@RequestBody ExchangeTradedFund exchangeTradedFund) {
+        portfolioService.sellExchangeTradedFund(exchangeTradedFund);
+        return new ResponseEntity(HttpStatus.ACCEPTED);
+    }
+
     /**
      * CASH METHODS
      */
@@ -124,6 +136,18 @@ public class PortfolioController {
     @RequestMapping(value = "/cash/transactiontype/{transactionType}", method = {RequestMethod.GET})
     public Collection<Cash> getCashByTransactionType(@PathVariable int transactionType) {
         return portfolioService.getCashByTransactionType(transactionType);
+    }
+
+    @RequestMapping(value = "/cash/deposit", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity depositCash(@RequestBody Cash cash) {
+        portfolioService.depositCash(cash);
+        return new ResponseEntity(HttpStatus.ACCEPTED);
+    }
+
+    @RequestMapping(value = "/cash/withdraw", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity withdrawCash(@RequestBody Cash cash) {
+        portfolioService.withdrawCash(cash);
+        return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
     /**

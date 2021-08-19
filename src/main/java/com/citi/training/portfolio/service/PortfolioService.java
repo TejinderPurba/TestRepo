@@ -39,7 +39,7 @@ public interface PortfolioService {
 
     /**
      * Sells a stock from the database.
-     * @param stock the stock to be sold to the database.
+     * @param stock the stock to be sold in the database.
      */
     public void sellStock(Stock stock);
 
@@ -69,6 +69,18 @@ public interface PortfolioService {
      * @return Collection of ExchangeTradedFunds with all database items by type.
      */
     public Collection<ExchangeTradedFund> getExchangeTradedFundsByType(int type);
+
+    /**
+     * Add a new exchange traded fund to the database.
+     * @param exchangeTradedFund the exchange traded fund to be added to the database.
+     */
+    public void buyExchangeTradedFund(ExchangeTradedFund exchangeTradedFund);
+
+    /**
+     * Sells a exchange traded fund from the database.
+     * @param exchangeTradedFund the exchange traded fund to be sold in the database.
+     */
+    public void sellExchangeTradedFund(ExchangeTradedFund exchangeTradedFund);
 
     /**
      * Get all cash accounts in the database.
@@ -103,6 +115,18 @@ public interface PortfolioService {
      * @return Collection of Cash with all database items by financial institution.
      */
     public Collection<Cash> getCashByFinancialInstitution(String institution);
+
+    /**
+     * Deposit a cash amount to the database.
+     * @param cash the cash to be added to the database.
+     */
+    public void depositCash(Cash cash);
+
+    /**
+     * Withdraw a cash amount from the database.
+     * @param cash the cash to be withdrawn in the database.
+     */
+    public void withdrawCash(Cash cash);
 
     /**
      * A dummy value representing the current market value of an investment.
