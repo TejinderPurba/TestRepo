@@ -194,4 +194,16 @@ public interface PortfolioService {
      */
     public Collection<HashMap> getMarketMovers();
 
+    /**
+     * Add a new bond to the database.
+     * @param bond the bond to be added to the database.
+     */
+    public void buyBond(Bond bond);
+
+    /**
+     * Sells a bond from the database.
+     * @param bondName the bond to be sold in the database.
+     */
+    public void sellBond(String bondName);
+
 }
