@@ -12,23 +12,33 @@ public class Bond implements Serializable {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="id")
     private int id;
-
     @Column(name="date_time")
     private LocalDateTime dateTime; // Date of transaction
-    @Column(name="symbol")
-    private String symbol; // Ticker symbol of investment
+    @Column(name="issuer")
+    private String issuer; // Issuer of the bond
     @Column(name="name")
-    private String name; // Name of investment
+    private String name; // Name/type of investment
+    @Column(name="bond_type")
+    private String bondType; // We only consider Fixed-rate bonds here
     @Column(name="transaction_type")
-    private int transactionType; // Sold or purchased - 0 for buy, 1 for sell
-    @Column(name="quantity_affected")
-    private int quantityAffected; // How many were sold/purchased
-    @Column(name="total_quantity")
-    private int totalQuantity; // Total amount of investment
-    @Column(name="market_value")
-    private double marketValue; // Value of investment at time of transaction
+    private int transactionType; // 0 for buy, 1 for sell, 2 for coupon paid
+    @Column(name="face_value")
+    private double faceValue; // face value of a bond
+    @Column(name="maturity")
+    private LocalDateTime maturity; // maturity
+    @Column(name="coupon_rate")
+    private double couponRate; // Interest rate of coupon paid every 6 months（x%）
     @Column(name="total_value")
-    private double totalValue; // Total value of the investment at this point
+    private double totalValue; // Total value of the investment at this point (It changes whenever coupon is paid)
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public LocalDateTime getDateTime() {
         return dateTime;
@@ -38,12 +48,12 @@ public class Bond implements Serializable {
         this.dateTime = dateTime;
     }
 
-    public String getSymbol() {
-        return symbol;
+    public String getIssuer() {
+        return issuer;
     }
 
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
+    public void setIssuer(String issuer) {
+        this.issuer = issuer;
     }
 
     public String getName() {
@@ -62,28 +72,36 @@ public class Bond implements Serializable {
         this.transactionType = transactionType;
     }
 
-    public int getQuantityAffected() {
-        return quantityAffected;
+    public double getFaceValue() {
+        return faceValue;
     }
 
-    public void setQuantityAffected(int quantityAffected) {
-        this.quantityAffected = quantityAffected;
+    public void setFaceValue(double faceValue) {
+        this.faceValue = faceValue;
     }
 
-    public int getTotalQuantity() {
-        return totalQuantity;
+    public LocalDateTime getMaturity() {
+        return maturity;
     }
 
-    public void setTotalQuantity(int totalQuantity) {
-        this.totalQuantity = totalQuantity;
+    public void setMaturity(LocalDateTime maturity) {
+        this.maturity = maturity;
     }
 
-    public double getMarketValue() {
-        return marketValue;
+    public double getCouponRate() {
+        return couponRate;
     }
 
-    public void setMarketValue(double marketValue) {
-        this.marketValue = marketValue;
+    public void setCouponRate(double couponRate) {
+        this.couponRate = couponRate;
+    }
+
+    public String getBondType() {
+        return bondType;
+    }
+
+    public void setBondType(String bondType) {
+        this.bondType = bondType;
     }
 
     public double getTotalValue() {

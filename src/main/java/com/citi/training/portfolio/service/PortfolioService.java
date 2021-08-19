@@ -128,4 +128,16 @@ public interface PortfolioService {
      * @return Double array representing the investment, cash account, and overall net-worth
      */
     public double[] getNetWorth();
+
+
+
+    public Collection<Bond> getAllBonds();
+
+
+    public Collection<Bond> getBondsByIssuer(String issuer);
+
+
+    public Collection<Bond> getBondsByName(String name);
+
+    public Collection<Bond> getBondsByBondType(String bondType);
 }

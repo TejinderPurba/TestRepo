@@ -110,4 +110,24 @@ public class PortfolioServiceImpl implements PortfolioService {
         double[] netWorth = {getInvestmentValue(), getCashValue(), getInvestmentValue() + getCashValue()};
         return netWorth;
     }
+
+    @Override
+    public Collection<Bond> getAllBonds() {
+        return bondRepository.findAllSorted();
+    }
+
+    @Override
+    public Collection<Bond> getBondsByIssuer(String issuer) {
+        return bondRepository.findByIssuer(issuer);
+    }
+
+    @Override
+    public Collection<Bond> getBondsByName(String name) {
+        return bondRepository.findByName(name);
+    }
+
+    @Override
+    public Collection<Bond> getBondsByBondType(String bondType) {
+        return bondRepository.findByBondType(bondType);
+    }
 }

@@ -20,6 +20,29 @@ public class PortfolioController {
     private PortfolioService portfolioService;
 
     /**
+     * BOND METHODS
+     */
+    @RequestMapping(value = "/bonds", method = {RequestMethod.GET})
+    public Collection<Bond> getAllBonds() {
+        return portfolioService.getAllBonds();
+    }
+
+    @RequestMapping(value = "/bonds/issuer/{issuer}", method = {RequestMethod.GET})
+    public Collection<Bond> getBondsByIssuer(@PathVariable String issuer) {
+        return portfolioService.getBondsByIssuer(issuer);
+    }
+
+    @RequestMapping(value = "/bonds/name/{name}", method = {RequestMethod.GET})
+    public Collection<Bond> getBondsByName(@PathVariable String name) {
+        return portfolioService.getBondsByName(name);
+    }
+
+    @RequestMapping(value = "/bonds/type/{type}", method = {RequestMethod.GET})
+    public Collection<Bond> getBondsByBondType(@PathVariable String type) {
+        return portfolioService.getBondsByBondType(type);
+    }
+
+    /**
      * STOCK METHODS
      */
     @RequestMapping(value = "/stocks", method = {RequestMethod.GET})
