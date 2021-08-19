@@ -16,7 +16,7 @@ public class Cash implements Serializable {
     @Column(name="financial_institution")
     private String financialInstitution; // Name of financial institution
     @Column(name="account_type")
-    private int accountType; // Type of account - 0 for chequing, 1 for savings, 2 for cash management, 3 for broker
+    private int accountType; // Type of account - 1 for chequing, 2 for savings, 3 for cash management, 4 for broker
     @Column(name="transaction_type")
     private int transactionType; // Deposit or withdraw - 0 for deposit, 1 for withdraw
     @Column(name="balance")

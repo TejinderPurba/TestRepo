@@ -2,6 +2,7 @@ package com.citi.training.portfolio.service;
 
 import com.citi.training.portfolio.entities.*;
 import java.util.Collection;
+import java.util.HashMap;
 
 public interface PortfolioService {
     /**
@@ -129,6 +130,33 @@ public interface PortfolioService {
     public void withdrawCash(Cash cash);
 
     /**
+     * Get all bonds in the database.
+     * @return Collection of bonds with all database items.
+     */
+    public Collection<Bond> getAllBonds();
+
+    /**
+     * Get all bonds in the database by issuer.
+     * @param issuer the issuer to use in the bond lookup.
+     * @return Collection of bonds with all database items by issuer.
+     */
+    public Collection<Bond> getBondsByIssuer(String issuer);
+
+    /**
+     * Get all bonds in the database by name.
+     * @param name the name to use in the bond lookup.
+     * @return Collection of bonds with all database items by bond name.
+     */
+    public Collection<Bond> getBondsByName(String name);
+
+    /**
+     * Get all bonds in the database by bond type.
+     * @param bondType the bond type to use in the cash lookup.
+     * @return Collection of bonds with all database items by bond type.
+     */
+    public Collection<Bond> getBondsByBondType(String bondType);
+
+    /**
      * A dummy value representing the current market value of an investment.
      * @param symbol the symbol to use in the investment lookup.
      * @return A double representing the current market value of the investment.
@@ -153,15 +181,17 @@ public interface PortfolioService {
      */
     public double[] getNetWorth();
 
+    /**
+     * A dummy value representing the current market mover value of an investment.
+     * @param symbol the symbol to use in the investment lookup.
+     * @return A double representing the current market mover value of the investment in percents.
+     */
+    public double dummyCurrentMarketMover(String symbol);
 
+    /**
+     * Generates the market mover data based on current investments.
+     * @return A collection of hashmaps indicating market movers and gainers respectively.
+     */
+    public Collection<HashMap> getMarketMovers();
 
-    public Collection<Bond> getAllBonds();
-
-
-    public Collection<Bond> getBondsByIssuer(String issuer);
-
-
-    public Collection<Bond> getBondsByName(String name);
-
-    public Collection<Bond> getBondsByBondType(String bondType);
 }
