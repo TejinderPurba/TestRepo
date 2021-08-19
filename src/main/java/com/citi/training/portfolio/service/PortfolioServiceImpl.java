@@ -6,8 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Collection;
-import java.util.Optional;
+import java.util.*;
 
 import static java.util.Objects.isNull;
 
@@ -139,6 +138,26 @@ public class PortfolioServiceImpl implements PortfolioService {
     }
 
     /**
+     * BOND METHODS
+     */
+    @Override
+    public Collection<Bond> getAllBonds() {
+        return bondRepository.findAllSorted();
+    }
+    @Override
+    public Collection<Bond> getBondsByIssuer(String issuer) {
+        return bondRepository.findByIssuer(issuer);
+    }
+    @Override
+    public Collection<Bond> getBondsByName(String name) {
+        return bondRepository.findByName(name);
+    }
+    @Override
+    public Collection<Bond> getBondsByBondType(String bondType) {
+        return bondRepository.findByBondType(bondType);
+    }
+
+    /**
      * PORTFOLIO METHODS
      */
     @Override
@@ -173,24 +192,22 @@ public class PortfolioServiceImpl implements PortfolioService {
         double[] netWorth = {getInvestmentValue(), getCashValue(), getInvestmentValue() + getCashValue()};
         return netWorth;
     }
-
     @Override
-    public Collection<Bond> getAllBonds() {
-        return bondRepository.findAllSorted();
+    public double dummyCurrentMarketMover(String symbol) {
+        double moveAmount = Math.floor((Math.random() * 3.8)) / 100; // Return random value between 0 and 3.8%, truncating to 2 decimal places
+        if (Math.round(Math.random()) == 1) moveAmount *= -1; // Random chance its either a gain or loss
+        return moveAmount;
     }
-
     @Override
-    public Collection<Bond> getBondsByIssuer(String issuer) {
-        return bondRepository.findByIssuer(issuer);
-    }
+    public Collection<HashMap> getMarketMovers() {
+        HashMap marketGainers = new HashMap<>();
+        HashMap marketLosers = new HashMap<>();
+        Collection<HashMap> marketMovers = new ArrayList<HashMap>(Arrays.asList(marketGainers, marketLosers));
 
-    @Override
-    public Collection<Bond> getBondsByName(String name) {
-        return bondRepository.findByName(name);
-    }
+        // Stock Analysis
+        Collection<Stock> latestStocks = stockRepository.getAllLatestStocks();
 
-    @Override
-    public Collection<Bond> getBondsByBondType(String bondType) {
-        return bondRepository.findByBondType(bondType);
+
+        return marketMovers;
     }
 }

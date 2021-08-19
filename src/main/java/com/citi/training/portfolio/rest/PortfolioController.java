@@ -168,4 +168,8 @@ public class PortfolioController {
         return portfolioService.getNetWorth();
     }
 
+    @RequestMapping(value = "/marketmovers", method = {RequestMethod.GET})
+    public Collection<HashMap> getMarketMovers() {
+        return portfolioService.getMarketMovers();
+    }
 }

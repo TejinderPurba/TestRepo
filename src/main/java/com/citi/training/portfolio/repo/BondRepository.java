@@ -66,11 +66,11 @@ public interface BondRepository extends JpaRepository<Bond, Integer> {
 
     /**
      * Retrieves the latest transaction of a specific bond.
-     * @param issuer the bond symbol to be fetched.
-     * @return The latest transaction for the specified stock.
+     * @param name the bond name to be fetched.
+     * @return The latest transaction for the specified bond.
      */
     @Query(
-            value = "SELECT * from bonds t1 where date_time = (select max(date_time) from bonds where bonds.issuer = :issuer) order by date_time desc",
+            value = "SELECT * from bonds t1 where date_time = (select max(date_time) from bonds where bonds.name = :name) order by date_time desc",
             nativeQuery = true)
-    Stock getLatestBondTransaction(@Param("issuer") String issuer);
+    Stock getLatestBondTransaction(@Param("name") String name);
 }
