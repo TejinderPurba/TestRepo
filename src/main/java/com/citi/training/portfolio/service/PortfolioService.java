@@ -3,6 +3,8 @@ package com.citi.training.portfolio.service;
 import com.citi.training.portfolio.entities.*;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.SortedMap;
 
 public interface PortfolioService {
     /**
@@ -186,12 +188,12 @@ public interface PortfolioService {
      * @param symbol the symbol to use in the investment lookup.
      * @return A double representing the current market mover value of the investment in percents.
      */
-    public double dummyCurrentMarketMover(String symbol);
+    public Double dummyCurrentMarketMover(String symbol);
 
     /**
      * Generates the market mover data based on current investments.
-     * @return A collection of hashmaps indicating market movers and gainers respectively.
+     * @return A sorted indicating market values of each investment.
      */
-    public Collection<HashMap> getMarketMovers();
+    public SortedMap getMarketMovers();
 
 }
