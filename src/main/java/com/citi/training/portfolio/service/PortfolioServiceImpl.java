@@ -12,6 +12,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.time.LocalDateTime;
+import java.util.*;
+
 
 @Service
 public class PortfolioServiceImpl implements PortfolioService {
@@ -296,5 +299,31 @@ public class PortfolioServiceImpl implements PortfolioService {
 //        }
 
         return marketMovers;
+    }
+
+    //Assume a bond can only be bought once
+    @Override
+    @Transactional
+    public void buyBond(Bond bond) {
+        bondRepository.save(bond);
+    }
+
+    //Assume a bond has to be sold as a whole
+    @Override
+    @Transactional
+    public void sellBond(String bondName) {
+        Collection<Bond> recentTransactions = bondRepository.getLatestBondTransaction(bondName);
+        if (recentTransactions.size() > 0) {
+            Bond recentTransaction = recentTransactions.iterator().next();
+            if(recentTransaction.getTotalValue()>0){
+                Bond newTransaction = recentTransaction;
+                newTransaction.setFaceValue(0);
+                newTransaction.setTotalValue(0);
+                newTransaction.setDateTime(LocalDateTime.now());
+                newTransaction.setTransactionType(1);
+                bondRepository.save(newTransaction);
+            }
+
+        }
     }
 }

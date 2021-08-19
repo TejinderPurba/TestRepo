@@ -36,6 +36,9 @@ public interface BondRepository extends JpaRepository<Bond, Integer> {
      * @param name the bond name to be used in the lookup.
      * @return Collection of bonds that match the name provided.
      */
+    @Query(
+            value = "SELECT * from bonds where bonds.name = :name order by maturity asc",
+            nativeQuery = true)
     Collection<Bond> findByName(String name);
 
     /**
@@ -57,7 +60,7 @@ public interface BondRepository extends JpaRepository<Bond, Integer> {
      * @return Collection of the latest transaction for each bond.
      */
     @Query(
-            value = "SELECT * from bonds t1 where date_time = (select max(date_time) from bonds where t1.issuer = bonds.issuer) order by date_time desc",
+            value = "SELECT * from bonds t1 where date_time = (select max(date_time) from bonds where t1.name = bonds.name) order by date_time desc",
             nativeQuery = true)
     Collection<Bond> getAllLatestBonds();
 
@@ -69,5 +72,5 @@ public interface BondRepository extends JpaRepository<Bond, Integer> {
     @Query(
             value = "SELECT * from bonds t1 where date_time = (select max(date_time) from bonds where bonds.name = :name) order by date_time desc",
             nativeQuery = true)
-    Stock getLatestBondTransaction(@Param("name") String name);
+    Collection<Bond> getLatestBondTransaction(@Param("name") String name);
 }

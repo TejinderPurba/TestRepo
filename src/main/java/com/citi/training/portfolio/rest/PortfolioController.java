@@ -44,7 +44,17 @@ public class PortfolioController {
     public Collection<Bond> getBondsByBondType(@PathVariable String type) {
         return portfolioService.getBondsByBondType(type);
     }
+    @RequestMapping(value = "/bonds/buy", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity buyBond(@RequestBody Bond bond) {
+        portfolioService.buyBond(bond);
+        return new ResponseEntity(HttpStatus.ACCEPTED);
+    }
 
+    @RequestMapping(value = "/bonds/sell", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity sellBond(@RequestBody String name) {
+        portfolioService.sellBond(name);
+        return new ResponseEntity(HttpStatus.ACCEPTED);
+    }
     /**
      * STOCK METHODS
      */

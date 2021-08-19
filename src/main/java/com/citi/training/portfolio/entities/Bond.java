@@ -17,7 +17,7 @@ public class Bond implements Serializable {
     @Column(name="issuer")
     private String issuer; // Issuer of the bond
     @Column(name="name")
-    private String name; // Name/type of investment
+    private String name; // Name of the bond, unique in database
     @Column(name="bond_type")
     private String bondType; // We only consider Fixed-rate bonds here
     @Column(name="transaction_type")
