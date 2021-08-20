@@ -163,8 +163,11 @@ public class PortfolioServiceImpl implements PortfolioService {
     }
     @Override
     @Transactional
-    public void buyBond(Bond bond) { //Assume a bond can only be bought once
-        bondRepository.save(bond);
+    public void buyBond(Bond bond) { //Assume a bond name is unique
+        Collection<Bond> recentTransactions = bondRepository.getLatestBondTransaction(bond.getName());
+        if (recentTransactions.size() == 0) {
+            bondRepository.save(bond);
+        }
     }
     @Override
     @Transactional
