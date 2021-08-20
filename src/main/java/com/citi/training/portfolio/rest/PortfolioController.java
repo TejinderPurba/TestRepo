@@ -186,8 +186,8 @@ public class PortfolioController {
         return portfolioService.getNetWorth();
     }
 
-    @RequestMapping(value = "/marketmovers", method = {RequestMethod.GET})
-    public SortedMap getMarketMovers() { return portfolioService.getMarketMovers(); }
+    @RequestMapping(value = "/marketmovers/{period}", method = {RequestMethod.GET})
+    public SortedMap getMarketMovers(@PathVariable int period) { return portfolioService.getMarketMovers(period); }
 
     @RequestMapping(value = "/cashincomeflow/{date}", method = {RequestMethod.GET})
     public double[] getIncomeCashFlow(@PathVariable String date){ return portfolioService.getIncomeCashFlow(date); }

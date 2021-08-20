@@ -207,15 +207,17 @@ public interface PortfolioService {
     /**
      * A dummy value representing the current market mover value of an investment.
      * @param symbol the symbol to use in the investment lookup.
+     * @param period the amount of days to calculate the market gains for.
      * @return A double representing the current market mover value of the investment in percents.
      */
-    public Double dummyCurrentMarketMover(String symbol);
+    public Double dummyCurrentMarketMover(String symbol, int period);
 
     /**
      * Generates the market mover data based on current investments.
+     * @param period the amount of days to calculate the market gains for.
      * @return A sorted indicating market values of each investment.
      */
-    public SortedMap getMarketMovers();
+    public SortedMap getMarketMovers(int period);
 
     /**
      * Generates the income cash flow by each account type.

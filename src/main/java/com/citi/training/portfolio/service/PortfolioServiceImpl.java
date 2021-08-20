@@ -217,30 +217,34 @@ public class PortfolioServiceImpl implements PortfolioService {
         return netWorth;
     }
     @Override
-    public Double dummyCurrentMarketMover(String symbol) {
+    public Double dummyCurrentMarketMover(String symbol, int period) {
         double moveAmount = (Math.floor((Math.random() * 5.5)*100))/100; // Return random value between 0 and 5.5%, truncating to 2 decimal places
         if (Math.round(Math.random()) == 1) moveAmount *= -1; // Random chance its either a gain or loss
         return moveAmount;
     }
     @Override
-    public SortedMap getMarketMovers() {
+    public SortedMap getMarketMovers(int period) {
         SortedMap<Double, String> marketMovers= new TreeMap<>();
 
         // Stock Analysis
         Collection<Stock> latestStocks = stockRepository.getAllLatestStocks();
         for(Stock stock : latestStocks) {
-            Double currMarketMoverValue = dummyCurrentMarketMover(stock.getSymbol());
-            marketMovers.put(currMarketMoverValue, stock.getSymbol());
+            if (stock.getTotalQuantity() > 0){
+                Double currMarketMoverValue = dummyCurrentMarketMover(stock.getSymbol(), period);
+                marketMovers.put(currMarketMoverValue, stock.getSymbol());
+            }
         }
 
         // Exchange Traded Fund Analysis
         Collection<ExchangeTradedFund> latestExchangeTradedFunds = exchangeTradedFundRepository.getAllLatestExchangeTradedFunds();
         for(ExchangeTradedFund exchangeTradedFund : latestExchangeTradedFunds) {
-            Double currMarketMoverValue = dummyCurrentMarketMover(exchangeTradedFund.getSymbol());
-            marketMovers.put(currMarketMoverValue, exchangeTradedFund.getSymbol());
+            if (exchangeTradedFund.getTotalQuantity() > 0) {
+                Double currMarketMoverValue = dummyCurrentMarketMover(exchangeTradedFund.getSymbol(), period);
+                marketMovers.put(currMarketMoverValue, exchangeTradedFund.getSymbol());
+            }
         }
 
-//        // Bond Analysis
+//        // Bond Analysis - No market movers for bonds
 //        Collection<Bond> latestBonds = bondRepository.getAllLatestBonds();
 //        for(Bond bond : latestBonds) {
 //            Double currMarketMoverValue = dummyCurrentMarketMover(bond.getIssuer());
@@ -315,8 +319,9 @@ public class PortfolioServiceImpl implements PortfolioService {
                 cashHistory.put(day, cashValueForYesterday);
             }
         }
-
         return cashHistory;
     }
+
+
 
 }
