@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.SortedMap;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/portfolio")
 public class PortfolioController {
 
