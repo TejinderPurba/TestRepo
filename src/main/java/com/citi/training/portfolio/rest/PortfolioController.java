@@ -200,4 +200,13 @@ public class PortfolioController {
 
     @RequestMapping(value = "/cashhistory/{period}", method = {RequestMethod.GET})
     public SortedMap<LocalDate, Double> getCashHistory(@PathVariable int period){ return portfolioService.getCashHistory(period); }
+
+    @RequestMapping(value = "/stockhistory", method = {RequestMethod.GET})
+    public SortedMap<LocalDate, Double> getStockHistory(){ return portfolioService.getStockHistory(); }
+
+    @RequestMapping(value = "/etfhistory", method = {RequestMethod.GET})
+    public SortedMap<LocalDate, Double> getExchangeTradedFundHistory(){ return portfolioService.getExchangeTradedFundHistory(); }
+
+    @RequestMapping(value = "/bondhistory", method = {RequestMethod.GET})
+    public SortedMap<LocalDate, Double> getBondHistory(){ return portfolioService.getBondHistory(); }
 }

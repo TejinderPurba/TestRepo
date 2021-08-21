@@ -59,6 +59,16 @@ public interface BondRepository extends JpaRepository<Bond, Integer> {
     Collection<Bond> getAllLatestBonds();
 
     /**
+     * Locates a bond based on date.
+     * @param date the bond date to be used in the lookup.
+     * @return Collection of bonds that match the date provided.
+     */
+    @Query(
+            value = "SELECT * from bonds t1 where date_time = (select max(date_time) from bonds where t1.name = bonds.name and DATE(date_time) = :date) order by date_time desc",
+            nativeQuery = true)
+    Collection<Bond> getAllLatestBondsByDate(@Param("date") String date);
+
+    /**
      * Retrieves the latest transaction of a specific bond.
      * @param name the bond name to be fetched.
      * @return The latest transaction for the specified bond.

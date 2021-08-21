@@ -242,4 +242,22 @@ public interface PortfolioService {
      * @return A map with the balance of each cash account for each day.
      */
     public SortedMap<LocalDate, Double> getCashHistory(int period);
+
+    /**
+     * Generates a map for each date in the stock history.
+     * @return A map with the value of each stock for each day.
+     */
+    public SortedMap<LocalDate, Double> getStockHistory();
+
+    /**
+     * Generates a map for each date in the exchange traded fund history.
+     * @return A map with the value of each exchange traded fund for each day.
+     */
+    public SortedMap<LocalDate, Double> getExchangeTradedFundHistory();
+
+    /**
+     * Generates a map for each date in the bond history.
+     * @return A map with the value of each bond for each day.
+     */
+    public SortedMap<LocalDate, Double> getBondHistory();
 }

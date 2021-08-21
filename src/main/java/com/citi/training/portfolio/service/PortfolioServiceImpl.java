@@ -322,6 +322,95 @@ public class PortfolioServiceImpl implements PortfolioService {
         return cashHistory;
     }
 
+    @Override
+    public SortedMap<LocalDate, Double> getStockHistory() {
+        SortedMap<LocalDate, Double> stockHistory = new TreeMap<>();
+        Collection<Stock> allStocks = stockRepository.findAllSorted();
+        Map<String, Double> stockValues = new HashMap<>();
 
+        if (allStocks.size() > 0) {
+            Stock firstStock = allStocks.iterator().next();
+            LocalDate currDate = firstStock.getDateTime().toLocalDate();
+            LocalDate today = LocalDate.now();
+            Double currWorth = 0.0;
 
+            do {
+                currWorth = 0.0;
+                Collection<Stock> currStocks = stockRepository.getAllLatestStocksByDate(currDate.toString());
+                if (currStocks.size() > 0) {
+                    for (Stock stock : currStocks) {
+                        stockValues.put(stock.getSymbol(), stock.getTotalValue());
+                    }
+                }
+                for (var stock : stockValues.entrySet()) {
+                    currWorth += stock.getValue();
+                }
+                stockHistory.put(currDate, currWorth);
+                currDate = currDate.plusDays(1);
+            } while(!currDate.equals(today));
+        }
+
+        return stockHistory;
+    }
+
+    @Override
+    public SortedMap<LocalDate, Double> getExchangeTradedFundHistory() {
+        SortedMap<LocalDate, Double> exchangeTradedFundHistory = new TreeMap<>();
+        Collection<ExchangeTradedFund> allExchangeTradedFunds = exchangeTradedFundRepository.findAllSorted();
+        Map<String, Double> exchangeTradedFundValues = new HashMap<>();
+
+        if (allExchangeTradedFunds.size() > 0) {
+            ExchangeTradedFund firstExchangeTradedFund = allExchangeTradedFunds.iterator().next();
+            LocalDate currDate = firstExchangeTradedFund.getDateTime().toLocalDate();
+            LocalDate today = LocalDate.now();
+            Double currWorth = 0.0;
+
+            do {
+                currWorth = 0.0;
+                Collection<ExchangeTradedFund> currExchangeTradedFunds = exchangeTradedFundRepository.getAllLatestExchangeTradedFundsByDate(currDate.toString());
+                if (currExchangeTradedFunds.size() > 0) {
+                    for (ExchangeTradedFund exchangeTradedFund : currExchangeTradedFunds) {
+                        exchangeTradedFundValues.put(exchangeTradedFund.getSymbol(), exchangeTradedFund.getTotalValue());
+                    }
+                }
+                for (var exchangeTradedFund : exchangeTradedFundValues.entrySet()) {
+                    currWorth += exchangeTradedFund.getValue();
+                }
+                exchangeTradedFundHistory.put(currDate, currWorth);
+                currDate = currDate.plusDays(1);
+            } while(!currDate.equals(today));
+        }
+
+        return exchangeTradedFundHistory;
+    }
+
+    public SortedMap<LocalDate, Double> getBondHistory() {
+        SortedMap<LocalDate, Double> bondHistory = new TreeMap<>();
+        Collection<Bond> allBonds = bondRepository.findAllSorted();
+        Map<String, Double> bondValues = new HashMap<>();
+
+        if (allBonds.size() > 0) {
+            Bond firstBond = allBonds.iterator().next();
+            LocalDate currDate = firstBond.getDateTime().toLocalDate();
+            LocalDate today = LocalDate.now();
+            Double currWorth = 0.0;
+
+            do {
+                currWorth = 0.0;
+                Collection<Bond> currBonds = bondRepository.getAllLatestBondsByDate(currDate.toString());
+                if (currBonds.size() > 0) {
+                    for (Bond bond : currBonds) {
+                        bondValues.put(bond.getName(), bond.getTotalValue());
+                    }
+                }
+                for (var bond : bondValues.entrySet()) {
+                    currWorth += bond.getValue();
+                }
+                bondHistory.put(currDate, currWorth);
+                currDate = currDate.plusDays(1);
+            } while(!currDate.equals(today));
+        }
+
+        return bondHistory;
+    }
 }

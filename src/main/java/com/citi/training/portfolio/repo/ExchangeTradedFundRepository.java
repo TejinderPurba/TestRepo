@@ -52,6 +52,16 @@ public interface ExchangeTradedFundRepository extends JpaRepository<ExchangeTrad
     Collection<ExchangeTradedFund> getAllLatestExchangeTradedFunds();
 
     /**
+     * Retrieves the latest transaction of each exchange traded fund by date.
+     * @param date the date to be fetched.
+     * @return Collection of the latest transaction for each exchange traded fund by date.
+     */
+    @Query(
+            value = "SELECT * from exchange_traded_funds t1 where date_time = (select max(date_time) from exchange_traded_funds where t1.symbol = exchange_traded_funds.symbol and DATE(date_time) = :date) order by date_time desc",
+            nativeQuery = true)
+    Collection<ExchangeTradedFund> getAllLatestExchangeTradedFundsByDate(@Param("date") String date);
+
+    /**
      * Retrieves the latest transaction of a specific etf.
      * @param symbol the etf symbol to be fetched.
      * @return The latest transaction for the specified etf.

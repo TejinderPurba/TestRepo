@@ -53,6 +53,16 @@ public interface StockRepository extends JpaRepository<Stock, Integer> {
     Collection<Stock> getAllLatestStocks();
 
     /**
+     * Retrieves the latest transaction of each stock by date.
+     * @param date the date to be fetched.
+     * @return Collection of the latest transaction for each stock by date.
+     */
+    @Query(
+            value = "SELECT * from stocks t1 where date_time = (select max(date_time) from stocks where t1.symbol = stocks.symbol and DATE(date_time) = :date) order by date_time desc",
+            nativeQuery = true)
+    Collection<Stock> getAllLatestStocksByDate(@Param("date") String date);
+
+    /**
      * Retrieves the latest transaction of a specific stock.
      * @param symbol the stock symbol to be fetched.
      * @return The latest transaction for the specified stock.
