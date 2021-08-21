@@ -12,12 +12,12 @@ TO-DO:
 
 4. Add buy/sell functionality for cash accounts and ETFs. - COMPLETED
 
-5. Make algorithms to find changes in networth, cash and investment values over various periods of time.
+5. Make algorithms to find changes in networth, cash and investment values over various periods of time. - COMPLETED EXCEPT FOR CASH
 
-6. Add buy/sell functionality for bonds.
+6. Add buy/sell functionality for bonds. - COMPLETED
 
 7. Integrate either dummy or real data to calculate Market Movers based on portfolio investments. - COMPLETED
 
-8. Add Futures investment support.
+8. Add Futures investment support. - NOT IN THIS RELEASE
 
 9. Add testing functionality.
