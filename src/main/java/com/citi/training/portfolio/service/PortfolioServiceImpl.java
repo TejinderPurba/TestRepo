@@ -331,7 +331,7 @@ public class PortfolioServiceImpl implements PortfolioService {
         if (allStocks.size() > 0) {
             Stock firstStock = allStocks.iterator().next();
             LocalDate currDate = firstStock.getDateTime().toLocalDate();
-            LocalDate today = LocalDate.now();
+            LocalDate tomorrow = LocalDate.now().plusDays(1);
             Double currWorth = 0.0;
 
             do {
@@ -347,7 +347,7 @@ public class PortfolioServiceImpl implements PortfolioService {
                 }
                 stockHistory.put(currDate, currWorth);
                 currDate = currDate.plusDays(1);
-            } while(!currDate.equals(today));
+            } while(!currDate.equals(tomorrow));
         }
 
         return stockHistory;
@@ -362,7 +362,7 @@ public class PortfolioServiceImpl implements PortfolioService {
         if (allExchangeTradedFunds.size() > 0) {
             ExchangeTradedFund firstExchangeTradedFund = allExchangeTradedFunds.iterator().next();
             LocalDate currDate = firstExchangeTradedFund.getDateTime().toLocalDate();
-            LocalDate today = LocalDate.now();
+            LocalDate tomorrow = LocalDate.now().plusDays(1);
             Double currWorth = 0.0;
 
             do {
@@ -378,7 +378,7 @@ public class PortfolioServiceImpl implements PortfolioService {
                 }
                 exchangeTradedFundHistory.put(currDate, currWorth);
                 currDate = currDate.plusDays(1);
-            } while(!currDate.equals(today));
+            } while(!currDate.equals(tomorrow));
         }
 
         return exchangeTradedFundHistory;
@@ -392,7 +392,7 @@ public class PortfolioServiceImpl implements PortfolioService {
         if (allBonds.size() > 0) {
             Bond firstBond = allBonds.iterator().next();
             LocalDate currDate = firstBond.getDateTime().toLocalDate();
-            LocalDate today = LocalDate.now();
+            LocalDate tomorrow = LocalDate.now().plusDays(1);
             Double currWorth = 0.0;
 
             do {
@@ -408,7 +408,7 @@ public class PortfolioServiceImpl implements PortfolioService {
                 }
                 bondHistory.put(currDate, currWorth);
                 currDate = currDate.plusDays(1);
-            } while(!currDate.equals(today));
+            } while(!currDate.equals(tomorrow));
         }
 
         return bondHistory;
