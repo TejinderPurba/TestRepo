@@ -30,6 +30,11 @@ public class PortfolioController {
         return portfolioService.getAllBonds();
     }
 
+    @RequestMapping(value = "/latestbonds", method = {RequestMethod.GET})
+    public Collection<Bond> getAllLatestBonds() {
+        return portfolioService.getAllLatestBonds();
+    }
+
     @RequestMapping(value = "/bonds/issuer/{issuer}", method = {RequestMethod.GET})
     public Collection<Bond> getBondsByIssuer(@PathVariable String issuer) {
         return portfolioService.getBondsByIssuer(issuer);
@@ -103,31 +108,34 @@ public class PortfolioController {
     /**
      * EXCHANGE TRADED FUND METHODS
      */
-    @RequestMapping(value = "/etf", method = {RequestMethod.GET})
+    @RequestMapping(value = "/etfs", method = {RequestMethod.GET})
     public Collection<ExchangeTradedFund> getAllExchangeTradedFunds() { return portfolioService.getAllExchangeTradedFunds(); }
 
-    @RequestMapping(value = "/etf/symbol/{symbol}", method = {RequestMethod.GET})
+    @RequestMapping(value = "/latestetfs", method = {RequestMethod.GET})
+    public Collection<ExchangeTradedFund> getAllLatestExchangeTradedFunds() { return portfolioService.getAllLatestExchangeTradedFunds(); }
+
+    @RequestMapping(value = "/etfs/symbol/{symbol}", method = {RequestMethod.GET})
     public Collection<ExchangeTradedFund> getExchangeTradedFundsBySymbol(@PathVariable String symbol) {
         return portfolioService.getExchangeTradedFundsBySymbol(symbol);
     }
 
-    @RequestMapping(value = "/etf/name/{name}", method = {RequestMethod.GET})
+    @RequestMapping(value = "/etfs/name/{name}", method = {RequestMethod.GET})
     public Collection<ExchangeTradedFund> getExchangeTradedFundsByName(@PathVariable String name) {
         return portfolioService.getExchangeTradedFundsByName(name);
     }
 
-    @RequestMapping(value = "/etf/type/{type}", method = {RequestMethod.GET})
+    @RequestMapping(value = "/etfs/type/{type}", method = {RequestMethod.GET})
     public Collection<ExchangeTradedFund> getExchangeTradedFundsByType(@PathVariable int type) {
         return portfolioService.getExchangeTradedFundsByType(type);
     }
 
-    @RequestMapping(value = "/etf/buy", method = RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(value = "/etfs/buy", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity buyExchangeTradedFund(@RequestBody ExchangeTradedFund exchangeTradedFund) {
         portfolioService.buyExchangeTradedFund(exchangeTradedFund);
         return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/etf/sell", method = RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(value = "/etfs/sell", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity sellExchangeTradedFund(@RequestBody ExchangeTradedFund exchangeTradedFund) {
         portfolioService.sellExchangeTradedFund(exchangeTradedFund);
         return new ResponseEntity(HttpStatus.ACCEPTED);
@@ -139,6 +147,11 @@ public class PortfolioController {
     @RequestMapping(value = "/cash", method = {RequestMethod.GET})
     public Collection<Cash> getAllCash() {
         return portfolioService.getAllCash();
+    }
+
+    @RequestMapping(value = "/latestcash", method = {RequestMethod.GET})
+    public Collection<Cash> getAllLatestCash() {
+        return portfolioService.getAllLatestCash();
     }
 
     @RequestMapping(value = "/cash/account/{accountNum}", method = {RequestMethod.GET})

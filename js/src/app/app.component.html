@@ -22,12 +22,18 @@
       <li class="nav-item">
         <a class="nav-link" href="/summary">Summary</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/mynetworth">Investment</a>
-      </li>
     </ul>
   </nav>
   <h1>Portfolio Manager</h1>
+  <ng-container *ngIf='askCookieConsent'>
+    <ngb-alert [dismissible]="false" type="info">This site uses cookies, is that ok?
+      <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic">
+        <label ngbButtonLabel class="btn btn-md btn-outline-primary">
+          <input ngbButton  type="radio" (click)='agreeCookie()' > Agree
+        </label>
+      </div>
+    </ngb-alert>
+  </ng-container>
   <!-- here we can bind to the daa models -->
   <!-- the | is 'pipe' in this case for date -->
   <!-- the {{}} are called interpolation binding -->
@@ -44,13 +50,4 @@
     <!-- ask the user to agree to cookies -->
   <!-- the () are one-way event binding OUT of the component -->
   <!-- structural directives AWLAYS start with an asterisk * -->
-  <br/>
-  <ng-container *ngIf='askCookieConsent'>
-    <ngb-alert [dismissible]="false" type="info">This site uses cookies, is that ok?</ngb-alert>
-    <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic">
-      <label ngbButtonLabel class="btn-primary">
-        <input (click)='agreeCookie()' ngbButton type="radio"> Agree
-      </label>
-    </div>
-  </ng-container>
 </article>

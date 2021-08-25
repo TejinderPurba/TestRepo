@@ -60,6 +60,12 @@ public interface PortfolioService {
     public Collection<ExchangeTradedFund> getAllExchangeTradedFunds();
 
     /**
+     * Get all recent exchange traded fund transactions in the database.
+     * @return Collection of exchange traded funds with all recent database items.
+     */
+    public Collection<ExchangeTradedFund> getAllLatestExchangeTradedFunds();
+
+    /**
      * Get all exchange traded funds in the database by symbol.
      * @param symbol the symbol to use in the exchange traded funds lookup.
      * @return Collection of ExchangeTradedFunds with all database items by symbol.
@@ -97,6 +103,12 @@ public interface PortfolioService {
      * @return Collection of cash accounts with all database items.
      */
     public Collection<Cash> getAllCash();
+
+    /**
+     * Get all recent cash account transactions in the database.
+     * @return Collection of cash accounts with all recent database items.
+     */
+    public Collection<Cash> getAllLatestCash();
 
     /**
      * Get all cash in the database by transaction type.
@@ -143,6 +155,12 @@ public interface PortfolioService {
      * @return Collection of bonds with all database items.
      */
     public Collection<Bond> getAllBonds();
+
+    /**
+     * Get all recent bond transactions in the database.
+     * @return Collection of bonds with all recent database items.
+     */
+    public Collection<Bond> getAllLatestBonds();
 
     /**
      * Get all bonds in the database by issuer.
