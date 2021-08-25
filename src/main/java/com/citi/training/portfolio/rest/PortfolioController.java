@@ -194,6 +194,7 @@ public class PortfolioController {
     @RequestMapping(value = "/marketmovers/{period}", method = {RequestMethod.GET})
     public SortedMap getMarketMovers(@PathVariable int period) { return portfolioService.getMarketMovers(period); }
 
+    //returns array with total income cash at [0] and the individual numbers for all accounts at [1][2][3][4]
     @RequestMapping(value = "/cashincomeflow/{date}", method = {RequestMethod.GET})
     public double[] getIncomeCashFlow(@PathVariable String date){ return portfolioService.getIncomeCashFlow(date); }
 

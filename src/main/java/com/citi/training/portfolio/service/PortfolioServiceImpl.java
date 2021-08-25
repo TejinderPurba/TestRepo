@@ -202,6 +202,11 @@ public class PortfolioServiceImpl implements PortfolioService {
         for(ExchangeTradedFund exchangeTradedFund: exchangeTradedFundTotal) {
             investmentValue += (exchangeTradedFund.getTotalQuantity() * dummyCurrentMarketValue(exchangeTradedFund.getSymbol()));
         }
+        Collection<Bond> bondsTotal = bondRepository.getAllLatestBonds();
+        for(Bond bond: bondsTotal) {
+            investmentValue += bond.getTotalValue();
+            System.out.println(investmentValue);
+        }
         return investmentValue;
     }
     @Override
