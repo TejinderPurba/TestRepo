@@ -4,6 +4,7 @@ import { CashFlowComponent } from './cash-flow/cash-flow.component';
 import { InsightsComponent } from './insights/insights.component';
 import { MarketMoversComponent } from './market-movers/market-movers.component';
 import { NetWorthComponent } from './net-worth/net-worth.component';
+import { SummaryComponent } from './summary/summary.component';
 
 // All routes are inspected in strict order until a match is found
 const routes: Routes = [
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path:'net-worth', component:NetWorthComponent},
   {path:'networth', component:NetWorthComponent},
   {path:'insights', component:InsightsComponent},
-  {path:'**', redirectTo: '/cash-flow', pathMatch:'full'} // put this in only when the other routes work!
+  {path:'summary', component:SummaryComponent},
+  {path:'**', redirectTo: '/summary', pathMatch:'full'} // put this in only when the other routes work!
 ];
 
 @NgModule({

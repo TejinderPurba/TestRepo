@@ -10,7 +10,8 @@ import { NetWorthComponent } from './net-worth/net-worth.component';
 import { AssetViewComponent } from './net-worth/asset-view/asset-view.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SummaryComponent } from './summary/summary.component'
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
     CashFlowComponent,
     InsightsComponent,
     NetWorthComponent,
-    AssetViewComponent
+    AssetViewComponent,
+    SummaryComponent
   ],
   imports: [
     BrowserModule,

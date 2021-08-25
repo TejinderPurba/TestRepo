@@ -68,6 +68,11 @@ public class PortfolioController {
         return portfolioService.getAllStocks();
     }
 
+    @RequestMapping(value = "/lateststocks", method = {RequestMethod.GET})
+    public Collection<Stock> getAllLatestStocks() {
+        return portfolioService.getAllLatestStocks();
+    }
+
     @RequestMapping(value = "/stocks/symbol/{symbol}", method = {RequestMethod.GET})
     public Collection<Stock> getStocksBySymbol(@PathVariable String symbol) {
         return portfolioService.getStocksBySymbol(symbol);

@@ -1,0 +1,15 @@
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Investment</th>
+      <th scope="col">{{ stockTotal |currency:'C$'}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let stock of stockResponseData">
+        <td>{{ stock.name }}</td>
+        <td>{{ stock.totalValue |currency:'C$'}}</td>
+    </tr>
+    </tbody>
+  </table>

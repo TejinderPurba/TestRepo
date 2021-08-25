@@ -33,6 +33,8 @@ public class PortfolioServiceImpl implements PortfolioService {
         return stockRepository.findAllSorted();
     }
     @Override
+    public Collection<Stock> getAllLatestStocks() { return stockRepository.getAllLatestStocks(); }
+    @Override
     public Collection<Stock> getStocksBySymbol(String symbol) { return stockRepository.findBySymbol(symbol); }
     @Override
     public Collection<Stock> getStocksByName(String name) { return stockRepository.findByName(name); }

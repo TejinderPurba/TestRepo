@@ -16,6 +16,11 @@ public interface PortfolioService {
     public Collection<Stock> getAllStocks();
 
     /**
+     * Get all recent stock transactions in the database.
+     * @return Collection of Stocks with all recent database items.
+     */
+    public Collection<Stock> getAllLatestStocks();
+    /**
      * Get all stocks in the database by symbol.
      * @param symbol the symbol to use in the stock lookup.
      * @return Collection of Stocks with all database items by symbol.
