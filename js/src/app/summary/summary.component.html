@@ -255,53 +255,66 @@
         <ngb-accordion #types="ngbAccordion" [closeOthers]="true" activeIds="cash">
             <ngb-panel id="cash" title="Cash Accounts">
               <ng-template ngbPanelContent>
-                <p>
-                    <button type="button" class="btn btn-outline-primary btn-lg" (click)="collapse.toggle()" [attr.aria-expanded]="!isCashDepositTransactionCollapsed"
-                        aria-controls="collapseExample">
-                        Deposit
-                    </button>
-                    <button type="button" class="btn btn-outline-primary btn-lg" (click)="collapse.toggle()" [attr.aria-expanded]="!isCashWithdrawTransactionCollapsed"
-                        aria-controls="collapseExample">
-                        Withdraw
-                    </button>
-                </p>
-                <div #collapse="ngbCollapse" [(ngbCollapse)]="isCashDepositTransactionCollapsed">
-                    <div class="card">
-                        <div class="card-body">
-                            Buy:
-                            <ul>
-                                <li>0 - Buy</li>
-                                <li>1 - Sell</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div #collapse="ngbCollapse" [(ngbCollapse)]="isCashWithdrawTransactionCollapsed">
-                    <div class="card">
-                        <div class="card-body">
-                            Sell:
-                            <ul>
-                                <li>0 - Buy</li>
-                                <li>1 - Sell</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                <ngb-accordion #types="ngbAccordion" [closeOthers]="true" activeIds="deposit">
+                    <ngb-panel id="deposit" title="Deposit">
+                        <ng-template ngbPanelContent>
+                            test 2
+                        </ng-template>
+                    </ngb-panel>
+                    <ngb-panel id="withdraw" title="Withdraw">
+                        <ng-template ngbPanelContent>
+                            test
+                        </ng-template>
+                    </ngb-panel>
+                </ngb-accordion>
               </ng-template>
             </ngb-panel>
             <ngb-panel id="stocks" title="Stocks">
               <ng-template ngbPanelContent>
-                  test
+                <ngb-accordion #types="ngbAccordion" [closeOthers]="true" activeIds="buy">
+                    <ngb-panel id="buy" title="Buy">
+                        <ng-template ngbPanelContent>
+                            test 2
+                        </ng-template>
+                    </ngb-panel>
+                    <ngb-panel id="sell" title="Sell">
+                        <ng-template ngbPanelContent>
+                            test
+                        </ng-template>
+                    </ngb-panel>
+                </ngb-accordion>
               </ng-template>
             </ngb-panel>
             <ngb-panel id="etfs" title="Exchange Traded Funds">
                 <ng-template ngbPanelContent>
-                  traded funds
+                    <ngb-accordion #types="ngbAccordion" [closeOthers]="true" activeIds="buy">
+                        <ngb-panel id="buy" title="Buy">
+                            <ng-template ngbPanelContent>
+                                test 2
+                            </ng-template>
+                        </ngb-panel>
+                        <ngb-panel id="sell" title="Sell">
+                            <ng-template ngbPanelContent>
+                                test
+                            </ng-template>
+                        </ngb-panel>
+                    </ngb-accordion>
                 </ng-template>
               </ngb-panel>
               <ngb-panel id="bonds" title="Bonds">
                 <ng-template ngbPanelContent>
-                  bondy
+                    <ngb-accordion #types="ngbAccordion" [closeOthers]="true" activeIds="buy">
+                        <ngb-panel id="buy" title="Buy">
+                            <ng-template ngbPanelContent>
+                                test 2
+                            </ng-template>
+                        </ngb-panel>
+                        <ngb-panel id="sell" title="Sell">
+                            <ng-template ngbPanelContent>
+                                test
+                            </ng-template>
+                        </ngb-panel>
+                    </ngb-accordion>
                 </ng-template>
               </ngb-panel>
           </ngb-accordion>
