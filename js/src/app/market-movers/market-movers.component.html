@@ -1,8 +1,29 @@
-<section>
-  <p>market-movers works!</p>
-  <!-- we can iterate over a collection such as an array -->
-  <ul>
-    <!-- *ngFor is sugar syntax for *ngForOf -->
-    <li *ngFor='let person of people'>{{person.f}} {{person.l}}</li>
-  </ul>
-</section>
+<form>
+  <input placeholder='number of days ' id="price-typeahead" type="text" class="form-control" [(ngModel)]='periodParamObj' name='period' min = "1"/>
+  <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic">
+    <label ngbButtonLabel class="btn-primary">
+      <input ngbButton type="radio" (click)='makeMarketMoversByPeriodCall()'> Input period (Last ? days)
+    </label>
+  </div>
+</form>
+<table class="table table-striped" >
+  <thead>
+  <tr>
+    <th scope="col">SYMBOLS</th>
+    <th scope="col">GAINER & LOSER</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>
+      <ul *ngFor="let mover of this.response | keyvalue">
+        {{mover.value}}
+    </ul>
+    </td>
+    <td> <ul *ngFor="let mover of this.response |  keyvalue ">
+        {{mover.key }}%
+    </ul>
+    </td>
+  </tr>
+  </tbody>
+</table>

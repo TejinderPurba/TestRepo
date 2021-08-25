@@ -50,4 +50,12 @@ export class PortfolioService {
   postSellStock(stock:any){ 
     return this.http.post('http://localhost:8080/portfolio/stocks/sell', stock, this.httpOptions)
   }
+
+  getMarketMoversData(){
+    return this.http.get('http://localhost:8080/portfolio/marketmovers/10')
+  }
+
+  getMarketMoversByPeriod(params= 0) {
+    return this.http.get(`http://localhost:8080/portfolio/marketmovers/${params}`)
+  }
 }
