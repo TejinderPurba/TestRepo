@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {PortfolioService} from "../../services/portfolio.service";
 
 @Component({
   selector: 'app-market-movers',
@@ -7,17 +8,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MarketMoversComponent implements OnInit {
 
-  constructor() { }
+  constructor(private portfolioService:PortfolioService) { }
   // we can declare data models for use within this component
-  people = [
-    { f: 'Grace', l: 'Hopper' },
-    { f: 'Catherine', l: 'Johnson' },
-    { f: 'Lisa', l: 'Su' },
-    { f: 'Ada', l: 'Lovelace' },
-    { f: 'Timnit', l: 'Gebru' },
-    { f: 'Meng', l: 'Wanzhou' }
-  ]
+  periodParamObj = 0
+  response = {}
   ngOnInit(): void {
+    // this.makeMarketMoversCall()
+  }
+  makeMarketMoversCall() {
+    // We call the service method by subscribing to the service call
+    // Remember the api call with be async so subscribing responds when it returns
+    this.portfolioService.getMarketMoversData()
+      .subscribe( (data:any)=>{ // any should be a class instead specifying what properties data would have
+        this.response = data
+        console.log(this.response)
+      } )
   }
 
+  makeMarketMoversByPeriodCall() {
+    this.portfolioService.getMarketMoversByPeriod(this.periodParamObj)
+      .subscribe( (data:any)=>{ // any should be a class instead specifying what properties data would have
+        this.response = data
+        console.log(this.response)
+      } )
+  }
 }
