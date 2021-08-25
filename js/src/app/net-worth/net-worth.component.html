@@ -1,0 +1,32 @@
+<section>
+  <aside>
+    <h3>Current Stock Codes</h3>
+    <ul>
+      <li *ngFor='let item of codes'>{{item.code}}</li>
+    </ul>
+  </aside>
+  <form>
+    <label for="code-typeahead">Enter a Stock Code</label>
+    <input placeholder='Stock Code' id="code-typeahead" type="text" class="form-control" [(ngModel)]='newStockCode' name='newStockCode' max="6" min = "1"/>
+    <label for="price-typeahead">Enter a Stock Code</label>
+    <input placeholder='Stock Price' id="price-typeahead" type="text" class="form-control" [(ngModel)]='newStockPrice' name='newStockPrice' min = "0.01"/>
+    <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic">
+      <label ngbButtonLabel class="btn-primary">
+        <input ngbButton type="radio" (click)='addNewStock()'> Add New Stock
+      </label>
+    </div>
+  </form>
+  <h3>Net Worth {{total |currency:'C$'}}</h3>
+  <p>Here are the assets that make up the net worth</p>
+  <!-- [] injects values into a component (one-way binding into component) -->
+  <app-asset-view
+    *ngFor="let item of codes"
+    [code]='item.code'
+    [price]='item.price'
+    (buy)='handleBuy($event)'
+    (sell)='handleSell($event)'
+    (reset)='handleReset()'
+    (remove)='handleRemove($event)'>
+  </app-asset-view>
+
+</section>

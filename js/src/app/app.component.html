@@ -1,0 +1,50 @@
+<!-- here we write our own component template -->
+<article>
+  <nav>
+    <!-- links go here -->
+    <!-- <a routerLink='/cash-flow'>Cash Flow</a> |
+    <a routerLink='/market-movers'>Market Movers</a> |
+    <a routerLink='/net-worth'>Net Worth</a> |
+    <a routerLink='/insights'>Insights</a> -->
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" href="/cash-flow">Cash Flow</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/market-movers">Market Movers</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/net-worth">Net Worth</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/insights">Insights</a>
+    </ul>
+  </nav>
+  <h1>Portfolio Manager</h1>
+  <!-- here we can bind to the daa models -->
+  <!-- the | is 'pipe' in this case for date -->
+  <h3>Today is {{today | date:'hh:mm:ss'}}</h3>
+  <!-- the {{}} are called interpolation binding -->
+  <h3>Welcome {{user}}</h3>
+  <!-- <hr/>
+  <form>
+    <input placeholder='Facebook image' [(ngModel)]='fbImage' name='fbImage' required/>
+    <br/>
+    <img src='https://graph.facebook.com/{{fbImage}}/picture?type=normal'>
+  </form>
+  <hr/> -->
+  <!-- here is where routed content will appear it is mutually exclusive content-->
+  <router-outlet></router-outlet>
+    <!-- ask the user to agree to cookies -->
+  <!-- the () are one-way event binding OUT of the component -->
+  <!-- structural directives AWLAYS start with an asterisk * -->
+  <br/>
+  <ng-container *ngIf='askCookieConsent'>
+    <ngb-alert [dismissible]="false" type="info">This site uses cookies, is that ok?</ngb-alert>
+    <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic">
+      <label ngbButtonLabel class="btn-primary">
+        <input (click)='agreeCookie()' ngbButton type="radio"> Agree
+      </label>
+    </div>
+  </ng-container>
+</article>

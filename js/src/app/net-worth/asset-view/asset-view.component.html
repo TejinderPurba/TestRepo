@@ -1,0 +1,17 @@
+<aside>
+  <p>Code: {{code}} <br/> Price: {{price |currency:'C$'}}</p>
+  <p>Price*Count is {{price * count |currency:'C$'}}</p>
+  <button (click)='buyStock()'>Buy</button>
+  <button [disabled]='!count' (click)='sellStock()'>Sell</button>
+  <button [disabled]='!count' (click)='resetStock()'>Reset</button>
+  <button (click)='removeStock()'>Remove</button>
+  <br/>
+  <form>
+    <input placeholder='Stock Code' [(ngModel)]='alternateCode' name='alternateCode'/>
+    <button (click)='setStockCode()'>Rename Stock</button>
+    <br/>
+    <input placeholder='Stock Price' [(ngModel)]='alternatePrice' name='alternatePrice'/>
+    <button (click)='setStockPrice()'>Change Price</button>
+  </form>
+  <br/>
+</aside>
