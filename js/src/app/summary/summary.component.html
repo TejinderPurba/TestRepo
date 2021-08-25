@@ -1,15 +1,312 @@
+<button type="button" class="btn btn-primary" (click)="openTransactionModal(transactionManager)" >
+    Transaction Manager
+</button>
+<hr/>
+<table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Cash Accounts</th>
+      <th scope="col">{{ cashTotal |currency:'C$'}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let cash of cashResponseData">
+        <td> <a href="javascript:void(0);" (click)="openDetailsModal(cashContent, cash.accountNumber, 0)">{{ cash.financialInstitution }} {{ cash.accountNumber }}</a></td>
+        <td>{{ cash.balance |currency:'C$'}}</td>
+    </tr>
+    </tbody>
+</table>
 
 <table class="table table-striped">
     <thead>
     <tr>
-      <th scope="col">Investment</th>
+      <th scope="col">Stocks</th>
       <th scope="col">{{ stockTotal |currency:'C$'}}</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let stock of stockResponseData">
-        <td>{{ stock.name }}</td>
+        <td> <a href="javascript:void(0);" (click)="openDetailsModal(investmentContentStocksETF, stock.symbol, 1)">{{ stock.name }}</a></td>
         <td>{{ stock.totalValue |currency:'C$'}}</td>
     </tr>
     </tbody>
-  </table>
+</table>
+
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Exchange Traded Funds</th>
+      <th scope="col">{{ etfTotal |currency:'C$'}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let etf of etfResponseData">
+        <td> <a href="javascript:void(0);" (click)="openDetailsModal(investmentContentStocksETF, etf.symbol, 2)">{{ etf.name }}</a></td>
+        <td>{{ etf.totalValue |currency:'C$'}}</td>
+    </tr>
+    </tbody>
+</table>
+
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Bonds</th>
+      <th scope="col">{{ bondTotal |currency:'C$'}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let bond of bondResponseData">
+        <td> <a href="javascript:void(0);" (click)="openDetailsModal(investmentContentBonds, bond.name, 3)">{{ bond.name }}</a></td>
+        <td>{{ bond.totalValue |currency:'C$'}}</td>
+    </tr>
+    </tbody>
+</table>
+
+<ng-template #investmentContentStocksETF let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">{{ currentModalTitle }}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <p>
+            <button type="button" class="btn btn-outline-primary" (click)="collapse.toggle()" [attr.aria-expanded]="!isStockETFLegendCollapsed"
+                aria-controls="collapseExample">
+                Legend
+            </button>
+        </p>
+        <div #collapse="ngbCollapse" [(ngbCollapse)]="isStockETFLegendCollapsed">
+            <div class="card">
+                <div class="card-body">
+                    Transaction Type:
+                    <ul>
+                        <li>0 - Buy</li>
+                        <li>1 - Sell</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+              <th scope="col">Transaction Time</th>
+              <th scope="col">Transaction Type</th>
+              <th scope="col">Quantity Affected</th>
+              <th scope="col">Total Quantity</th>
+              <th scope="col">Market Value</th>
+              <th scope="col">Total Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of stockETFModalResponseData">
+                <td>{{ item.dateTime |date:'yyyy-mm-dd hh:mm:ss'}}</td>
+                <td>{{ item.transactionType }}</td>
+                <td>{{ item.quantityAffected }}</td>
+                <td>{{ item.totalQuantity }}</td>
+                <td>{{ item.marketValue |currency:'C$'}}</td>
+                <td>{{ item.totalValue |currency:'C$'}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </div>
+</ng-template>
+
+<ng-template #cashContent let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">{{ currentModalTitle }}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <p>
+            <button type="button" class="btn btn-outline-primary" (click)="collapse.toggle()" [attr.aria-expanded]="!isCashLegendCollapsed"
+                aria-controls="collapseExample">
+                Legend
+            </button>
+        </p>
+        <div #collapse="ngbCollapse" [(ngbCollapse)]="isCashLegendCollapsed">
+            <div class="card">
+                <div class="card-body">
+                    <h6>Account Type:</h6>
+                    <ul>
+                        <li>1 - Chequing</li>
+                        <li>2 - Savings</li>
+                        <li>3 - Cash Management</li>
+                        <li>4 - Broker</li>
+                    </ul>
+                    <h6>Transaction Type:</h6>
+                    <ul>
+                        <li>0 - Deposit</li>
+                        <li>1 - Withdrawal</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+              <th scope="col">Transaction Time</th>
+              <th scope="col">Financial Institution</th>
+              <th scope="col">Account Number</th>
+              <th scope="col">Account Type</th>
+              <th scope="col">Transaction Type</th>
+              <th scope="col">Transaction Amount</th>
+              <th scope="col">Balance</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let cash of cashModalResponseData">
+                <td>{{ cash.dateTime |date:'yyyy-mm-dd hh:mm:ss'}}</td>
+                <td>{{ cash.financialInstitution }}</td>
+                <td>{{ cash.accountNumber }}</td>
+                <td>{{ cash.accountType }}</td>
+                <td>{{ cash.transactionType }}</td>
+                <td>{{ cash.transactionAmount |currency:'C$'}}</td>
+                <td>{{ cash.balance |currency:'C$'}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </div>
+</ng-template>
+
+<ng-template #investmentContentBonds let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">{{ currentModalTitle }}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <p>
+            <button type="button" class="btn btn-outline-primary" (click)="collapse.toggle()" [attr.aria-expanded]="!isBondLegendCollapsed"
+                aria-controls="collapseExample">
+                Legend
+            </button>
+        </p>
+        <div #collapse="ngbCollapse" [(ngbCollapse)]="isBondLegendCollapsed">
+            <div class="card">
+                <div class="card-body">
+                    <h6>Transaction Type:</h6>
+                    <ul>
+                        <li>0 - Buy</li>
+                        <li>1 - Sell</li>
+                        <li>2 - Coupon Paid</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+              <th scope="col">Transaction Time</th>
+              <th scope="col">Issuer</th>
+              <th scope="col">Name</th>
+              <th scope="col">Bond Type</th>
+              <th scope="col">Transaction Type</th>
+              <th scope="col">Face Value</th>
+              <th scope="col">Maturity</th>
+              <th scope="col">Coupon Rate</th>
+              <th scope="col">Total Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let bond of bondModalResponseData">
+                <td>{{ bond.dateTime |date:'yyyy-mm-dd hh:mm:ss'}}</td>
+                <td>{{ bond.issuer }}</td>
+                <td>{{ bond.name }}</td>
+                <td>{{ bond.bondType }}</td>
+                <td>{{ bond.transactionType }}</td>
+                <td>{{ bond.faceValue |currency:'C$'}}</td>
+                <td>{{ bond.maturity |date:'yyyy-mm-dd hh:mm:ss'}}</td>
+                <td>{{ bond.couponRate }}</td>
+                <td>{{ bond.totalValue }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </div>
+</ng-template>
+
+<ng-template #transactionManager let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Transaction Manager</h4>
+      <button type="button" class="close btn-warning" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <button class="btn btn-md btn-outline-primary" (click)="types.toggle('cash')">Cash Accounts</button>
+        <button class="btn btn-md btn-outline-primary" (click)="types.toggle('stocks')">Stocks</button>
+        <button class="btn btn-md btn-outline-primary" (click)="types.toggle('etfs')">Exchange Traded Funds</button>
+        <button class="btn btn-md btn-outline-primary" (click)="types.toggle('bonds')">Bonds</button>
+        <hr/>
+        <ngb-accordion #types="ngbAccordion" [closeOthers]="true" activeIds="cash">
+            <ngb-panel id="cash" title="Cash Accounts">
+              <ng-template ngbPanelContent>
+                <p>
+                    <button type="button" class="btn btn-outline-primary btn-lg" (click)="collapse.toggle()" [attr.aria-expanded]="!isCashDepositTransactionCollapsed"
+                        aria-controls="collapseExample">
+                        Deposit
+                    </button>
+                    <button type="button" class="btn btn-outline-primary btn-lg" (click)="collapse.toggle()" [attr.aria-expanded]="!isCashWithdrawTransactionCollapsed"
+                        aria-controls="collapseExample">
+                        Withdraw
+                    </button>
+                </p>
+                <div #collapse="ngbCollapse" [(ngbCollapse)]="isCashDepositTransactionCollapsed">
+                    <div class="card">
+                        <div class="card-body">
+                            Buy:
+                            <ul>
+                                <li>0 - Buy</li>
+                                <li>1 - Sell</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div #collapse="ngbCollapse" [(ngbCollapse)]="isCashWithdrawTransactionCollapsed">
+                    <div class="card">
+                        <div class="card-body">
+                            Sell:
+                            <ul>
+                                <li>0 - Buy</li>
+                                <li>1 - Sell</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+              </ng-template>
+            </ngb-panel>
+            <ngb-panel id="stocks" title="Stocks">
+              <ng-template ngbPanelContent>
+                  test
+              </ng-template>
+            </ngb-panel>
+            <ngb-panel id="etfs" title="Exchange Traded Funds">
+                <ng-template ngbPanelContent>
+                  traded funds
+                </ng-template>
+              </ngb-panel>
+              <ngb-panel id="bonds" title="Bonds">
+                <ng-template ngbPanelContent>
+                  bondy
+                </ng-template>
+              </ngb-panel>
+          </ngb-accordion>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </div>
+</ng-template>

@@ -11,7 +11,9 @@ import { AssetViewComponent } from './net-worth/asset-view/asset-view.component'
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { SummaryComponent } from './summary/summary.component'
+import { SummaryComponent } from './summary/summary.component';
+import { NgxChartsModule }from '@swimlane/ngx-charts';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import { SummaryComponent } from './summary/summary.component'
     FormsModule,
     HttpClientModule,
     NgbModule,
+    BrowserAnimationsModule,
+    NgxChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

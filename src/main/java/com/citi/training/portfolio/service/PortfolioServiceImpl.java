@@ -72,6 +72,8 @@ public class PortfolioServiceImpl implements PortfolioService {
     @Override
     public Collection<ExchangeTradedFund> getAllExchangeTradedFunds() { return exchangeTradedFundRepository.findAllSorted(); }
     @Override
+    public Collection<ExchangeTradedFund> getAllLatestExchangeTradedFunds() { return exchangeTradedFundRepository.getAllLatestExchangeTradedFunds(); }
+    @Override
     public Collection<ExchangeTradedFund> getExchangeTradedFundsBySymbol(String symbol) { return exchangeTradedFundRepository.findBySymbol(symbol); }
     @Override
     public Collection<ExchangeTradedFund> getExchangeTradedFundsByName(String name) { return exchangeTradedFundRepository.findByName(name); }
@@ -108,6 +110,8 @@ public class PortfolioServiceImpl implements PortfolioService {
      */
     @Override
     public Collection<Cash> getAllCash() { return cashRepository.findAllSorted(); }
+    @Override
+    public Collection<Cash> getAllLatestCash() { return cashRepository.getAllLatestCashAccounts(); }
     @Override
     public Collection<Cash> getCashByTransactionType(int type) { return cashRepository.findByTransactionType(type); }
     @Override
@@ -146,6 +150,10 @@ public class PortfolioServiceImpl implements PortfolioService {
     @Override
     public Collection<Bond> getAllBonds() {
         return bondRepository.findAllSorted();
+    }
+    @Override
+    public Collection<Bond> getAllLatestBonds() {
+        return bondRepository.getAllLatestBonds();
     }
     @Override
     public Collection<Bond> getBondsByIssuer(String issuer) {
@@ -202,6 +210,11 @@ public class PortfolioServiceImpl implements PortfolioService {
         for(ExchangeTradedFund exchangeTradedFund: exchangeTradedFundTotal) {
             investmentValue += (exchangeTradedFund.getTotalQuantity() * dummyCurrentMarketValue(exchangeTradedFund.getSymbol()));
         }
+
+        Collection<Bond> bondTotal = bondRepository.getAllLatestBonds();
+        for(Bond bond: bondTotal) {
+            investmentValue += bond.getTotalValue();
+        }
         return investmentValue;
     }
     @Override
@@ -252,6 +265,16 @@ public class PortfolioServiceImpl implements PortfolioService {
 //            Double currMarketMoverValue = dummyCurrentMarketMover(bond.getIssuer());
 //            marketMovers.put(currMarketMoverValue, bond.getName());
 //        }
+
+        // Remove duplicates
+        final Iterator<Map.Entry<Double, String>> iter = marketMovers.entrySet().iterator();
+        final HashSet<String> valueSet = new HashSet<String>();
+        while (iter.hasNext()) {
+            final SortedMap.Entry<Double, String> next = iter.next();
+            if (!valueSet.add(next.getValue())) {
+                iter.remove();
+            }
+        }
 
         return marketMovers;
     }
