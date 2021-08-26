@@ -1,24 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CashFlowComponent } from './cash-flow/cash-flow.component';
-import { InsightsComponent } from './insights/insights.component';
 import { MarketMoversComponent } from './market-movers/market-movers.component';
 import { NetWorthComponent } from './net-worth/net-worth.component';
 import { SummaryComponent } from './summary/summary.component';
-import { InvestmentComponent } from './Investment/investment.component';
+import { Investment2Component } from './investment2/investment2.component';
 import {MainComponent} from './main.component'
 
 // All routes are inspected in strict order until a match is found
 const routes: Routes = [
   {path:'', redirectTo: '/home', pathMatch:'full'},
   {path:'home', component:MainComponent},
-  {path:'cash-flow', component:CashFlowComponent},
   {path:'market-movers', component:MarketMoversComponent},
   {path:'net-worth', component:NetWorthComponent},
   {path:'networth', component:NetWorthComponent},
-  {path:'insights', component:InsightsComponent},
   {path:'summary', component:SummaryComponent},
-  {path:'mynetworth', component:InvestmentComponent},
+  {path:'mynetworth', component:Investment2Component},
   {path:'**', redirectTo: '/summary', pathMatch:'full'} // put this in only when the other routes work!
 ];
 

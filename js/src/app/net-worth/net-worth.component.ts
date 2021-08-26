@@ -8,6 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NetWorthComponent implements OnInit {
 
+  saleData = [
+    { name: "Mobiles", value: 105000 },
+    { name: "Laptop", value: 55000 },
+    { name: "AC", value: 15000 },
+    { name: "Headset", value: 150000 },
+    { name: "Fridge", value: 20000 }
+  ];
   // declare model data for this component
   total:number = 0
   codes = [

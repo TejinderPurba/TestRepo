@@ -17,6 +17,19 @@
     </div>
   </form>
   <h3>Net Worth {{total |currency:'C$'}}</h3>
+  <ngx-charts-bar-vertical 
+    [view]="[1000,400]"
+    [results]="saleData"
+    [xAxisLabel]="'Products'"
+    [legendTitle]="'Product Sale Chart'"
+    [yAxisLabel]="'Sale'"
+    [legend]="true"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxis]="true"
+    [yAxis]="true"
+    [gradient]="true">
+</ngx-charts-bar-vertical>
   <p>Here are the assets that make up the net worth</p>
   <!-- [] injects values into a component (one-way binding into component) -->
   <app-asset-view
