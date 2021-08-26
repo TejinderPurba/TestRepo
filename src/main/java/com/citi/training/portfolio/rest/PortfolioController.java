@@ -2,6 +2,7 @@ package com.citi.training.portfolio.rest;
 
 import com.citi.training.portfolio.entities.*;
 import com.citi.training.portfolio.service.PortfolioService;
+import com.citi.training.portfolio.service.PortfolioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.SortedMap;
 
 @RestController
@@ -229,4 +231,7 @@ public class PortfolioController {
 
     @RequestMapping(value = "/bondhistory", method = {RequestMethod.GET})
     public SortedMap<LocalDate, Double> getBondHistory(){ return portfolioService.getBondHistory(); }
+
+    @RequestMapping(value = "/networthhistory", method = {RequestMethod.GET})
+    public LinkedList<PortfolioServiceImpl.Networth> getNetworthHistory(){ return portfolioService.getNetWorthHistory(); }
 }

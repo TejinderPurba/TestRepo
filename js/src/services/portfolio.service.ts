@@ -28,47 +28,47 @@ export class PortfolioService {
   getBondSummaryData(){
     return this.http.get('http://localhost:8080/portfolio/latestbonds')
   }
-  getCashSummaryData(){ 
+  getCashSummaryData(){
     return this.http.get('http://localhost:8080/portfolio/latestcash')
   }
 
   // Lookup data
-  getStockDataBySymbol(params={symbol:''}){ 
+  getStockDataBySymbol(params={symbol:''}){
     return this.http.get(`http://localhost:8080/portfolio/stocks/symbol/${params.symbol}`)
   }
-  getETFDataBySymbol(params={symbol:''}){ 
+  getETFDataBySymbol(params={symbol:''}){
     return this.http.get(`http://localhost:8080/portfolio/etfs/symbol/${params.symbol}`)
   }
-  getBondDataByName(params={name:''}){ 
+  getBondDataByName(params={name:''}){
     return this.http.get(`http://localhost:8080/portfolio/bonds/name/${params.name}`)
   }
-  getCashDataByAccount(params={accountNumber:0}){ 
+  getCashDataByAccount(params={accountNumber:0}){
     return this.http.get(`http://localhost:8080/portfolio/cash/account/${params.accountNumber}`)
   }
 
   // Transaction data
-  postBuyStock(stock:any){ 
+  postBuyStock(stock:any){
     return this.http.post('http://localhost:8080/portfolio/stocks/buy', JSON.stringify(stock), this.httpOptions)
   }
-  postSellStock(stock:any){ 
+  postSellStock(stock:any){
     return this.http.post('http://localhost:8080/portfolio/stocks/sell', stock, this.httpOptions)
   }
-  postBuyETF(etf:any){ 
+  postBuyETF(etf:any){
     return this.http.post('http://localhost:8080/portfolio/etfs/buy', etf, this.httpOptions)
   }
-  postSellETF(etf:any){ 
+  postSellETF(etf:any){
     return this.http.post('http://localhost:8080/portfolio/etfs/sell', etf, this.httpOptions)
   }
-  postBuyBond(bond:any){ 
+  postBuyBond(bond:any){
     return this.http.post('http://localhost:8080/portfolio/bonds/buy', bond, this.httpOptions)
   }
-  postSellBond(bond:any){ 
+  postSellBond(bond:any){
     return this.http.post('http://localhost:8080/portfolio/bonds/sell', bond, this.httpOptions)
   }
-  postDepositCash(cash:any){ 
+  postDepositCash(cash:any){
     return this.http.post('http://localhost:8080/portfolio/cash/deposit', cash, this.httpOptions)
   }
-  postWithdrawCash(cash:any){ 
+  postWithdrawCash(cash:any){
     return this.http.post('http://localhost:8080/portfolio/cash/withdraw', cash, this.httpOptions)
   }
 
@@ -89,10 +89,27 @@ export class PortfolioService {
   }
 
   getTotalIncome(date:any){ // All httpClients are observables
-    return this.http.get(`http://localhost:8080/portfolio/cashincomeflow/${date}`) 
+    return this.http.get(`http://localhost:8080/portfolio/cashincomeflow/${date}`)
   }
 
   getTotalExpense(date:any){ // All httpClients are observables
-    return this.http.get(`http://localhost:8080/portfolio/cashexpenseflow/${date}`) 
+    return this.http.get(`http://localhost:8080/portfolio/cashexpenseflow/${date}`)
+  }
+
+  //Get data of history
+  getCashHistory(){
+    return this.http.get('http://localhost:8080/portfolio/cashhistory')
+  }
+  getStockHistory(){
+    return this.http.get('http://localhost:8080/portfolio/stockhistory')
+  }
+  getETFHistory(){
+    return this.http.get('http://localhost:8080/portfolio/etfhistory')
+  }
+  getBondHistory(){
+    return this.http.get('http://localhost:8080/portfolio/bondhistory')
+  }
+  getNetworthHistory(){
+    return this.http.get('http://localhost:8080/portfolio/networthhistory')
   }
 }

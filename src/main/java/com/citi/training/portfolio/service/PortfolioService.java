@@ -3,10 +3,7 @@ package com.citi.training.portfolio.service;
 import com.citi.training.portfolio.entities.*;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedMap;
+import java.util.*;
 
 public interface PortfolioService {
     /**
@@ -283,4 +280,11 @@ public interface PortfolioService {
      * @return A map with the value of each bond for each day.
      */
     public SortedMap<LocalDate, Double> getBondHistory();
+
+    /**
+     * Combine history of 4 types of data
+     * Generates a map for each date in the networth history.
+     * @return A map with the value of networth for each day.
+     */
+    public LinkedList<PortfolioServiceImpl.Networth> getNetWorthHistory();
 }

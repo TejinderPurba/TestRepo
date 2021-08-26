@@ -1,4 +1,33 @@
 <section>
+  <nav class="navbar navbar-expand navbar-light bg-primary">
+    <div class="nav navbar-nav">
+      <h5 class="nav-item nav-link active text-white">NGX-CHARTS DASHBOARD </h5>
+    </div>
+  </nav>
+  <div class="container-fluid">
+    <div class="row pt-2">
+      <div class="col-md-12">
+        <div class="card text-left">
+          <div class="card-body">
+            <h4 class="card-title border-bottom">Vertical Bar Charts</h4>
+            <ngx-charts-bar-vertical
+              [view]="[500,200]"
+              [results]= saleData
+              [xAxisLabel]="'Date'"
+              [legendTitle]="'Networth Chart'"
+              [yAxisLabel]="'Networth in $C'"
+              [legend]="true"
+              [showXAxisLabel]="true"
+              [showYAxisLabel]="true"
+              [xAxis]="true"
+              [yAxis]="true"
+              [gradient]="true">
+            </ngx-charts-bar-vertical>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <aside>
     <h3>Current Stock Codes</h3>
     <ul>
