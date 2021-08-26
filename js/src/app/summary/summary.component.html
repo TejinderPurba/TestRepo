@@ -258,12 +258,34 @@
                 <ngb-accordion #types="ngbAccordion" [closeOthers]="true" activeIds="deposit">
                     <ngb-panel id="deposit" title="Deposit">
                         <ng-template ngbPanelContent>
-                            test 2
+                            <form>
+                                <input id="accountNumber" type="number" [(ngModel)]='cashParamObj.accountNumber' name="accountNumber" placeholder="Account Number" class="form-control" ng-required="true">
+                                <label for="accountNumber">Account Number</label>
+                                <input id="financialInstitution" type="text" [(ngModel)]='cashParamObj.financialInstitution' name="financialInstitution" placeholder="Financial Institution" class="form-control" ng-required="true">
+                                <label for="financialInstitution">Financial Institution</label>
+                                <input id="accountType" type="number" [(ngModel)]='cashParamObj.accountType' name="accountType" placeholder="Account Type" class="form-control" ng-required="true">
+                                <label for="accountType">Account Type</label>
+                                <input id="transactionAmount" type="number" [(ngModel)]='cashParamObj.transactionAmount' name="transactionAmount" placeholder="Transaction Amount" class="form-control" ng-required="true">
+                                <label for="transactionAmount">Transaction Amount</label>
+                                <br/>
+                                <button type="button" class="btn btn-dark btn-md" (click)="saveTransactionModal(0, true)">Submit</button>
+                            </form>
                         </ng-template>
                     </ngb-panel>
                     <ngb-panel id="withdraw" title="Withdraw">
                         <ng-template ngbPanelContent>
-                            test
+                            <form>
+                                <input id="accountNumber" type="number" [(ngModel)]='cashParamObj.accountNumber' name="accountNumber" placeholder="Account Number" class="form-control" ng-required="true">
+                                <label for="accountNumber">Account Number</label>
+                                <input id="financialInstitution" type="text" [(ngModel)]='cashParamObj.financialInstitution' name="financialInstitution" placeholder="Financial Institution" class="form-control" ng-required="true">
+                                <label for="financialInstitution">Financial Institution</label>
+                                <input id="accountType" type="number" [(ngModel)]='cashParamObj.accountType' name="accountType" placeholder="Account Type" class="form-control" ng-required="true">
+                                <label for="accountType">Account Type</label>
+                                <input id="transactionAmount" type="number" [(ngModel)]='cashParamObj.transactionAmount' name="transactionAmount" placeholder="Transaction Amount" class="form-control" ng-required="true">
+                                <label for="transactionAmount">Transaction Amount</label>
+                                <br/>
+                                <button type="button" class="btn btn-dark btn-md" (click)="saveTransactionModal(0, false)">Submit</button>
+                            </form>
                         </ng-template>
                     </ngb-panel>
                 </ngb-accordion>
@@ -274,7 +296,16 @@
                 <ngb-accordion #types="ngbAccordion" [closeOthers]="true" activeIds="buy">
                     <ngb-panel id="buy" title="Buy">
                         <ng-template ngbPanelContent>
-                            test 2
+                            <div class="md-form">
+                                <input id="symbol" type="text" placeholder="Stock Symbol" class="form-control" mdbInput>
+                                <label for="symbol">Stock Symbol</label>
+                                <input id="name" type="text" placeholder="Stock Name" class="form-control" mdbInput>
+                                <label for="name">Stock Name</label>
+                                <input id="quantity" type="text" placeholder="Stock Quantity" class="form-control" mdbInput>
+                                <label for="quantity">Stock Quantity</label>
+                                <input id="marketValue" type="text" placeholder="Stock Market Value" class="form-control" mdbInput>
+                                <label for="marketValue">Stock Market Value</label>
+                            </div>
                         </ng-template>
                     </ngb-panel>
                     <ngb-panel id="sell" title="Sell">

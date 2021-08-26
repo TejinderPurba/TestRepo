@@ -176,6 +176,7 @@ public class PortfolioController {
 
     @RequestMapping(value = "/cash/deposit", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity depositCash(@RequestBody Cash cash) {
+        System.out.println(cash.toString());
         portfolioService.depositCash(cash);
         return new ResponseEntity(HttpStatus.ACCEPTED);
     }

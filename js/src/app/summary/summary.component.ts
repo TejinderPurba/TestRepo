@@ -124,7 +124,6 @@ export class SummaryComponent implements OnInit {
     } )
   }
 
-
   makeBondNameCall(name:string) {
     this.bondParamObj.name=name
     this.portfolioService.getBondDataByName(this.bondParamObj)
@@ -132,7 +131,6 @@ export class SummaryComponent implements OnInit {
         this.bondModalResponseData = data
     } )
   }
-
 
   makeCashAccountCall(account:number) {
     this.cashParamObj.accountNumber = account
@@ -142,6 +140,48 @@ export class SummaryComponent implements OnInit {
     } )
   }
 
+  buyStock() {
+    this.portfolioService.postBuyStock(this.stockParamObj)
+    .subscribe( (data:any)=>{
+    } )
+  }
+  sellStock() {
+    this.portfolioService.postSellStock(this.stockParamObj)
+    .subscribe( (data:any)=>{
+    } )
+  }
+  buyETF() {
+    this.portfolioService.postBuyETF(this.etfParamObj)
+    .subscribe( (data:any)=>{
+    } )
+  }
+  sellETF() {
+    this.portfolioService.postSellETF(this.etfParamObj)
+    .subscribe( (data:any)=>{
+    } )
+  }
+  buyBond() {
+    this.portfolioService.postBuyBond(this.bondParamObj)
+    .subscribe( (data:any)=>{
+    } )
+  }
+  sellBond() {
+    this.portfolioService.postSellBond(this.bondParamObj)
+    .subscribe( (data:any)=>{
+    } )
+  }
+  test:any
+  depositCash() {
+    this.cashParamObj.dateTime = new Date().toISOString()
+    this.portfolioService.postDepositCash(this.cashParamObj)
+    .subscribe( (data:any)=>{
+  } )
+  }
+  withdrawCash() {
+    this.portfolioService.postWithdrawCash(this.cashParamObj)
+    .subscribe( (data:any)=>{
+    } )
+  }
 
   openDetailsModal(content:any, lookup:any, type:number) {
     switch(type) {
@@ -173,8 +213,49 @@ export class SummaryComponent implements OnInit {
   openTransactionModal(content:any) {
     this.modalService.open(content, { scrollable: true, size: 'xl', backdrop: 'static' });
   }
-  saveTransactionModal() {
-    
+  saveTransactionModal(type:number, transactionType:boolean) {
+    // type is for different account types
+    // transactionType is true for buy/deposit, false for sell/withdraw
+    switch(type) {
+      case 0: {
+        if (transactionType) {
+          this.depositCash()
+          console.log('Depositing!')
+          console.log(new Date())
+        }
+        else{
+          this.withdrawCash()
+        }
+        break
+      }
+      case 1: {
+        if (transactionType) {
+          this.buyStock()
+        }
+        else{
+          this.sellStock()
+        }
+        break
+      }
+      case 2: {
+        if (transactionType) {
+          this.buyETF()
+        }
+        else{
+          this.sellETF()
+        }
+        break
+      }
+      case 3: {
+        if (transactionType) {
+          this.buyBond()
+        }
+        else{
+          this.sellBond()
+        }
+        break
+      }
+    }
   }
 
 }
