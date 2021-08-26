@@ -17,7 +17,7 @@ pipeline {
       }
     stage('Build docker image for frontend') {
           steps {
-            sh "docker build -t ${dockerImageTagFrontend} -f DockerfileFront"
+            sh "docker build -t ${dockerImageTagFrontend} -f js/Dockerfile ."
           }
       }
     stage('Deploy Container To Openshift') {
