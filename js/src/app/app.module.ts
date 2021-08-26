@@ -14,7 +14,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SummaryComponent } from './summary/summary.component'
 import { NgxChartsModule} from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { InvestmentModule } from './Investment/investment.module';
 
 
 @NgModule({
@@ -36,7 +36,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     NgbModule,
     BrowserAnimationsModule,
-    NgxChartsModule
+    NgxChartsModule, 
+    InvestmentModule
   ],
   providers: [],
   bootstrap: [AppComponent]
