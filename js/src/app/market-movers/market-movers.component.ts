@@ -13,7 +13,7 @@ export class MarketMoversComponent implements OnInit {
   periodParamObj = 1
   response = {}
   ngOnInit(): void {
-    // this.makeMarketMoversCall()
+    this.makeMarketMoversByPeriodCall()
   }
   makeMarketMoversCall() {
     // We call the service method by subscribing to the service call
