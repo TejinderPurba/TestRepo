@@ -1,0 +1,13 @@
+table {
+    width:auto;
+  }
+  td {
+    white-space:nowrap;
+  }
+  th:last-child{
+    text-align: right;
+  }
+  td:last-child {
+    width:100%;
+    text-align: right;
+  }
