@@ -6,10 +6,12 @@ import { MarketMoversComponent } from './market-movers/market-movers.component';
 import { NetWorthComponent } from './net-worth/net-worth.component';
 import { SummaryComponent } from './summary/summary.component';
 import { InvestmentComponent } from './Investment/investment.component';
+import {MainComponent} from './main.component'
 
 // All routes are inspected in strict order until a match is found
 const routes: Routes = [
-  {path:'', redirectTo: '/cash-flow', pathMatch:'full'},
+  {path:'', redirectTo: '/home', pathMatch:'full'},
+  {path:'home', component:MainComponent},
   {path:'cash-flow', component:CashFlowComponent},
   {path:'market-movers', component:MarketMoversComponent},
   {path:'net-worth', component:NetWorthComponent},
