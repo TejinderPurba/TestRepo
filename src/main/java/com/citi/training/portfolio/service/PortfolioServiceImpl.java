@@ -26,12 +26,28 @@ public class PortfolioServiceImpl implements PortfolioService {
     @Autowired
     private CashRepository cashRepository;
 
-    public static class Networth {
-        LocalDate date;
-        Double value;
+    public class Networth {
+        public LocalDate date;
+        public Double value;
 
         Networth(LocalDate date, Double value) {
             this.date = date;
+            this.value = value;
+        }
+
+        public LocalDate getDate() {
+            return date;
+        }
+
+        public void setDate(LocalDate date) {
+            this.date = date;
+        }
+
+        public Double getValue() {
+            return value;
+        }
+
+        public void setValue(Double value) {
             this.value = value;
         }
     }
@@ -548,6 +564,12 @@ public class PortfolioServiceImpl implements PortfolioService {
                 networthHistory.put(date, cashHistory.get(date));
             }
         }
+
+        for (var entry : networthHistory.entrySet()) {
+            Networth networth = new Networth(entry.getKey(), entry.getValue());
+            history.add(networth);
+        }
+
         return history;
 
     }
