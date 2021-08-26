@@ -209,12 +209,11 @@ public class PortfolioController {
     @RequestMapping(value = "/marketmovers/{period}", method = {RequestMethod.GET})
     public SortedMap getMarketMovers(@PathVariable int period) { return portfolioService.getMarketMovers(period); }
 
-    //returns array with total income cash at [0] and the individual numbers for all accounts at [1][2][3][4]
     @RequestMapping(value = "/cashincomeflow/{date}", method = {RequestMethod.GET})
-    public double[] getIncomeCashFlow(@PathVariable String date){ return portfolioService.getIncomeCashFlow(date); }
+    public LinkedList<PortfolioServiceImpl.GraphData> getIncomeCashFlow(@PathVariable String date){ return portfolioService.getIncomeCashFlow(date); }
 
     @RequestMapping(value = "/cashexpenseflow/{date}", method = {RequestMethod.GET})
-    public double[] getExpenseCashFlow(@PathVariable String date){ return portfolioService.getExpenseCashFlow(date); }
+    public LinkedList<PortfolioServiceImpl.GraphData> getExpenseCashFlow(@PathVariable String date){ return portfolioService.getExpenseCashFlow(date); }
 
     @RequestMapping(value = "/cashflow/{date}", method = {RequestMethod.GET})
     public double getCashFlow(@PathVariable String date){ return portfolioService.getCashFlow(date); }
@@ -232,5 +231,5 @@ public class PortfolioController {
     public SortedMap<LocalDate, Double> getBondHistory(){ return portfolioService.getBondHistory(); }
 
     @RequestMapping(value = "/networthhistory", method = {RequestMethod.GET})
-    public LinkedList<PortfolioServiceImpl.Networth> getNetworthHistory(){ return portfolioService.getNetWorthHistory(); }
+    public LinkedList<PortfolioServiceImpl.GraphData> getNetworthHistory(){ return portfolioService.getNetWorthHistory(); }
 }

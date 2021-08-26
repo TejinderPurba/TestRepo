@@ -26,11 +26,11 @@ public class PortfolioServiceImpl implements PortfolioService {
     @Autowired
     private CashRepository cashRepository;
 
-    public class Networth {
+    public class GraphData {
         public Double value;
-        public LocalDate name;
+        public Object name;
 
-        Networth(Double value, LocalDate name) {
+        GraphData(Double value, Object name) {
             this.value = value;
             this.name = name;
         }
@@ -43,11 +43,11 @@ public class PortfolioServiceImpl implements PortfolioService {
             this.value = value;
         }
 
-        public LocalDate getName() {
+        public Object getName() {
             return name;
         }
 
-        public void setName(LocalDate name) {
+        public void setName(Object name) {
             this.name = name;
         }
     }
@@ -366,8 +366,9 @@ public class PortfolioServiceImpl implements PortfolioService {
     }
 
     @Override
-    public double[] getIncomeCashFlow(String date) {
+    public LinkedList<GraphData> getIncomeCashFlow(String date) {
         double[] incomeCashFlow = new double[5];
+        LinkedList<GraphData> incomeFlow = new LinkedList<>();
         Collection<Cash> cashFlows = cashRepository.getLatestIncomeCashFlows(date);
         for (Cash cash : cashFlows) {
             if (cash.getAccountType() == 1) {
@@ -381,12 +382,19 @@ public class PortfolioServiceImpl implements PortfolioService {
             }
         }
         incomeCashFlow[0] = incomeCashFlow[1] + incomeCashFlow[2] + incomeCashFlow[3] + incomeCashFlow[4];
-        return incomeCashFlow;
+
+        incomeFlow.add(new GraphData(incomeCashFlow[1], "Chequing Accounts"));
+        incomeFlow.add(new GraphData(incomeCashFlow[2], "Savings Accounts"));
+        incomeFlow.add(new GraphData(incomeCashFlow[3], "Cash Management Accounts"));
+        incomeFlow.add(new GraphData(incomeCashFlow[4], "Broker Accounts"));
+
+        return incomeFlow;
     }
 
     @Override
-    public double[] getExpenseCashFlow(String date) {
+    public LinkedList<GraphData> getExpenseCashFlow(String date) {
         double[] expenseCashFlow = new double[5];
+        LinkedList<GraphData> expenseFlow = new LinkedList<>();
         Collection<Cash> cashFlows = cashRepository.getLatestExpenseCashFlows(date);
         for (Cash cash : cashFlows) {
             if (cash.getAccountType() == 1) {
@@ -400,12 +408,24 @@ public class PortfolioServiceImpl implements PortfolioService {
             }
         }
         expenseCashFlow[0] = expenseCashFlow[1] + expenseCashFlow[2] + expenseCashFlow[3] + expenseCashFlow[4];
-        return expenseCashFlow;
+
+        expenseFlow.add(new GraphData(expenseCashFlow[1], "Chequing Accounts"));
+        expenseFlow.add(new GraphData(expenseCashFlow[2], "Savings Accounts"));
+        expenseFlow.add(new GraphData(expenseCashFlow[3], "Cash Management Accounts"));
+        expenseFlow.add(new GraphData(expenseCashFlow[4], "Broker Accounts"));
+
+        return expenseFlow;
     }
 
     @Override
     public double getCashFlow(String date) {
-        double cashFlow = getIncomeCashFlow(date)[0] - getExpenseCashFlow(date)[0];
+        double cashFlow = 0.0;
+        for (GraphData item : getIncomeCashFlow(date)) {
+            cashFlow += item.getValue();
+        }
+        for (GraphData item : getExpenseCashFlow(date)) {
+            cashFlow -= item.getValue();
+        }
         return cashFlow;
     }
 
@@ -533,13 +553,13 @@ public class PortfolioServiceImpl implements PortfolioService {
     }
 
     @Override
-    public LinkedList<Networth> getNetWorthHistory() {
+    public LinkedList<GraphData> getNetWorthHistory() {
         SortedMap<LocalDate, Double> networthHistory = new TreeMap<>();
         SortedMap<LocalDate, Double> bondHistory = getBondHistory();
         SortedMap<LocalDate, Double> stockHistory = getStockHistory();
         SortedMap<LocalDate, Double> cashHistory = getCashHistory();
         SortedMap<LocalDate, Double> etfHistory = getExchangeTradedFundHistory();
-        LinkedList<Networth> history = new LinkedList<>();
+        LinkedList<GraphData> history = new LinkedList<>();
         for (LocalDate date : bondHistory.keySet()) {
             networthHistory.put(date, bondHistory.get(date));
         }
@@ -566,7 +586,7 @@ public class PortfolioServiceImpl implements PortfolioService {
         }
 
         for (var entry : networthHistory.entrySet()) {
-            Networth networth = new Networth(entry.getValue(), entry.getKey());
+            GraphData networth = new GraphData(entry.getValue(), entry.getKey());
             history.add(networth);
         }
 

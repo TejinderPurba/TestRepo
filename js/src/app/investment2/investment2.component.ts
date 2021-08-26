@@ -14,8 +14,11 @@ export class Investment2Component implements OnInit {
 
   paramCashFlowDate = ''
 
-  totalIncome = [1,2,3] as number[]
-  totalExpenses= [1,2,3] as number[]
+  incomeSeries = [ {value:0.0, name:'None'} ]
+  expenseSeries = [ {value:0.0, name:'None'} ]
+
+  totalIncome = 0.0
+  totalExpenses = 0.0
 
   constructor(private typicodeService:TypicodeService, private PortfolioService:PortfolioService) { }
 
@@ -26,17 +29,12 @@ export class Investment2Component implements OnInit {
     this.paramCashFlowDate=date.toISOString().split('T')[0]
     //this.paramCashFlowDate = this.datePipe.transform(date, 'yyyy-MM-dd').toLocaleString();
     this.makePortfolioServiceCall()
+
 }
 
-
-public chartDatasets: Array<any> = [
-    { data: [300, 50, 100, 40, 120], label: 'My First dataset' }
-];
-public chartOptions: any = {
-    responsive: true
-  };
-public chartHovered(e: any): void { }
-
+addCurrencySymbol(data:any) {
+      return 'C$' + data;
+}
 
 makePortfolioServiceCall() {
     // We call the service method by subscribing to the service call
@@ -44,7 +42,7 @@ makePortfolioServiceCall() {
   this.PortfolioService.getNetWorth()
     .subscribe( (data:any)=>{ // any should be a class instead specifying what properties data would have
       this.myNetWorth = data
-  } )
+    } )
 
     this.PortfolioService.getTotalCashFlow(this.paramCashFlowDate)
     .subscribe( (data:any)=>{ // any should be a class instead specifying what properties data would have
@@ -53,13 +51,20 @@ makePortfolioServiceCall() {
 
     this.PortfolioService.getTotalIncome(this.paramCashFlowDate)
     .subscribe( (data:any)=>{ // any should be a class instead specifying what properties data would have
-        this.totalIncome = data
+        this.incomeSeries = data
     } )
 
     this.PortfolioService.getTotalExpense(this.paramCashFlowDate)
     .subscribe( (data:any)=>{ // any should be a class instead specifying what properties data would have
-        this.totalExpenses = data
+        this.expenseSeries = data
     } )
-  }
 
+    // ISNT WORKING RIGHT NOW, MIGHT BE DOING IT BEFORE THE HTTP RESPONSE COMES BACK AND THE VARS GET POPULATED?
+    for(let entry of this.incomeSeries) {
+      this.totalIncome += entry.value
+    }
+    for(let entry of this.expenseSeries) {
+      this.totalExpenses -= entry.value
+    }
+  }
 }

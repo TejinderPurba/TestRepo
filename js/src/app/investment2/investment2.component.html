@@ -2,19 +2,30 @@
     <!-- <h3>Net Worth C${{myNetWorth[2] | currency:'C$'}}</h3> -->
     <h3>Net Worth C${{myNetWorth[2]}}</h3>
 
-    <p>Here are the assets that make up the net worth</p>
-
 </section>
 <section>
   <h3>Cash Flow is C${{totalCashFlow}}</h3>
 </section>
 
 <section>
-  <h4>Income</h4>
-  <h5>C${{totalIncome[0]}}</h5>
+  <h3>Income</h3>
+  <br/>
+  <br/>
+<ngx-charts-advanced-pie-chart 
+      [results]="incomeSeries"
+      [gradient]="true"
+      [valueFormatting]="addCurrencySymbol" >
+</ngx-charts-advanced-pie-chart>
 </section>
 
 <section>
-    <h4>Expenses</h4>
-    <h5>C${{totalExpenses[0]}}</h5>
+    <h3>Expenses</h3>
+    <br/>
+    <br/>
+<ngx-charts-advanced-pie-chart 
+      [results]="expenseSeries"
+      [gradient]="true" 
+      [valueFormatting]="addCurrencySymbol" >
+</ngx-charts-advanced-pie-chart>
+
 </section>

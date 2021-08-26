@@ -243,13 +243,13 @@ public interface PortfolioService {
      * Generates the income cash flow by each account type.
      * @return A collection with income cash flows sorted by account type.
      */
-    public double[] getIncomeCashFlow(String date);
+    public LinkedList<PortfolioServiceImpl.GraphData> getIncomeCashFlow(String date);
 
     /**
      * Generates the expense cash flow by each account type.
      * @return A collection with expense cash flows sorted by account type.
      */
-    public double[] getExpenseCashFlow(String date);
+    public LinkedList<PortfolioServiceImpl.GraphData> getExpenseCashFlow(String date);
 
     /**
      * Calculates the overall cash flow by subtracting expenses from income.
@@ -286,5 +286,5 @@ public interface PortfolioService {
      * Generates a map for each date in the networth history.
      * @return A map with the value of networth for each day.
      */
-    public LinkedList<PortfolioServiceImpl.Networth> getNetWorthHistory();
+    public LinkedList<PortfolioServiceImpl.GraphData> getNetWorthHistory();
 }
