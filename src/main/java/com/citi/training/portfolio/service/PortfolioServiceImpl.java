@@ -2,6 +2,7 @@ package com.citi.training.portfolio.service;
 
 import com.citi.training.portfolio.entities.*;
 import com.citi.training.portfolio.repo.*;
+import com.fasterxml.jackson.datatype.jsr310.deser.key.LocalDateKeyDeserializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,14 @@ public class PortfolioServiceImpl implements PortfolioService {
     @Autowired
     private CashRepository cashRepository;
 
+    public static class Networth {
+        LocalDate date;
+        Double value;
+        Networth(LocalDate date,Double value){
+            this.date = date;
+            this.value = value;
+        }
+    }
     /**
      * STOCK METHODS
      */
@@ -444,5 +453,40 @@ public class PortfolioServiceImpl implements PortfolioService {
         }
 
         return bondHistory;
+    }
+
+    @Override
+    public LinkedList<Networth> getNetWorthHistory() {
+        SortedMap<LocalDate, Double> networthHistory = new TreeMap<>();
+        SortedMap<LocalDate, Double> bondHistory = getBondHistory();
+        SortedMap<LocalDate, Double> stockHistory = getStockHistory();
+        SortedMap<LocalDate, Double> cashHistory = getCashHistory();
+        SortedMap<LocalDate, Double> etfHistory = getExchangeTradedFundHistory();
+        LinkedList<Networth> history = new LinkedList<>();
+        for(LocalDate date: bondHistory.keySet()){
+            networthHistory.put(date,bondHistory.get(date));
+        }
+        for(LocalDate date: stockHistory.keySet()){
+            if(networthHistory.containsKey(date)){
+                networthHistory.put(date,networthHistory.get(date)+stockHistory.get(date));
+            }else {
+                networthHistory.put(date,stockHistory.get(date));
+            }
+        }
+        for(LocalDate date: etfHistory.keySet()){
+            if(networthHistory.containsKey(date)){
+                networthHistory.put(date,networthHistory.get(date)+etfHistory.get(date));
+            }else {
+                networthHistory.put(date,etfHistory.get(date));
+            }
+        }
+        for(LocalDate date: cashHistory.keySet()){
+            if(networthHistory.containsKey(date)){
+                networthHistory.put(date,networthHistory.get(date)+cashHistory.get(date));
+            }else {
+                networthHistory.put(date,cashHistory.get(date));
+            }
+        }
+        return history;
     }
 }
