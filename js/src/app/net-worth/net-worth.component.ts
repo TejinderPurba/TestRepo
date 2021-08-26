@@ -17,16 +17,6 @@ export class NetWorthComponent implements OnInit {
   networthResponseData = [{name: 0, value: 0}]
 
 
-  // declare model data for this component
-  total:number = 0
-  codes = [
-    {code:'AMZN', price:42},
-    {code:'NFLX', price:12},
-    {code:'GOOGL', price:142},
-    {code:'FB', price:82},
-    {code:'AAPL', price:11},
-  ]
-
   constructor(private portfolioService:PortfolioService, private modalService: NgbModal) { }
 
 
