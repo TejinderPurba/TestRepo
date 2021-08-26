@@ -20,6 +20,9 @@ export class Investment2Component implements OnInit {
   totalIncome = 0.0
   totalExpenses = 0.0
 
+  incomeData= [ {name:'None', value:0.0} ]
+  expenseData= [ {name:'None', value:0.0} ]
+
   constructor(private typicodeService:TypicodeService, private PortfolioService:PortfolioService) { }
 
   ngOnInit(): void {
@@ -51,12 +54,24 @@ makePortfolioServiceCall() {
 
     this.PortfolioService.getTotalIncome(this.paramCashFlowDate)
     .subscribe( (data:any)=>{ // any should be a class instead specifying what properties data would have
-        this.incomeSeries = data
+        this.totalIncome = data[0]
+        this.incomeData = [
+          { name: "Chequing", value: data[1]},
+          { name: "Saving", value: data[2]},
+          { name: "Cash Management", value: data[3]},
+          { name: "Broker", value: data[4]}
+        ];
     } )
 
     this.PortfolioService.getTotalExpense(this.paramCashFlowDate)
     .subscribe( (data:any)=>{ // any should be a class instead specifying what properties data would have
-        this.expenseSeries = data
+      this.totalExpenses = data[0]
+        this.expenseData = [
+          { name: "Chequing", value: data[1]},
+          { name: "Saving", value: data[2]},
+          { name: "Cash Management", value: data[3]},
+          { name: "Broker", value: data[4]}
+        ];
     } )
 
     // ISNT WORKING RIGHT NOW, MIGHT BE DOING IT BEFORE THE HTTP RESPONSE COMES BACK AND THE VARS GET POPULATED?

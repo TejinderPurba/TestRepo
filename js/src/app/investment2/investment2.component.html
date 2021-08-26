@@ -11,10 +11,10 @@
   <h3>Income</h3>
   <br/>
   <br/>
-<ngx-charts-advanced-pie-chart 
-      [results]="incomeSeries"
-      [gradient]="true"
-      [valueFormatting]="addCurrencySymbol" >
+  <ngx-charts-advanced-pie-chart 
+        [results]="incomeData"
+        [gradient]="true" 
+        [valueFormatting]="addCurrencySymbol">
 </ngx-charts-advanced-pie-chart>
 </section>
 
@@ -23,7 +23,7 @@
     <br/>
     <br/>
 <ngx-charts-advanced-pie-chart 
-      [results]="expenseSeries"
+      [results]="expenseData"
       [gradient]="true" 
       [valueFormatting]="addCurrencySymbol" >
 </ngx-charts-advanced-pie-chart>
