@@ -324,26 +324,33 @@ public class PortfolioServiceImpl implements PortfolioService {
     }
 
     @Override
-    public SortedMap<LocalDate, Double> getCashHistory(int period){
-        SortedMap<LocalDate, Double> cashHistory= new TreeMap<>();
-        double cashValueForYesterday =0;
-        for(int i = period; i >= 0; i--){
-            LocalDate day= LocalDate.now().minusDays(i);
-            Collection<Cash> dayCashValue = cashRepository.getAllCashByDay(day.toString());
-            System.out.println("date "+day);
-            double cashValForToday = 0;
-            for(Cash cash: dayCashValue) {
-                cashValForToday += cash.getBalance();
-                System.out.println(cash.getFinancialInstitution()+" "+cash.getBalance());
-            }
-            System.out.println(cashValForToday);
-            if(cashValForToday!=0){
-                cashHistory.put(day, cashValForToday);
-                cashValueForYesterday=cashValForToday;
-            }else{
-                cashHistory.put(day, cashValueForYesterday);
-            }
+    public SortedMap<LocalDate, Double> getCashHistory(){
+        SortedMap<LocalDate, Double> cashHistory = new TreeMap<>();
+        Collection<Cash> allCash = cashRepository.findAllSorted();
+        Map<Integer, Double> cashValues = new HashMap<>();
+
+        if (allCash.size() > 0) {
+            Cash firstCash = allCash.iterator().next();
+            LocalDate currDate = firstCash.getDateTime().toLocalDate();
+            LocalDate tomorrow = LocalDate.now().plusDays(1);
+            Double currWorth = 0.0;
+
+            do {
+                currWorth = 0.0;
+                Collection<Cash> currCash = cashRepository.getAllLatestCashAccountsByDate(currDate.toString());
+                if (currCash.size() > 0) {
+                    for (Cash cash : currCash) {
+                        cashValues.put(cash.getAccountNumber(), cash.getBalance());
+                    }
+                }
+                for (var cash : cashValues.entrySet()) {
+                    currWorth += cash.getValue();
+                }
+                cashHistory.put(currDate, currWorth);
+                currDate = currDate.plusDays(1);
+            } while(!currDate.equals(tomorrow));
         }
+
         return cashHistory;
     }
 

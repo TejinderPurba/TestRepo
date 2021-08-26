@@ -88,11 +88,12 @@ public interface CashRepository extends JpaRepository<Cash, Integer> {
     Collection<Cash> getLatestExpenseCashFlows(@Param("date") String date);
 
     /**
-     * Retrieves all cash transactions on a given day
-     * @return Collection of the latest transaction for each cash account.
+     * Retrieves the latest transaction of each cash account by date.
+     * @param date the date to be fetched.
+     * @return Collection of the latest transaction for each cash account by date.
      */
     @Query(
-            value = "SELECT * from cash t1 where DATE(date_time) = :date",
+            value = "SELECT * from cash t1 where date_time = (select max(date_time) from cash where t1.account_number = cash.account_number and DATE(date_time) = :date) order by date_time desc",
             nativeQuery = true)
-    Collection<Cash> getAllCashByDay(@Param("date") String date);
+    Collection<Cash> getAllLatestCashAccountsByDate(@Param("date") String date);
 }

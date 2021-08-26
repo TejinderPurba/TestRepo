@@ -218,8 +218,8 @@ public class PortfolioController {
     @RequestMapping(value = "/cashflow/{date}", method = {RequestMethod.GET})
     public double getCashFlow(@PathVariable String date){ return portfolioService.getCashFlow(date); }
 
-    @RequestMapping(value = "/cashhistory/{period}", method = {RequestMethod.GET})
-    public SortedMap<LocalDate, Double> getCashHistory(@PathVariable int period){ return portfolioService.getCashHistory(period); }
+    @RequestMapping(value = "/cashhistory", method = {RequestMethod.GET})
+    public SortedMap<LocalDate, Double> getCashHistory(){ return portfolioService.getCashHistory(); }
 
     @RequestMapping(value = "/stockhistory", method = {RequestMethod.GET})
     public SortedMap<LocalDate, Double> getStockHistory(){ return portfolioService.getStockHistory(); }

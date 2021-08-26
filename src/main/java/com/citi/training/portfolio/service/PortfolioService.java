@@ -264,7 +264,7 @@ public interface PortfolioService {
      * Generates a map for each date in the cash history.
      * @return A map with the balance of each cash account for each day.
      */
-    public SortedMap<LocalDate, Double> getCashHistory(int period);
+    public SortedMap<LocalDate, Double> getCashHistory();
 
     /**
      * Generates a map for each date in the stock history.
