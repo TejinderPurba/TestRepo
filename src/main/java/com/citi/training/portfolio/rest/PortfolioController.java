@@ -210,10 +210,10 @@ public class PortfolioController {
     public SortedMap getMarketMovers(@PathVariable int period) { return portfolioService.getMarketMovers(period); }
 
     @RequestMapping(value = "/cashincomeflow/{date}", method = {RequestMethod.GET})
-    public LinkedList<PortfolioServiceImpl.GraphData> getIncomeCashFlow(@PathVariable String date){ return portfolioService.getIncomeCashFlow(date); }
+    public double[] getIncomeCashFlow(@PathVariable String date){ return portfolioService.getIncomeCashFlow(date); }
 
     @RequestMapping(value = "/cashexpenseflow/{date}", method = {RequestMethod.GET})
-    public LinkedList<PortfolioServiceImpl.GraphData> getExpenseCashFlow(@PathVariable String date){ return portfolioService.getExpenseCashFlow(date); }
+    public double[] getExpenseCashFlow(@PathVariable String date){ return portfolioService.getExpenseCashFlow(date); }
 
     @RequestMapping(value = "/cashflow/{date}", method = {RequestMethod.GET})
     public double getCashFlow(@PathVariable String date){ return portfolioService.getCashFlow(date); }
