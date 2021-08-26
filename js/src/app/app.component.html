@@ -8,7 +8,7 @@
     <a routerLink='/insights'>Insights</a> -->
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <a class="nav-link active" href="/cash-flow">Cash Flow</a>
+        <a class="nav-link" href="/cash-flow">Cash Flow</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/market-movers">Market Movers</a>
@@ -25,6 +25,7 @@
     </ul>
   </nav>
   <h1>Portfolio Manager</h1>
+  <br/>
   <ng-container *ngIf='askCookieConsent'>
     <ngb-alert [dismissible]="false" type="info">This site uses cookies, is that ok?
       <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic">
