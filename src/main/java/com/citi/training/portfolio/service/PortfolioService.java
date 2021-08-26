@@ -243,13 +243,13 @@ public interface PortfolioService {
      * Generates the income cash flow by each account type.
      * @return A collection with income cash flows sorted by account type.
      */
-    public LinkedList<PortfolioServiceImpl.GraphData> getIncomeCashFlow(String date);
+    public double[] getIncomeCashFlow(String date);
 
     /**
      * Generates the expense cash flow by each account type.
      * @return A collection with expense cash flows sorted by account type.
      */
-    public LinkedList<PortfolioServiceImpl.GraphData> getExpenseCashFlow(String date);
+    public double[] getExpenseCashFlow(String date);
 
     /**
      * Calculates the overall cash flow by subtracting expenses from income.

@@ -47,7 +47,7 @@ public class PortfolioServiceImpl implements PortfolioService {
             return name;
         }
 
-        public void setName(Object name) {
+        public void setName(LocalDate name) {
             this.name = name;
         }
     }
@@ -366,9 +366,8 @@ public class PortfolioServiceImpl implements PortfolioService {
     }
 
     @Override
-    public LinkedList<GraphData> getIncomeCashFlow(String date) {
+    public double[] getIncomeCashFlow(String date) {
         double[] incomeCashFlow = new double[5];
-        LinkedList<GraphData> incomeFlow = new LinkedList<>();
         Collection<Cash> cashFlows = cashRepository.getLatestIncomeCashFlows(date);
         for (Cash cash : cashFlows) {
             if (cash.getAccountType() == 1) {
@@ -382,19 +381,12 @@ public class PortfolioServiceImpl implements PortfolioService {
             }
         }
         incomeCashFlow[0] = incomeCashFlow[1] + incomeCashFlow[2] + incomeCashFlow[3] + incomeCashFlow[4];
-
-        incomeFlow.add(new GraphData(incomeCashFlow[1], "Chequing Accounts"));
-        incomeFlow.add(new GraphData(incomeCashFlow[2], "Savings Accounts"));
-        incomeFlow.add(new GraphData(incomeCashFlow[3], "Cash Management Accounts"));
-        incomeFlow.add(new GraphData(incomeCashFlow[4], "Broker Accounts"));
-
-        return incomeFlow;
+        return incomeCashFlow;
     }
 
     @Override
-    public LinkedList<GraphData> getExpenseCashFlow(String date) {
+    public double[] getExpenseCashFlow(String date) {
         double[] expenseCashFlow = new double[5];
-        LinkedList<GraphData> expenseFlow = new LinkedList<>();
         Collection<Cash> cashFlows = cashRepository.getLatestExpenseCashFlows(date);
         for (Cash cash : cashFlows) {
             if (cash.getAccountType() == 1) {
@@ -408,24 +400,12 @@ public class PortfolioServiceImpl implements PortfolioService {
             }
         }
         expenseCashFlow[0] = expenseCashFlow[1] + expenseCashFlow[2] + expenseCashFlow[3] + expenseCashFlow[4];
-
-        expenseFlow.add(new GraphData(expenseCashFlow[1], "Chequing Accounts"));
-        expenseFlow.add(new GraphData(expenseCashFlow[2], "Savings Accounts"));
-        expenseFlow.add(new GraphData(expenseCashFlow[3], "Cash Management Accounts"));
-        expenseFlow.add(new GraphData(expenseCashFlow[4], "Broker Accounts"));
-
-        return expenseFlow;
+        return expenseCashFlow;
     }
 
     @Override
     public double getCashFlow(String date) {
-        double cashFlow = 0.0;
-        for (GraphData item : getIncomeCashFlow(date)) {
-            cashFlow += item.getValue();
-        }
-        for (GraphData item : getExpenseCashFlow(date)) {
-            cashFlow -= item.getValue();
-        }
+        double cashFlow = getIncomeCashFlow(date)[0] - getExpenseCashFlow(date)[0];
         return cashFlow;
     }
 
