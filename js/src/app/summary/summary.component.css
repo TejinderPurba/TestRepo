@@ -10,4 +10,7 @@
     display: inline-block;
     vertical-align: top;
   }
+  a {
+    text-decoration: underline;
+  }
   
