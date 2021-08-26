@@ -10,7 +10,7 @@ export class MarketMoversComponent implements OnInit {
 
   constructor(private portfolioService:PortfolioService) { }
   // we can declare data models for use within this component
-  periodParamObj = 0
+  periodParamObj = 1
   response = {}
   ngOnInit(): void {
     // this.makeMarketMoversCall()

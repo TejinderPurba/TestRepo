@@ -28,6 +28,7 @@
     </ul>
   </nav>
   <h1>Portfolio Manager</h1>
+  <br/>
   <ng-container *ngIf='askCookieConsent'>
     <ngb-alert [dismissible]="false" type="info">This site uses cookies, is that ok?
       <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic">
@@ -44,16 +45,16 @@
     </div>
     <!-- try -md-auto when the charts are there-->
     <div class="col-6">
-        <app-investment></app-investment>      
+        <app-investment></app-investment>
     </div>
     <div class="col">
       <app-market-movers></app-market-movers>
     </div>
   </div>
 
-  
-  
-  
+
+
+
   <!-- here we can bind to the daa models -->
   <!-- the | is 'pipe' in this case for date -->
   <!-- the {{}} are called interpolation binding -->

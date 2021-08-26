@@ -1,5 +1,4 @@
-import { NgForOf } from '@angular/common';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Component, OnInit } from '@angular/core';
 import { PortfolioService } from 'src/services/portfolio.service';
 
@@ -22,8 +21,8 @@ export class SummaryComponent implements OnInit {
   bondResponseData = [{dateTime:'', issuer:'', name:'', bondType:'', transactionType:0, faceValue:0.0, maturity:'', couponRate:0.0, totalValue:0.0}]
   bondTotal = 0.0
 
-  cashParamObj = {dateTime:'', financialInstitution:'', accountType:0, transactionType:0, balance:0.0, transactionAmount:0.0, accountNumber:0}
-  cashResponseData = [{dateTime:'', financialInstitution:'', accountType:0, transactionType:0, balance:0.0, transactionAmount:0.0, accountNumber:0}]
+  cashParamObj = {dateTime:'', financialInstitution:'', accountType:1, transactionType:0, balance:0.0, transactionAmount:0.0, accountNumber:0}
+  cashResponseData = [{dateTime:'', financialInstitution:'', accountType:1, transactionType:0, balance:0.0, transactionAmount:0.0, accountNumber:0}]
   cashTotal = 0.0
 
   currentModalTitle = ''
@@ -34,16 +33,14 @@ export class SummaryComponent implements OnInit {
   isStockETFLegendCollapsed = true
   isBondLegendCollapsed = true
   isCashLegendCollapsed = true
-  isCashDepositTransactionCollapsed = true
-  isCashWithdrawTransactionCollapsed = true
 
-  saleData = [
-    { name: "Mobiles", value: 105000 },
-    { name: "Laptop", value: 55000 },
-    { name: "AC", value: 15000 },
-    { name: "Headset", value: 150000 },
-    { name: "Fridge", value: 20000 }
-  ];
+  displayMonths = 2;
+  navigation = 'select';
+  showWeekNumbers = false;
+  outsideDays = 'visible';
+  private dateToString(date:any) {
+    return `${date.year}-${date.month}-${date.day}`
+  }
 
   constructor(private portfolioService:PortfolioService, private modalService: NgbModal) { }
 
@@ -142,36 +139,46 @@ export class SummaryComponent implements OnInit {
 
   buyStock() {
     this.stockParamObj.dateTime = new Date().toISOString()
+    this.stockParamObj.transactionType = 0
     this.portfolioService.postBuyStock(this.stockParamObj)
       .subscribe( (data:any)=>{
       } )
   }
   sellStock() {
     this.stockParamObj.dateTime = new Date().toISOString()
+    this.stockParamObj.transactionType = 1
     this.portfolioService.postSellStock(this.stockParamObj)
       .subscribe( (data:any)=>{
       } )
   }
   buyETF() {
     this.etfParamObj.dateTime = new Date().toISOString()
+    this.etfParamObj.transactionType = 0
     this.portfolioService.postBuyETF(this.etfParamObj)
       .subscribe( (data:any)=>{
       } )
   }
   sellETF() {
     this.etfParamObj.dateTime = new Date().toISOString()
+    this.etfParamObj.transactionType = 1
     this.portfolioService.postSellETF(this.etfParamObj)
       .subscribe( (data:any)=>{
       } )
   }
   buyBond() {
     this.bondParamObj.dateTime = new Date().toISOString()
-    this.portfolioService.postBuyBond(this.bondParamObj)
-      .subscribe( (data:any)=>{
-      } )
+    this.bondParamObj.transactionType = 0
+    this.bondParamObj.maturity = this.dateToString(this.bondParamObj.maturity)
+    console.log(this.bondParamObj)
+  
+    // this.portfolioService.postBuyBond(this.bondParamObj)
+    //   .subscribe( (data:any)=>{
+    //   } )
   }
   sellBond() {
     this.bondParamObj.dateTime = new Date().toISOString()
+    this.bondParamObj.transactionType = 1
+    this.bondParamObj.totalValue = 0.0
     this.portfolioService.postSellBond(this.bondParamObj)
       .subscribe( (data:any)=>{
       } )
@@ -179,12 +186,14 @@ export class SummaryComponent implements OnInit {
   test:any
   depositCash() {
     this.cashParamObj.dateTime = new Date().toISOString()
+    this.cashParamObj.transactionType = 0
     this.portfolioService.postDepositCash(this.cashParamObj)
       .subscribe( (data:any)=>{
       } )
   }
   withdrawCash() {
     this.cashParamObj.dateTime = new Date().toISOString()
+    this.cashParamObj.transactionType = 1
     this.portfolioService.postWithdrawCash(this.cashParamObj)
       .subscribe( (data:any)=>{
       } )

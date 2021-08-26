@@ -445,4 +445,9 @@ public class PortfolioServiceImpl implements PortfolioService {
 
         return bondHistory;
     }
+
+    class lineData {
+        LocalDate d1;
+        Double d2;
+    }
 }

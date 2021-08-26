@@ -1,28 +1,29 @@
 <form>
-  <input placeholder='number of days ' id="price-typeahead" type="text" class="form-control" [(ngModel)]='periodParamObj' name='period' min = "1"/>
+  <input placeholder='Number of Days' id="period" type="text" class="form-control" [(ngModel)]='periodParamObj' name='period' min = "1"/>
+  <label for="period">Analysis Period in Days</label>
+  <br/>
+  <hr/>
   <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic">
     <label ngbButtonLabel class="btn-primary">
-      <input ngbButton type="radio" (click)='makeMarketMoversByPeriodCall()'> Input period (Last ? days)
+      <input ngbButton type="radio" (click)='makeMarketMoversByPeriodCall()'> Refresh
     </label>
   </div>
 </form>
-<table class="table table-striped" >
+<table class="table table-striped table-responsive" >
   <thead>
   <tr>
-    <th scope="col">SYMBOLS</th>
-    <th scope="col">GAINER & LOSER</th>
+    <th scope="col">Symbols</th>
+    <th scope="col">Gainers & Losers</th>
   </tr>
   </thead>
   <tbody>
-  <tr>
-    <td>
-      <ul *ngFor="let mover of this.response | keyvalue">
+  <tr *ngFor="let mover of this.response | keyvalue">
+    <td >
         {{mover.value}}
-    </ul>
+
     </td>
-    <td> <ul *ngFor="let mover of this.response |  keyvalue ">
+    <td>
         {{mover.key }}%
-    </ul>
     </td>
   </tr>
   </tbody>
