@@ -27,20 +27,12 @@ public class PortfolioServiceImpl implements PortfolioService {
     private CashRepository cashRepository;
 
     public class Networth {
-        public LocalDate date;
         public Double value;
+        public LocalDate name;
 
-        Networth(LocalDate date, Double value) {
-            this.date = date;
+        Networth(Double value, LocalDate name) {
             this.value = value;
-        }
-
-        public LocalDate getDate() {
-            return date;
-        }
-
-        public void setDate(LocalDate date) {
-            this.date = date;
+            this.name = name;
         }
 
         public Double getValue() {
@@ -49,6 +41,14 @@ public class PortfolioServiceImpl implements PortfolioService {
 
         public void setValue(Double value) {
             this.value = value;
+        }
+
+        public LocalDate getName() {
+            return name;
+        }
+
+        public void setName(LocalDate name) {
+            this.name = name;
         }
     }
 
@@ -566,7 +566,7 @@ public class PortfolioServiceImpl implements PortfolioService {
         }
 
         for (var entry : networthHistory.entrySet()) {
-            Networth networth = new Networth(entry.getKey(), entry.getValue());
+            Networth networth = new Networth(entry.getValue(), entry.getKey());
             history.add(networth);
         }
 
