@@ -141,46 +141,53 @@ export class SummaryComponent implements OnInit {
   }
 
   buyStock() {
+    this.stockParamObj.dateTime = new Date().toISOString()
     this.portfolioService.postBuyStock(this.stockParamObj)
-    .subscribe( (data:any)=>{
-    } )
+      .subscribe( (data:any)=>{
+      } )
   }
   sellStock() {
+    this.stockParamObj.dateTime = new Date().toISOString()
     this.portfolioService.postSellStock(this.stockParamObj)
-    .subscribe( (data:any)=>{
-    } )
+      .subscribe( (data:any)=>{
+      } )
   }
   buyETF() {
+    this.etfParamObj.dateTime = new Date().toISOString()
     this.portfolioService.postBuyETF(this.etfParamObj)
-    .subscribe( (data:any)=>{
-    } )
+      .subscribe( (data:any)=>{
+      } )
   }
   sellETF() {
+    this.etfParamObj.dateTime = new Date().toISOString()
     this.portfolioService.postSellETF(this.etfParamObj)
-    .subscribe( (data:any)=>{
-    } )
+      .subscribe( (data:any)=>{
+      } )
   }
   buyBond() {
+    this.bondParamObj.dateTime = new Date().toISOString()
     this.portfolioService.postBuyBond(this.bondParamObj)
-    .subscribe( (data:any)=>{
-    } )
+      .subscribe( (data:any)=>{
+      } )
   }
   sellBond() {
+    this.bondParamObj.dateTime = new Date().toISOString()
     this.portfolioService.postSellBond(this.bondParamObj)
-    .subscribe( (data:any)=>{
-    } )
+      .subscribe( (data:any)=>{
+      } )
   }
   test:any
   depositCash() {
     this.cashParamObj.dateTime = new Date().toISOString()
     this.portfolioService.postDepositCash(this.cashParamObj)
-    .subscribe( (data:any)=>{
-  } )
+      .subscribe( (data:any)=>{
+      } )
   }
   withdrawCash() {
+    this.cashParamObj.dateTime = new Date().toISOString()
     this.portfolioService.postWithdrawCash(this.cashParamObj)
-    .subscribe( (data:any)=>{
-    } )
+      .subscribe( (data:any)=>{
+      } )
   }
 
   openDetailsModal(content:any, lookup:any, type:number) {
@@ -220,8 +227,6 @@ export class SummaryComponent implements OnInit {
       case 0: {
         if (transactionType) {
           this.depositCash()
-          console.log('Depositing!')
-          console.log(new Date())
         }
         else{
           this.withdrawCash()
@@ -257,5 +262,4 @@ export class SummaryComponent implements OnInit {
       }
     }
   }
-
 }
