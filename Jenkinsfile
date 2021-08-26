@@ -1,7 +1,9 @@
 def projectName = 'portfolio-manager'
+def dockerImageNameBack = 'portfolio-manager-back'
+def dockerImageNameFront = 'portfolio-manager-front'
 def version = "0.0.${currentBuild.number}"
-def dockerImageTagBackend = "${projectName}:${version}:back"
-def dockerImageTagFrontend = "${projectName}:${version}:front"
+def dockerImageTagBackend = "${dockerImageNameBack}:${version}"
+def dockerImageTagFrontend = "${dockerImageNameFront}:${version}"
 
 pipeline {
   agent any
