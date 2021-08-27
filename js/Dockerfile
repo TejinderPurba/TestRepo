@@ -1,12 +1,9 @@
 FROM node:12.18.2 as build
 
-WORKDIR /app
-
-COPY ./package.json /app/package.json
-COPY ./package-lock.json /app/package-lock.json
+WORKDIR /usr/local/app
+COPY ./ /usr/local/app/
 
 RUN npm install
-COPY . .
 RUN npm run build
 
 
