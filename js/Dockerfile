@@ -15,3 +15,5 @@ RUN sed -i.bak 's/^user/#user/' /etc/nginx/nginx.conf
 COPY --from=build-step /usr/local/app/dist/routed-app /usr/share/nginx/html
 
 EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
