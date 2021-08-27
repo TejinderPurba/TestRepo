@@ -1,18 +1,17 @@
 FROM node:14.17.0-alpine as build-step
-RUN mkdir -p /app
-WORKDIR /app
-COPY package.json /app
+WORKDIR /usr/local/app
+COPY ./ /usr/local/app/
 RUN npm install
-COPY . /app
-RUN npm run build --prod
+RUN npm run build
+
 
 FROM nginx:1.17.1-alpine
-
 # support running as arbitrary user which belogs to the root group
 RUN chmod g+rwx /var/cache/nginx /var/run /var/log/nginx
 # users are not allowed to listen on priviliged ports
 RUN sed -i.bak 's/listen\(.*\)80;/listen 8081;/' /etc/nginx/conf.d/default.conf
-EXPOSE 80
 # comment user directive as master process is run as user in OpenShift anyhow
 RUN sed -i.bak 's/^user/#user/' /etc/nginx/nginx.conf
-COPY --from=build-step /usr/local/app/dist/sample-angular-routed-app /usr/share/nginx/html
+COPY --from=build-step /usr/local/app/dist/routed-app /usr/share/nginx/html
+
+EXPOSE 80
